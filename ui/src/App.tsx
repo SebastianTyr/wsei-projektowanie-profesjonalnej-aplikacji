@@ -14,7 +14,6 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: 0.3px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
   }
 `;
 const Reset = createGlobalStyle`
@@ -46,24 +45,8 @@ const Reset = createGlobalStyle`
 `;
 const Scrollbar = createGlobalStyle`
   ::-webkit-scrollbar {
-    border-radius: 6px;
-    width: 7px;
-    height: 7px;
-    background-color: ${Colors.gray02};
-      &-track {
-        border-radius: 6px;
-        width: 7px;
-        background-color: transparent;
-        &-piece {
-          border-radius: 6px;
-          background-color: ${Colors.gray02};
-        }
-      }
-      &-thumb {
-        border-radius: 6px;
-        background-color: ${Colors.gray03};
-      }
-    }
+    display: none;
+  }
 `;
 
 function App() {
