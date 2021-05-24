@@ -2,6 +2,6 @@
 {
     public class BasicPasswordPolicy : IPasswordPolicy
     {
-        public bool Validate(string password) => password.Length > 8 && password.Length < 100;
+        public bool Validate(string password) => password.Length >= 8 && password.Length < 100;
     }
 }

@@ -4,9 +4,9 @@ using NTMY.Infrastructure.Persistance.Users;
 
 namespace NTMY.Infrastructure.Contexts
 {
-    public class EventDbContext : DbContext
+    public class EventDbContext : PlaygroundShared.Infrastructure.EF.EventDbContext.EventDbContext
     {
-        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserEventEntity> Users { get; set; }
 
         protected EventDbContext()
         {

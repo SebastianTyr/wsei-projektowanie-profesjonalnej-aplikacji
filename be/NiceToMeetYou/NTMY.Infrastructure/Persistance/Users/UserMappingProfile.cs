@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
+using Newtonsoft.Json;
 using NTMY.Domain.Users;
 using PlaygroundShared.Domain;
+using PlaygroundShared.DomainEvents;
 
 namespace NTMY.Infrastructure.Persistance.Users
 {
@@ -18,7 +21,18 @@ namespace NTMY.Infrastructure.Persistance.Users
             CreateMap<UserEntity, User>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => new AggregateId(x.Id)))
                 .ForMember(x => x.Height, opt => opt.MapFrom(x => new Height(x.HeightValue, x.HeightUnit)))
-                .ForMember(x => x.Weight, opt => opt.MapFrom(x => new Height(x.WeightValue, x.WeightUnit)));
+                .ForMember(x => x.Weight, opt => opt.MapFrom(x => new Weight(x.WeightValue, x.WeightUnit)));
+
+            CreateMap<IDomainEvent, UserEventEntity>()
+                .ConstructUsing(x => new UserEventEntity()
+                {
+                    AggregateId = x.Id.ToGuid(),
+                    CorrelationId = Guid.NewGuid(),
+                    CreatedAt = DateTime.Now,
+                    Event = JsonConvert.SerializeObject(x),
+                    EventType = x.GetType().Name,
+                    PublishedAt = DateTime.Now
+                });
         }
     }
 }
