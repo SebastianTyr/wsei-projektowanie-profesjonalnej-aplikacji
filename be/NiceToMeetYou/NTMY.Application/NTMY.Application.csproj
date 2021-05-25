@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PlaygroundShared" Version="1.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NTMY.Application.Interfaces\NTMY.Application.Interfaces.csproj" />
+    <ProjectReference Include="..\NTMY.Domain\NTMY.Domain.csproj" />
+    <ProjectReference Include="..\NTMY.Infrastructure\NTMY.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
