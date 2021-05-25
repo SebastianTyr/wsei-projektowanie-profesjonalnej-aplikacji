@@ -17,5 +17,7 @@ namespace NTMY.Infrastructure.Persistance.Users
         public decimal HeightValue { get; set; }
         public string HeightUnit { get; set; }
         public Gender Gender { get; set; }
+        public bool IsConfirmed { get; set; }
+        public UserStatus Status { get; set; }
     }
 }

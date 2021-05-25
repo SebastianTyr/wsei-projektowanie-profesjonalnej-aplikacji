@@ -16,23 +16,27 @@ namespace NTMY.Infrastructure.Persistance.Users
                 .ForMember(x => x.HeightValue, opt => opt.MapFrom(x => x.Height.Value))
                 .ForMember(x => x.HeightUnit, opt => opt.MapFrom(x => x.Height.Unit))
                 .ForMember(x => x.WeightValue, opt => opt.MapFrom(x => x.Weight.Value))
-                .ForMember(x => x.WeightUnit, opt => opt.MapFrom(x => x.Weight.Unit));
+                .ForMember(x => x.WeightUnit, opt => opt.MapFrom(x => x.Weight.Unit))
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status));
 
             CreateMap<UserEntity, User>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => new AggregateId(x.Id)))
                 .ForMember(x => x.Height, opt => opt.MapFrom(x => new Height(x.HeightValue, x.HeightUnit)))
-                .ForMember(x => x.Weight, opt => opt.MapFrom(x => new Weight(x.WeightValue, x.WeightUnit)));
+                .ForMember(x => x.Weight, opt => opt.MapFrom(x => new Weight(x.WeightValue, x.WeightUnit)))
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status));
 
             CreateMap<IDomainEvent, UserEventEntity>()
                 .ConstructUsing(x => new UserEventEntity()
                 {
+                    Id = Guid.NewGuid(),
                     AggregateId = x.Id.ToGuid(),
                     CorrelationId = Guid.NewGuid(),
                     CreatedAt = DateTime.Now,
                     Event = JsonConvert.SerializeObject(x),
                     EventType = x.GetType().Name,
                     PublishedAt = DateTime.Now
-                });
+                })
+                .ForAllMembers(opt => opt.Ignore());
         }
     }
 }

@@ -65,6 +65,14 @@ namespace NTMY.Application.Users
             await _userRepository.PersistAsync(user);
         }
 
+        public async Task ActivateUserAsync(AggregateId userId)
+        {
+            var user = await GetUserOrThrowAsync(userId);
+            user.ActivateUser();
+
+            await _userRepository.PersistAsync(user);
+        }
+
         private async Task<User> GetUserOrThrowAsync(AggregateId id)
         {
             var user = await _userRepository.GetAsync(id);

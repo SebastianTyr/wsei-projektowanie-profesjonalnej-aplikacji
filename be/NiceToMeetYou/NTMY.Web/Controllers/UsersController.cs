@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NTMY.Application.Interfaces.Users.Commands;
 using NTMY.Application.Interfaces.Users.DTOs;
@@ -8,6 +9,7 @@ using NTMY.Application.Interfaces.Users.Queries;
 using NTMY.Domain.Users;
 using NTMY.Web.ViewModels.Users;
 using PlaygroundShared.Application.CQRS;
+using PlaygroundShared.Domain;
 
 namespace NTMY.Web.Controllers
 {
@@ -51,6 +53,15 @@ namespace NTMY.Web.Controllers
             var result = await _commandQueryDispatcherDecorator.DispatchAsync<LoginUserQuery, LoggedUserDto>(query);
 
             return Ok(_mapper.Map<LoggedUserViewModel>(result));
+        }
+
+        [HttpPost("Active")]
+        public async Task<IActionResult> Activate([FromBody] ActivateUserViewModel viewModel)
+        {
+            var command = new ActivateUserCommand(new AggregateId(viewModel.Id));
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+
+            return Ok();
         }
     }
 }

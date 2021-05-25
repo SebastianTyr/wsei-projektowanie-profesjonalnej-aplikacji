@@ -13,8 +13,6 @@ using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using NTMY.Application.Interfaces.Users.Commands;
-using NTMY.Application.Interfaces.Users.Queries;
 using NTMY.Application.Users;
 using NTMY.Application.Users.Handlers;
 using NTMY.Domain.Users;
@@ -23,6 +21,7 @@ using NTMY.Domain.Users.Repositories;
 using NTMY.Infrastructure;
 using NTMY.Infrastructure.Contexts;
 using NTMY.Infrastructure.Persistance.Users;
+using NTMY.Web.Extensions;
 using NTMY.Web.MappingProfiles;
 using PlaygroundShared.Application.CQRS;
 using PlaygroundShared.Application.Services;
@@ -56,7 +55,7 @@ namespace NTMY.Web
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
                 .AddJwtBearer(jwt => {
-                    var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+                    var key = Encoding.ASCII.GetBytes(Configuration["JwtConfiguration:Secret"]);
 
                     jwt.SaveToken = true;
                     jwt.TokenValidationParameters = new TokenValidationParameters
@@ -92,14 +91,15 @@ namespace NTMY.Web
             builder.RegisterAssemblyTypes(typeof(IUserFactory).Assembly).Where(x => x.IsAssignableTo(typeof(IAggregateRecreate<>))).AsImplementedInterfaces();
             builder.RegisterMainEfDbContext<MainDbContext>(sqlConnectionConfiguration);
             builder.RegisterEventEfDbContext<EventDbContext>(sqlConnectionConfiguration);
+
             builder.RegisterAssemblyTypes(typeof(IUserFactory).Assembly).Where(x => x.Name.EndsWith("DomainEventFactory") && x.IsClass).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(IUserFactory).Assembly).Where(x => x.Name.EndsWith("PolicyFactory") && x.IsClass).AsImplementedInterfaces();
-
+            builder.RegisterAssemblyTypes(typeof(User).Assembly).Where(x => x.IsAssignableTo<IDomainFactory>())
+                .AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(typeof(UserEfRepository).Assembly).AsClosedTypesOf(typeof(IGenericRepository<>));
             builder.RegisterAssemblyTypes(typeof(UserEfRepository).Assembly).AsClosedTypesOf(typeof(IGenericEventRepository<>));
             builder.RegisterType<UserRepository>().As<IUserRepository>();
-
 
             builder.RegisterAssemblyTypes(typeof(UserService).Assembly).Where(x => x.IsAssignableTo<IService>()).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(RegisterUserCommandHandler).Assembly)
@@ -109,6 +109,7 @@ namespace NTMY.Web
             builder.RegisterType<CommandDispatcher>().As<ICommandDispatcher>();
             builder.RegisterType<QueryDispatcher>().As<IQueryDispatcher>();
             builder.RegisterType<CommandQueryDispatcherDecorator>().As<ICommandQueryDispatcherDecorator>();
+
             builder.Register(ctx =>
             {
                 var assemblies = new List<Assembly>()
@@ -120,14 +121,17 @@ namespace NTMY.Web
                 var profiles = assemblies.SelectMany(x => x.GetExportedTypes()).Where(x => x.IsAssignableTo<Profile>())
                     .Select(x => (Profile) Activator.CreateInstance(x));
 
-                var cfg = new MapperConfiguration(m => m.AddProfiles(profiles));
+                var cfg = new MapperConfiguration(m =>
+                {
+                    m.DisableConstructorMapping();
+                    m.AddProfiles(profiles);
+                });
 
                 return new Mapper(cfg);
             }).As<IMapper>().InstancePerLifetimeScope();
+
             //builder.RegisterRabbitMq("rawrabbit.json");
             builder.RegisterType<FakeMessagePublisher>().As<IMessagePublisher>().InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(typeof(User).Assembly).Where(x => x.IsAssignableTo<IDomainFactory>())
-                .AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.Register(ctx => new CorrelationContext()).As<ICorrelationContext>();
         }
 
@@ -143,6 +147,13 @@ namespace NTMY.Web
 
             app.UseHttpsRedirection();
 
+            app.UseCors(ctx =>
+            {
+                ctx.AllowAnyHeader();
+                ctx.AllowAnyMethod();
+                ctx.AllowAnyOrigin();
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -151,6 +162,8 @@ namespace NTMY.Web
             {
                 endpoints.MapControllers();
             });
+
+            app.SeedDatabase();
         }
     }
 }

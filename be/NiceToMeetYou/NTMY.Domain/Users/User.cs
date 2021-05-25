@@ -24,6 +24,8 @@ namespace NTMY.Domain.Users
         public Weight Weight { get; private set; }
         public Height Height { get; private set; }
         public Gender Gender { get; private set; }
+        public bool IsConfirmed { get; private set; }
+        public UserStatus Status { get; private set; }
 
         public User(
             UserDataStructure userDataStructure,
@@ -34,6 +36,7 @@ namespace NTMY.Domain.Users
         {
             SetDependencies(domainEventsManager, passwordHashingPolicyFactory, passwordPolicyFactory, userDomainEventFactory);
             AssignFromDataStructure(userDataStructure);
+            SetUserCreated();
 
             DomainEvent(_userDomainEventFactory.PrepareUserCreatedEvent(this));
         }
@@ -85,6 +88,43 @@ namespace NTMY.Domain.Users
             {
                 throw new BusinessLogicException(UserResources.IncorrectCredentialsMessage);
             }
+        }
+
+        public void ActivateUser()
+        {
+            if (!Status.Equals(UserStatus.Created))
+            {
+                throw new BusinessLogicException(UserResources.UserNotConfirmedMessage);
+            }
+
+            if (!IsConfirmed)
+            {
+                throw new BusinessLogicException(UserResources.UserNotConfirmedMessage);
+            }
+
+            var oldStatus = Status;
+            Status = UserStatus.Active;
+
+            DomainEvent(_userDomainEventFactory.PrepareUserStatusChangedEvent(this, oldStatus));
+        }
+
+        public void SuspendUser()
+        {
+            if (!Status.Equals(UserStatus.Active))
+            {
+                throw new BusinessLogicException(UserResources.UserNotConfirmedMessage);
+            }
+
+            var oldStatus = Status;
+            Status = UserStatus.Suspended;
+
+            DomainEvent(_userDomainEventFactory.PrepareUserStatusChangedEvent(this, oldStatus));
+        }
+
+        private void SetUserCreated()
+        {
+            Status = UserStatus.Created;
+            IsConfirmed = true;
         }
 
         private void AssignFromDataStructure(UserDataStructure userDataStructure)
