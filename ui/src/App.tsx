@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { createGlobalStyle } from 'styled-components';
-import LandingPage from './pages/LandingPage';
 import { Colors } from './styledHelpers/Colors';
+import LandingPage from './pages/LandingPage';
+import MainPage from './pages//mainPage/MainPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -55,7 +57,8 @@ function App() {
       <Reset />
       <GlobalStyle />
       <Scrollbar />
-      <LandingPage />
+      {/* <LandingPage /> */}
+      <MainPage></MainPage>
     </>
   );
 }
