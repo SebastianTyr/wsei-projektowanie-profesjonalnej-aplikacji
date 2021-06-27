@@ -23,16 +23,13 @@ const ContentWrapper = styled.div`
 const MainPage: FC = () => {
     return (
         <Wrapper>
-            <TopBar></TopBar>
+            <TopBar/>
             <ContentWrapper>
-                <LeftBar></LeftBar>
-                <MainContent></MainContent>
+                <LeftBar/>
+                <MainContent/>
             </ContentWrapper>
-
         </Wrapper>
-
     );
-
 }
 
 export default MainPage;

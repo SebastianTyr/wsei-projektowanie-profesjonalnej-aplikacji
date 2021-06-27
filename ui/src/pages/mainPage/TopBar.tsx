@@ -12,9 +12,7 @@ const Wrapper = styled.div`
 const TopBar: FC = () => {
     return (
         <Wrapper>Top bar</Wrapper>
-
     );
-
 }
 
 export default TopBar;
