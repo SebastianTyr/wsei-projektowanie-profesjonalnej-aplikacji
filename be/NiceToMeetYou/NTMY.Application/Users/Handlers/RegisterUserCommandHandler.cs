@@ -26,8 +26,6 @@ namespace NTMY.Application.Users.Handlers
                     command.SecondName,
                     command.Email,
                     command.BirthDate,
-                    command.Weight,
-                    command.Height,
                     command.Gender),
                 command.Password,
                 command.ConfirmPassword);

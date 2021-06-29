@@ -11,11 +11,9 @@ namespace NTMY.Domain.Users.DataStructures
         public string SecondName { get; }
         public string Email { get; }
         public DateTime BirthDate { get; }
-        public Weight Weight { get; }
-        public Height Height { get; }
         public Gender Gender { get; }
 
-        public UserDataStructure(AggregateId id, string userName, string firstName, string secondName, string email, DateTime birthDate, Weight weight, Height height, Gender gender)
+        public UserDataStructure(AggregateId id, string userName, string firstName, string secondName, string email, DateTime birthDate, Gender gender)
         {
             Id = id;
             UserName = userName;
@@ -23,8 +21,6 @@ namespace NTMY.Domain.Users.DataStructures
             SecondName = secondName;
             Email = email;
             BirthDate = birthDate;
-            Weight = weight;
-            Height = height;
             Gender = gender;
         }
     }

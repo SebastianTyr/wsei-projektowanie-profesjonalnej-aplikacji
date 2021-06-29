@@ -13,13 +13,11 @@ namespace NTMY.Application.Interfaces.Users.Commands
         public string SecondName { get; }
         public string Email { get; }
         public Gender Gender { get; }
-        public Weight Weight { get; }
-        public Height Height { get; }
         public DateTime BirthDate { get; }
         public string Password { get; }
         public string ConfirmPassword { get; }
 
-        public RegisterUserCommand(string userName, string firstName, string secondName, string email, Gender gender, Weight weight, Height height, DateTime birthDate, string password, string confirmPassword)
+        public RegisterUserCommand(string userName, string firstName, string secondName, string email, Gender gender, DateTime birthDate, string password, string confirmPassword)
         {
             Id = AggregateId.Generate();
             UserName = userName;
@@ -27,8 +25,6 @@ namespace NTMY.Application.Interfaces.Users.Commands
             SecondName = secondName;
             Email = email;
             Gender = gender;
-            Weight = weight;
-            Height = height;
             BirthDate = birthDate;
             Password = password;
             ConfirmPassword = confirmPassword;

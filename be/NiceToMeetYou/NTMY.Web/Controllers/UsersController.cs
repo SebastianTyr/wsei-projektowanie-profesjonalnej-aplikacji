@@ -35,8 +35,6 @@ namespace NTMY.Web.Controllers
                 viewModel.SecondName,
                 viewModel.Email,
                 viewModel.Gender,
-                new Weight(viewModel.Weight.Value, viewModel.Weight.Unit),
-                new Height(viewModel.Height.Value, viewModel.Height.Unit),
                 viewModel.BirthDate,
                 viewModel.Password,
                 viewModel.ConfirmPassword);
