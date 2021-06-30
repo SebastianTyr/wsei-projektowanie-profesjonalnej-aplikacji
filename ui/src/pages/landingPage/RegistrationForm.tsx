@@ -87,11 +87,11 @@ const RegistrationForm: FC = () => {
     return (
         <Wrapper>
             <HeaderWrapper>
-                <h2>Create Account</h2>
+                <h2>Utwórz Konto</h2>
             </HeaderWrapper>
             <CostumForm onSubmit={submitHandler}>
                 <FormItem>
-                    <label>Name</label>
+                    <label>Imię</label>
                     <input
                         type='text'
                         name='name'
@@ -100,7 +100,7 @@ const RegistrationForm: FC = () => {
                     />
                 </FormItem>
                 <FormItem>
-                    <label>Last Name</label>
+                    <label>Nazwisko</label>
                     <input
                         type='text'
                         name='lastName'
@@ -118,7 +118,7 @@ const RegistrationForm: FC = () => {
                     />
                 </FormItem>
                 <FormItem>
-                    <label>Password</label>
+                    <label>Hasło</label>
                     <input
                         type='text'
                         name='passowrd'
@@ -127,7 +127,7 @@ const RegistrationForm: FC = () => {
                     />
                 </FormItem>
                 <FormItem>
-                    <label>Confirm Password</label>
+                    <label>Powtórz Hasło</label>
                     <input
                         type='text'
                         name='confirmPassword'
@@ -136,7 +136,7 @@ const RegistrationForm: FC = () => {
                     />
                 </FormItem>
                 <FormItem>
-                    <CreateButton type='submit'>Create</CreateButton>
+                    <CreateButton type='submit'>Zarejestruj się</CreateButton>
                 </FormItem>
             </CostumForm>
         </Wrapper>
