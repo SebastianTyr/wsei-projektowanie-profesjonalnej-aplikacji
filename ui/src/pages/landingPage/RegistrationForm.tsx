@@ -1,4 +1,4 @@
-import React,  { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import styled from "styled-components";
 
 
@@ -8,12 +8,13 @@ import { CreateAccountButton } from './common';
 
 
 const Wrapper = styled.div`
-    width: 400px;
+    width: 600px;
     background: ${Colors.white};
     color: ${Colors.black};
     padding: 20px;
     z-index: 10000;
     border-radius: 5%;
+   
 `;
 
 const HeaderWrapper = styled.div`
@@ -27,8 +28,10 @@ const CostumForm = styled.form`
 
 const FormItem = styled.div`
     display: flex;
+    flex: 1;
     flex-direction: column;
     margin-bottom: 20px;
+    border-bottom: 1px solid ${Colors.gray03};
 
     label {
         font-size: 15px;
@@ -39,7 +42,7 @@ const FormItem = styled.div`
     input {
         font-size: 20px;
         border: none;
-        border-bottom: 1px solid ${Colors.gray03};
+        
 
         &:focus {
             background-color: ${Colors.gray01};
@@ -47,6 +50,17 @@ const FormItem = styled.div`
         }
 
     }
+
+    div {
+        display: felx;
+        justify-content: space-between;
+
+    }
+`;
+
+const ItemsBox = styled.div`
+    display: flex;
+
 `;
 
 const CreateButton = styled(CreateAccountButton)`
@@ -57,11 +71,16 @@ const CreateButton = styled(CreateAccountButton)`
 
 
 interface IRegistrationData {
+    userName: string,
     name: string,
     lastName: string,
     email: string,
     passowrd: string,
-    confirmPassword: string
+    confirmPassword: string,
+    weight: null,
+    height: null,
+    gender: string,
+    birthDate: Date,
 }
 
 
@@ -72,11 +91,17 @@ const RegistrationForm: FC = () => {
         lastName: '',
         email: '',
         passowrd: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        userName: '',
+        weight: null,
+        height: null,
+        gender: '',
+        birthDate: new Date(),
+
     });
 
     const textChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setRegistrationData({...registrationData, [e.target.name]: e.target.value});
+        setRegistrationData({ ...registrationData, [e.target.name]: e.target.value });
     };
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,23 +116,34 @@ const RegistrationForm: FC = () => {
             </HeaderWrapper>
             <CostumForm onSubmit={submitHandler}>
                 <FormItem>
-                    <label>Imię</label>
+                    <label>Nazwa Użytkownika</label>
                     <input
                         type='text'
-                        name='name'
-                        value={registrationData.name}
+                        name='userName'
+                        value={registrationData.userName}
                         onChange={textChangeHandler}
                     />
                 </FormItem>
-                <FormItem>
-                    <label>Nazwisko</label>
-                    <input
-                        type='text'
-                        name='lastName'
-                        value={registrationData.lastName}
-                        onChange={textChangeHandler}
-                    />
-                </FormItem>
+                <ItemsBox>
+                    <FormItem style={{marginRight: "20px"}}>
+                        <label>Imię</label>
+                        <input
+                            type='text'
+                            name='name'
+                            value={registrationData.name}
+                            onChange={textChangeHandler}
+                        />
+                    </FormItem>
+                    <FormItem>
+                        <label>Nazwisko</label>
+                        <input
+                            type='text'
+                            name='lastName'
+                            value={registrationData.lastName}
+                            onChange={textChangeHandler}
+                        />
+                    </FormItem>
+                </ItemsBox>
                 <FormItem>
                     <label>Email</label>
                     <input
@@ -117,24 +153,51 @@ const RegistrationForm: FC = () => {
                         onChange={textChangeHandler}
                     />
                 </FormItem>
-                <FormItem>
-                    <label>Hasło</label>
-                    <input
-                        type='text'
-                        name='passowrd'
-                        value={registrationData.passowrd}
-                        onChange={textChangeHandler}
-                    />
-                </FormItem>
-                <FormItem>
-                    <label>Powtórz Hasło</label>
-                    <input
-                        type='text'
-                        name='confirmPassword'
-                        value={registrationData.confirmPassword}
-                        onChange={textChangeHandler}
-                    />
-                </FormItem>
+                <ItemsBox>
+                    <FormItem style={{marginRight: "20px"}}>
+                        <label>Płeć</label>
+                        <div onChange={textChangeHandler}>
+                            <input
+                                type='radio'
+                                name='gender'
+                                value='female'
+                            /> Kobieta
+                            <input
+                                type='radio'
+                                name='gender'
+                                value='male'
+                            /> Mężczyzna
+                        </div>
+                    </FormItem>
+                    <FormItem>
+                        <label>Data urodzenia</label>
+                        <input
+                            type='date'
+                            name='birthDate'
+                            onChange={textChangeHandler}
+                        />
+                    </FormItem>
+                </ItemsBox>
+                <ItemsBox>
+                    <FormItem style={{marginRight: "20px"}}>
+                        <label>Hasło</label>
+                        <input
+                            type='text'
+                            name='passowrd'
+                            value={registrationData.passowrd}
+                            onChange={textChangeHandler}
+                        />
+                    </FormItem>
+                    <FormItem>
+                        <label>Powtórz Hasło</label>
+                        <input
+                            type='text'
+                            name='confirmPassword'
+                            value={registrationData.confirmPassword}
+                            onChange={textChangeHandler}
+                        />
+                    </FormItem>
+                </ItemsBox>
                 <FormItem>
                     <CreateButton type='submit'>Zarejestruj się</CreateButton>
                 </FormItem>
