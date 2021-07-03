@@ -202,7 +202,7 @@ const RegistrationForm = () => {
                             <Field
                                 id='password'
                                 type='password'
-                                name='passowrd'
+                                name='password'
                             />
                         </FormItem>
                         <FormItem>
