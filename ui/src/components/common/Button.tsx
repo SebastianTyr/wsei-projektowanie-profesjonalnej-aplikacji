@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 import { Colors } from '../../styledHelpers/Colors';
+import { FontSize } from '../../styledHelpers/FontSize';
 import { Gradient } from '../../styledHelpers/Gradient';
 import { Padding } from '../../styledHelpers/Padding';
 
@@ -16,7 +17,7 @@ const GenericButton = styled.button<{variant: string; size: string; text: string
     justify-content: center;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
     padding: ${Padding[8]} ${Padding[16]};
-    font-size: 0.875rem;
+    font-size: ${FontSize[14]};
     z-index: 1;
     font-weight: 600;
     letter-spacing: 0.02857em;
