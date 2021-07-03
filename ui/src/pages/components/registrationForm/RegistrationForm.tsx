@@ -110,18 +110,16 @@ const RegistrationForm = () => {
     }
 
     const validationSchema = Yup.object({
-        userName: Yup.string().required('Proszę podać nazwę użytkownika')
+        userName: Yup.string().required('Proszę podać nazwę użytkownika'),
+        firstName: Yup.string().required('Proszę podać imię'),
+        lastName: Yup.string().required('Proszę podać nazwisko'),
+        email: Yup.string().email('Email niepoprawny').required('Proszę podać email'),
+        password: Yup.string().min(6, 'Hasło musi mieć co najmniej 6 znaków').required('Proszę podać hasło'),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Hasło musi się zgadzać').required('Proszę powtórzyć hasło'),
+        gender: Yup.string().required('Proszę wskazać płeć'),
+        birthDate: Yup.date().required("Proszę podać datę urodzenia")
     })
 
-
-    // const textChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setRegistrationData({ ...registrationData, [e.target.name]: e.target.value });
-    // };
-
-    // const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     console.log(registrationData);
-    // };
 
     return (
         <Wrapper>
@@ -144,7 +142,7 @@ const RegistrationForm = () => {
                             type='text'
                             name='userName'
                         />
-                        <ErrorMessage name='userName' render={error => <ErrorBox>{error}</ErrorBox> } />
+                        <ErrorMessage name='userName' render={error => <ErrorBox>{error}</ErrorBox>} />
                     </FormItem>
                     <ItemsBox>
                         <FormItem style={{ marginRight: "20px" }}>
@@ -154,6 +152,7 @@ const RegistrationForm = () => {
                                 type='text'
                                 name='firstName'
                             />
+                            <ErrorMessage name="firstName" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                         <FormItem>
                             <label htmlFor='lastName'>Nazwisko</label>
@@ -162,6 +161,7 @@ const RegistrationForm = () => {
                                 type='text'
                                 name='lastName'
                             />
+                            <ErrorMessage name='lastName' render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
                     <FormItem>
@@ -171,6 +171,7 @@ const RegistrationForm = () => {
                             type='email'
                             name='email'
                         />
+                        <ErrorMessage name="email" render={error => <ErrorBox>{error}</ErrorBox>} />
                     </FormItem>
                     <ItemsBox>
                         <FormItem style={{ marginRight: "20px" }}>
@@ -189,6 +190,7 @@ const RegistrationForm = () => {
                                     value='male'
                                 /> Mężczyzna
                             </div>
+                            <ErrorMessage name="gender" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                         <FormItem>
                             <label htmlFor='birthDate'>Data urodzenia</label>
@@ -196,8 +198,8 @@ const RegistrationForm = () => {
                                 id='birthDate'
                                 type='date'
                                 name='birthDate'
-
                             />
+                            <ErrorMessage name="birthDate" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
                     <ItemsBox>
@@ -208,6 +210,7 @@ const RegistrationForm = () => {
                                 type='password'
                                 name='password'
                             />
+                            <ErrorMessage name="password" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                         <FormItem>
                             <label htmlFor='confirmPassword'>Powtórz Hasło</label>
@@ -216,6 +219,7 @@ const RegistrationForm = () => {
                                 type='password'
                                 name='confirmPassword'
                             />
+                            <ErrorMessage name="confirmPassword" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
                     <FormItem style={{ border: "none" }}>
@@ -252,7 +256,7 @@ export default RegistrationForm;
 //     padding: 20px;
 //     z-index: 10000;
 //     border-radius: 5%;
-   
+
 // `;
 
 // const HeaderWrapper = styled.div`
@@ -280,7 +284,7 @@ export default RegistrationForm;
 //         font-size: 20px;
 //         border: none;
 //         border-bottom: 1px solid ${Colors.gray03};
-        
+
 
 //         &:focus {
 //             background-color: ${Colors.gray01};
