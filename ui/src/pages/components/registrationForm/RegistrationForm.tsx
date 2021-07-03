@@ -1,14 +1,10 @@
-import React, { ChangeEvent, FC, useState } from "react";
 import styled from "styled-components";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from 'yup';
 
 
 import { Colors } from "../../../styledHelpers/Colors";
 import { CreateAccountButton } from '../common';
-// -------NIE DZIAŁA---------------
-import CustomTextInput from "./CustomTextInput";
-
 
 
 
@@ -26,7 +22,7 @@ const HeaderWrapper = styled.div`
 
 `;
 
-const CostumForm = styled(Form)`
+const CustomForm = styled.form`
     display: flex;
     flex-direction: column;
 `;
@@ -85,7 +81,7 @@ interface IRegistrationData {
     firstName: string,
     lastName: string,
     email: string,
-    passowrd: string,
+    password: string,
     confirmPassword: string,
     weight: null,
     height: null,
@@ -102,7 +98,7 @@ const RegistrationForm = () => {
         firstName: '',
         lastName: '',
         email: '',
-        passowrd: '',
+        password: '',
         confirmPassword: '',
         weight: null,
         height: null,
@@ -111,18 +107,16 @@ const RegistrationForm = () => {
     }
 
     const validationSchema = Yup.object({
-        userName: Yup.string().required('Proszę podać nazwę użytkownika')
-    })
+        userName: Yup.string().required('Proszę podać nazwę użytkownika'),
+        firstName: Yup.string().required('Proszę podać imię'),
+        lastName: Yup.string().required('Proszę podać nazwisko'),
+        email: Yup.string().email('Email niepoprawny').required('Proszę podać email'),
+        password: Yup.string().min(6, 'Hasło musi mieć co najmniej 6 znaków').required('Proszę podać hasło'),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Hasło musi się zgadzać').required('Proszę powtórzyć hasło'),
+        gender: Yup.string().required('Proszę wskazać płeć'),
+        birthData: Yup.date().required("Proszę podać datę urodzenia"),
+    });
 
-
-    // const textChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setRegistrationData({ ...registrationData, [e.target.name]: e.target.value });
-    // };
-
-    // const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     console.log(registrationData);
-    // };
 
     return (
         <Wrapper>
@@ -134,95 +128,119 @@ const RegistrationForm = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={(values) => console.log(values)}
             >
+                {({ values, handleChange, handleSubmit }) => (
 
-                <CostumForm>
-                    <FormItem>
-                        <label htmlFor='userName'>Nazwa Użytkownika</label>
-                        <Field
-                            id='userName'
-                            type='text'
-                            name='userName'
-                        />
-                        <ErrorMessage name='userName' render={error => <ErrorBox>{error}</ErrorBox> } />
-                    </FormItem>
-                    <ItemsBox>
-                        <FormItem style={{ marginRight: "20px" }}>
-                            <label htmlFor='firstName'>Imię</label>
-                            <Field
-                                id='firstName'
+                    <CustomForm onSubmit={handleSubmit}>
+                        <FormItem>
+                            <label htmlFor='userName'>Nazwa Użytkownika</label>
+                            <input
+                                id='userName'
                                 type='text'
-                                name='firstName'
+                                name='userName'
+                                value={values.userName}
+                                onChange={handleChange}
                             />
+                            <ErrorMessage name='userName' render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
+                        <ItemsBox>
+                            <FormItem style={{ marginRight: "20px" }}>
+                                <label htmlFor='firstName'>Imię</label>
+                                <input
+                                    id='firstName'
+                                    type='text'
+                                    name='firstName'
+                                    value={values.firstName}
+                                    onChange={handleChange}
+                                />
+                                <ErrorMessage name="firstName" render={error => <ErrorBox>{error}</ErrorBox>} />
+                            </FormItem>
+                            <FormItem>
+                                <label htmlFor='lastName'>Nazwisko</label>
+                                <input
+                                    id="lastName"
+                                    type='text'
+                                    name='lastName'
+                                    value={values.lastName}
+                                    onChange={handleChange}
+                                />
+                                <ErrorMessage name="lastName" render={error => <ErrorBox>{error}</ErrorBox>} />
+                            </FormItem>
+                        </ItemsBox>
                         <FormItem>
-                            <label htmlFor='lastName'>Nazwisko</label>
-                            <Field
-                                id="lastName"
-                                type='text'
-                                name='lastName'
+                            <label htmlFor='email'>Email</label>
+                            <input
+                                id='email'
+                                type='email'
+                                name='email'
+                                value={values.email}
+                                onChange={handleChange}
                             />
+                            <ErrorMessage name="email" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
-                    </ItemsBox>
-                    <FormItem>
-                        <label htmlFor='email'>Email</label>
-                        <Field
-                            id='email'
-                            type='email'
-                            name='email'
-                        />
-                    </FormItem>
-                    <ItemsBox>
-                        <FormItem style={{ marginRight: "20px" }}>
-                            <label htmlFor='gender'>Płeć</label>
-                            <div>
-                                <Field
-                                    id='gender'
-                                    type='radio'
-                                    name='gender'
-                                    value='female'
-                                /> Kobieta
-                                <Field
-                                    id='gender'
-                                    type='radio'
-                                    name='gender'
-                                    value='male'
-                                /> Mężczyzna
-                            </div>
+                        <ItemsBox>
+                            <FormItem style={{ marginRight: "20px" }}>
+                                <label htmlFor='gender'>Płeć</label>
+                                <div style={{ borderBottom: ` 1px solid ${Colors.gray03}` }}>
+                                    <input
+                                        id='gender'
+                                        type='radio'
+                                        name='gender'
+                                        value='female'
+                                        onChange={handleChange}
+                                    /> Kobieta
+                                    <input
+                                        id='gender'
+                                        type='radio'
+                                        name='gender'
+                                        value='male'
+                                        onChange={handleChange}
+                                    /> Mężczyzna
+                                </div>
+                                <ErrorMessage name="gender" render={error => <ErrorBox>{error}</ErrorBox>} />
+                            </FormItem>
+                            <FormItem>
+                                <label htmlFor='birthDate'>Data urodzenia</label>
+                                <input
+                                    id='birthDate'
+                                    type='date'
+                                    name='birthDate'
+                                    value={values.birthDate}
+                                    onChange={handleChange}
+                                />
+                                <ErrorMessage name="birthDate" render={error => <ErrorBox>{error}</ErrorBox>} />
+                            </FormItem>
+                        </ItemsBox>
+                        <ItemsBox>
+                            <FormItem style={{ marginRight: "20px" }}>
+                                <label htmlFor='password'>Hasło</label>
+                                <input
+                                    id='password'
+                                    type='password'
+                                    name='password'
+                                    value={values.password}
+                                    onChange={handleChange}
+                                />
+                                <ErrorMessage name="password" render={error => <ErrorBox>{error}</ErrorBox>} />
+                            </FormItem>
+                            <FormItem>
+                                <label htmlFor='confirmPassword'>Powtórz Hasło</label>
+                                <input
+                                    id='confirmPassword'
+                                    type='password'
+                                    name='confirmPassword'
+                                    value={values.confirmPassword}
+                                    onChange={handleChange}
+                                />
+                                <ErrorMessage name="confirmPassword" render={error => <ErrorBox>{error}</ErrorBox>} />
+                            </FormItem>
+                        </ItemsBox>
+                        <FormItem style={{ border: "none" }}>
+                            <CreateButton type='submit'>Zarejestruj się</CreateButton>
                         </FormItem>
-                        <FormItem>
-                            <label htmlFor='birthDate'>Data urodzenia</label>
-                            <Field
-                                id='birthDate'
-                                type='date'
-                                name='birthDate'
-
-                            />
-                        </FormItem>
-                    </ItemsBox>
-                    <ItemsBox>
-                        <FormItem style={{ marginRight: "20px" }}>
-                            <label htmlFor='password'>Hasło</label>
-                            <Field
-                                id='password'
-                                type='password'
-                                name='passowrd'
-                            />
-                        </FormItem>
-                        <FormItem>
-                            <label htmlFor='confirmPassword'>Powtórz Hasło</label>
-                            <Field
-                                id='confirmPassword'
-                                type='password'
-                                name='confirmPassword'
-                            />
-                        </FormItem>
-                    </ItemsBox>
-                    <FormItem style={{ border: "none" }}>
-                        <CreateButton type='submit'>Zarejestruj się</CreateButton>
-                    </FormItem>
-                </CostumForm>
+                    </CustomForm>
+                )}
             </Formik>
         </Wrapper>
     );
