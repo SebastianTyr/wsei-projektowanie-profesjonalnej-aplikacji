@@ -30,7 +30,6 @@ const Reset = createGlobalStyle`
   button {
     border: none;
     cursor: pointer;
-    background: transparent;
     &:focus {
       outline: none;
     }
