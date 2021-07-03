@@ -10,26 +10,27 @@ const Wrapper = styled.div`
     background-repeat: no-repeat;
 `
 const Header = styled.header`
-    background: transparent;
-    padding: 1rem;
+    background: ${Colors.white};
+    padding: 0.5rem 1rem;
     position: sticky;
     top: 0;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     z-index: 1;
 `
 const LogoContainer = styled.div`
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 9.5rem;
+    height: 3.75rem;
     margin-right: 0.5rem;
 `
 const Logo = styled.div`
-    width: 70px;
-    height: 70px;
-    background-image: url("./media/icons/glass-cheers-solid.svg");
+    width: 100%;
+    height: 100%;
+    background-image: url("./media/icons/logo.png");
     background-repeat: no-repeat;
-    font-size: 18px;
+    background-size: cover;
 `
 const Main = styled.main`
     display: flex;
