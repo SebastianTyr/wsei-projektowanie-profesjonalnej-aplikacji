@@ -1,6 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
-import { Colors } from '../styledHelpers/Colors';
+import { Colors } from '../../styledHelpers/Colors';
+import { CreateAccountButton } from '../components/common';
+import RegistrationForm from '../components/registrationForm/RegistrationForm';
 
 const Wrapper = styled.div`
     background-color: rgba(0,0,0,.4);
@@ -65,18 +68,9 @@ const LogButton = styled.button`
     font-size: 1rem;
     cursor: pointer;
 `
-const CreateAccountButton = styled.button`
-    text-transform: uppercase;
-    background: ${Colors.white};
-    padding: 1.25rem 4rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 2rem;
-    z-index: 1;
-`
+
 const Section = styled.section`
-    background: white;
+    background: ${Colors.white};
     padding: 1rem;
     min-height: 1000px;
     display: flex;
@@ -84,38 +78,50 @@ const Section = styled.section`
     justify-content: center;
 `
 const Footer = styled.footer`
-    background: white;
+    background: ${Colors.white};
     padding: 1rem;
     min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
 `
-export const LandingPage = () => {
-  return (
-      <>
-        <Wrapper>
-            <Header>
-                <LogoContainer>
-                    <Logo/> 
-                </LogoContainer>
-                <ButtonContainer>
-                    <LogButton>Log in</LogButton>
-                </ButtonContainer>
-            </Header>
-            <Main>
-                <CreateAccountButton>
-                    Create Account
-                </CreateAccountButton>
-            </Main>
-        </Wrapper>
-        <Section>
-            Section
-        </Section>
-        <Footer>
-            Footer
-        </Footer>
-   </>
-  );
+const LandingPage: FC = () => {
+
+    const [isCreating, setIsCreating] = useState<boolean>(false);
+
+    const createButtonHandler = () => {
+        setIsCreating(isCreating => !isCreating);
+    };
+
+    return (
+        <>
+            <Wrapper>
+                <Header>
+                    <LogoContainer>
+                        <Logo />
+                    </LogoContainer>
+                    <ButtonContainer>
+                        <LogButton>Log in</LogButton>
+                    </ButtonContainer>
+                </Header>
+                <Main>
+                    {isCreating &&
+                        <RegistrationForm />
+                    }
+                    {!isCreating &&
+                        <CreateAccountButton onClick={createButtonHandler}>
+                            Create Account
+                        </CreateAccountButton>
+                    }
+                </Main>
+            </Wrapper>
+            <Section>
+                Section
+            </Section>
+            <Footer>
+                Footer
+            </Footer>
+        </>
+    );
 }
 export default LandingPage;

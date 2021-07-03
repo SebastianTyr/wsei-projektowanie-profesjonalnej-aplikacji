@@ -1,10 +1,12 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
+import { Colors } from '../../../styledHelpers/Colors';
+
 
 const Wrapper = styled.div`
    
-    background-color: white;
+    background-color: ${Colors.white};
     height: 300px;
     padding: 1rem 0;
     margin-right: 2rem;
@@ -44,7 +46,7 @@ const LeftBar: FC = () => {
     return (
         <Wrapper>
             <ImageBox>
-                <img src='./photos/userAvatar_2.jpg'></img>
+                <img src='./photos/userAvatar_2.jpg' alt='user'></img>
             </ImageBox>
             <NameBox>Aniela Kowalska</NameBox>
             <DescriptionBox>Uśmiech to podstawa-takie tam hasło</DescriptionBox>

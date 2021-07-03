@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
+import { Colors } from '../../../styledHelpers/Colors';
+
 const Wrapper = styled.div`
 
-    background-color: white;
+    background-color: ${Colors.white};
     width: 280px;
     height: 220px;
     display: flex;
@@ -60,7 +62,7 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
     return(
         <Wrapper>
             <ImageBox>
-                <img src='./photos/userAvatar_2.jpg'></img>
+                <img src='./photos/userAvatar_2.jpg' alt='user'></img>
             </ImageBox>
             <TextWrapper>
                 <NameBox>{props.name}</NameBox>

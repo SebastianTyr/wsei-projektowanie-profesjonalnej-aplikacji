@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
-import LandingPage from './pages/LandingPage';
+import LandingPage from './pages/landingPage/LandingPage';
 import MainPage from './pages//mainPage/MainPage';
 
 const GlobalStyle = createGlobalStyle`
@@ -56,8 +56,8 @@ function App() {
       <Reset />
       <GlobalStyle />
       <Scrollbar />
-      {/* <LandingPage /> */}
-      <MainPage></MainPage>
+      <LandingPage />
+      {/* <MainPage></MainPage> */}
     </>
   );
 }
