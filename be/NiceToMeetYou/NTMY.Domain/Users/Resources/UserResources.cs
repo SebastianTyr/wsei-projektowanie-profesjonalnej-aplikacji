@@ -15,5 +15,6 @@
         public const string LikeNeededToRateUserMessage = nameof(LikeNeededToRateUserMessage);
         public const string RateAlreadyAddedMessage = nameof(RateAlreadyAddedMessage);
         public const string RatingNotFoundMessage = nameof(RatingNotFoundMessage);
+        public const string UserShouldBeActiveMessage = nameof(UserShouldBeActiveMessage);
     }
 }

@@ -19,6 +19,11 @@ namespace NTMY.Domain.Users
             Date = DateTime.UtcNow;
         }
 
+        private UserLike()
+        {
+
+        }
+
         public void MarkAsArchived()
         {
             IsArchived = true;

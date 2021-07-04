@@ -12,6 +12,7 @@ using NTMY.Domain.Users.Factories;
 using NTMY.Domain.Users.Repositories;
 using NTMY.Domain.Users.Resources;
 using NTMY.SharedKernel;
+using PlaygroundShared;
 using PlaygroundShared.Configurations;
 using PlaygroundShared.Domain;
 using PlaygroundShared.Infrastructure;
@@ -73,6 +74,30 @@ namespace NTMY.Application.Users
             await _userRepository.PersistAsync(user);
         }
 
+        public async Task SetAdditionalInformationAsync(UserAdditionalInformationDataStructure dataStructure)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            user.SetAdditionalInformation(dataStructure.Height, dataStructure.Weight, dataStructure.Address, dataStructure.Description, dataStructure.WantedGender, dataStructure.Coordinate);
+
+            await _userRepository.PersistAsync(user);
+        }
+
+        public async Task AddUserLikeAsync(AggregateId likedUserId)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            user.AddLike(likedUserId);
+
+            await _userRepository.PersistAsync(user);
+        }
+
+        public async Task RemoveUserLikeAsync(int no)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            user.RemoveLike(no);
+
+            await _userRepository.PersistAsync(user);
+        }
+
         private async Task<User> GetUserOrThrowAsync(AggregateId id)
         {
             var user = await _userRepository.GetAsync(id);
@@ -105,6 +130,7 @@ namespace NTMY.Application.Users
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("id", user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName), 
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

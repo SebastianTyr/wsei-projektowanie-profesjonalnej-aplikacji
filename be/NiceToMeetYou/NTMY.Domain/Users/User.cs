@@ -10,6 +10,7 @@ using NTMY.SharedKernel;
 using PlaygroundShared;
 using PlaygroundShared.Domain;
 using PlaygroundShared.DomainEvents;
+using PlaygroundShared.Infrastructure;
 
 namespace NTMY.Domain.Users
 {
@@ -18,7 +19,6 @@ namespace NTMY.Domain.Users
         private IUserDomainEventFactory _userDomainEventFactory;
         private IPasswordHashingPolicyFactory _passwordHashingPolicyFactory;
         private IPasswordPolicyFactory _passwordPolicyFactory;
-        private ICurrentUser _currentUser;
 
         public string UserName { get; private set; }
         public string PasswordHash { get; private set; }
@@ -52,6 +52,8 @@ namespace NTMY.Domain.Users
         }
 
         private List<UserRating> _ratings = new List<UserRating>();
+        private ICorrelationContext _correlationContext;
+
         public IEnumerable<UserRating> Ratings
         {
             get => _ratings;
@@ -64,9 +66,9 @@ namespace NTMY.Domain.Users
             IPasswordHashingPolicyFactory passwordHashingPolicyFactory,
             IPasswordPolicyFactory passwordPolicyFactory,
             IUserDomainEventFactory userDomainEventFactory,
-            ICurrentUser currentUser) : base(userDataStructure.Id, domainEventsManager)
+            ICorrelationContext correlationContext) : base(userDataStructure.Id, domainEventsManager)
         {
-            SetDependencies(domainEventsManager, passwordHashingPolicyFactory, passwordPolicyFactory, userDomainEventFactory, currentUser);
+            SetDependencies(domainEventsManager, passwordHashingPolicyFactory, passwordPolicyFactory, userDomainEventFactory, correlationContext);
             AssignFromDataStructure(userDataStructure);
             SetUserCreated();
 
@@ -82,13 +84,16 @@ namespace NTMY.Domain.Users
             IPasswordHashingPolicyFactory passwordHashingPolicyFactory,
             IPasswordPolicyFactory passwordPolicyFactory,
             IUserDomainEventFactory userDomainEventFactory,
-            ICurrentUser currentUser)
+            ICorrelationContext correlationContext)
         {
             base.SetDependencies(domainEventsManager);
             _passwordHashingPolicyFactory = passwordHashingPolicyFactory ?? throw new ArgumentNullException(nameof(passwordHashingPolicyFactory));
             _passwordPolicyFactory = passwordPolicyFactory ?? throw new ArgumentNullException(nameof(passwordPolicyFactory));
             _userDomainEventFactory = userDomainEventFactory ?? throw new ArgumentNullException(nameof(userDomainEventFactory));
-            _currentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
+            _correlationContext = correlationContext ?? throw new ArgumentNullException(nameof(correlationContext));
+
+            Weight = Weight.Empty();
+            Height = Height.Empty();
         }
 
         public void SetAdditionalInformation(Height height, Weight weight, Address address, string description, Gender wantedGender, GeoCoordinate coordinate)
@@ -172,6 +177,8 @@ namespace NTMY.Domain.Users
             IsConfirmed = true;
         }
 
+        #region Weddings
+
         public void AddIncomingWedding(DateTime date, Address address)
         {
             var wedding = new Wedding(_incomingWeddings.GetNextNo(), date, Address);
@@ -190,8 +197,28 @@ namespace NTMY.Domain.Users
             incomingWedding.MarkAsArchived();
         }
 
+        private Wedding GetWeddingOrThrow(int no)
+        {
+            var wedding = _incomingWeddings.SingleOrDefault(x => x.No == no);
+            if (wedding == null)
+            {
+                throw new BusinessLogicException(UserResources.WeddingNotFoundMessage);
+            }
+
+            return wedding;
+        }
+
+        #endregion
+
+        #region Likes
+
         public void AddLike(AggregateId userId)
         {
+            if (!Status.Equals(UserStatus.Active))
+            {
+                throw new BusinessLogicException(UserResources.UserShouldBeActiveMessage);
+            }
+
             if (_likes.Any(x => x.LikedUserId == userId && !x.IsArchived))
             {
                 throw new BusinessLogicException(UserResources.UserAlreadyLikedMessage);
@@ -203,22 +230,42 @@ namespace NTMY.Domain.Users
 
         public void RemoveLike(int no)
         {
+            if (!Status.Equals(UserStatus.Active))
+            {
+                throw new BusinessLogicException(UserResources.UserShouldBeActiveMessage);
+            }
+
             var like = GetLikeOrThrow(no);
             like.MarkAsArchived();
         }
+
+        private UserLike GetLikeOrThrow(int no)
+        {
+            var like = _likes.SingleOrDefault(x => x.No == no && !x.IsArchived);
+            if (like == null)
+            {
+                throw new BusinessLogicException(UserResources.UserLikeNotFoundMessage);
+            }
+
+            return like;
+        }
+
+        #endregion
+
+        #region Ratings
 
         public void AddRating(RateType type, decimal rate)
         {
             ValidateRate(type, rate);
 
-            var rating = new UserRating(_ratings.GetNextNo(), _currentUser.UserId.Value, rate, type);
+            var rating = new UserRating(_ratings.GetNextNo(), _correlationContext.CurrentUser.UserId.Value, rate, type);
             _ratings.Add(rating);
         }
 
         public void UpdateRating(int no, decimal rate)
         {
             var rating = GetRatingOrThrow(no);
-            if (rating.RatedBy != _currentUser.UserId.Value)
+            if (rating.RatedBy != _correlationContext.CurrentUser.UserId.Value)
             {
                 throw new BusinessLogicException(UserResources.RatingNotFoundMessage);
             }
@@ -229,7 +276,7 @@ namespace NTMY.Domain.Users
         public void RemoveRating(int no)
         {
             var rating = GetRatingOrThrow(no);
-            if (rating.RatedBy != _currentUser.UserId.Value)
+            if (rating.RatedBy != _correlationContext.CurrentUser.UserId.Value)
             {
                 throw new BusinessLogicException(UserResources.RatingNotFoundMessage);
             }
@@ -250,27 +297,18 @@ namespace NTMY.Domain.Users
 
         private void ValidateRate(RateType type, in decimal rate)
         {
-            if (!_likes.Any(x => x.LikedUserId == _currentUser.UserId.Value && !x.IsArchived))
+            if (!_likes.Any(x => x.LikedUserId == _correlationContext.CurrentUser.UserId.Value && !x.IsArchived))
             {
                 throw new BusinessLogicException(UserResources.LikeNeededToRateUserMessage);
             }
 
-            if (_ratings.Any(x => !x.IsArchived && x.RatedBy == _currentUser.UserId.Value && x.Type == type))
+            if (_ratings.Any(x => !x.IsArchived && x.RatedBy == _correlationContext.CurrentUser.UserId.Value && x.Type == type))
             {
                 throw new BusinessLogicException(UserResources.RateAlreadyAddedMessage);
             }
         }
 
-        private UserLike GetLikeOrThrow(int no)
-        {
-            var like = _likes.SingleOrDefault(x => x.No == no);
-            if (like == null)
-            {
-                throw new BusinessLogicException(UserResources.UserLikeNotFoundMessage);
-            }
-
-            return like;
-        }
+        #endregion
 
         private void AssignFromDataStructure(UserDataStructure userDataStructure)
         {
@@ -320,17 +358,6 @@ namespace NTMY.Domain.Users
             }
 
             UserName = userName;
-        }
-
-        private Wedding GetWeddingOrThrow(int no)
-        {
-            var wedding = _incomingWeddings.SingleOrDefault(x => x.No == no);
-            if (wedding == null)
-            {
-                throw new BusinessLogicException(UserResources.WeddingNotFoundMessage);
-            }
-
-            return wedding;
         }
     }
 }

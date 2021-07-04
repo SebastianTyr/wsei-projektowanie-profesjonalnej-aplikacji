@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using GeoCoordinatePortable;
 using NTMY.Domain.Users;
 using PlaygroundShared.Infrastructure.Persistance;
 
@@ -19,5 +21,15 @@ namespace NTMY.Infrastructure.Persistance.Users
         public Gender Gender { get; set; }
         public bool IsConfirmed { get; set; }
         public UserStatus Status { get; set; }
+        public Gender WantedGender { get; set; }
+        public string Description { get; set; }
+        public double CoordinateLongitude { get; set; }
+        public double CoordinateLatitude { get; set; }
+        public DateTime? LastLoginDate { get; set; }
+        public string AddressStreet { get; set; }
+        public string AddressCity { get; set; }
+        public string AddressPostCode { get; set; }
+        public string AddressCountry { get; set; }
+        public virtual List<UserLikeEntity> Likes { get; set; }
     }
 }

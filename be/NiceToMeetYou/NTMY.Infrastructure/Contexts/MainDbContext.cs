@@ -7,6 +7,7 @@ namespace NTMY.Infrastructure.Contexts
     public class MainDbContext : DbContext
     {
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserLikeEntity> UserLikes { get; set; }
 
         protected MainDbContext()
         {
@@ -19,6 +20,7 @@ namespace NTMY.Infrastructure.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserLikeEntityConfiguration());
         }
     }
 }

@@ -9,6 +9,14 @@ namespace NTMY.Domain.Users
         public string PostCode { get; private set; }
         public string Country { get; private set; }
 
+        public Address(string street, string city, string postCode, string country)
+        {
+            Street = street;
+            City = city;
+            PostCode = postCode;
+            Country = country;
+        }
+
         public bool Equals(Address other)
         {
             return Street == other.Street && City == other.City && PostCode == other.PostCode && Country == other.Country;
