@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
+import { Border } from '../../styledHelpers/Border';
 import { Colors } from '../../styledHelpers/Colors';
 import { FontSize } from '../../styledHelpers/FontSize';
 import { Gradient } from '../../styledHelpers/Gradient';
@@ -9,6 +10,8 @@ interface ButtonProps {
     variant: string;
     size: string;
     text: string;
+    type: string;
+    onClick?: () => void;
 }
 
 const GenericButton = styled.button<{variant: string; size: string; text: string}>`
@@ -54,6 +57,7 @@ const GenericButton = styled.button<{variant: string; size: string; text: string
     /* PRIMARY */
     ${props => props.variant === "primary" && css`
         color: ${Colors.red};
+        border: ${Border.red};
         background-color: ${Colors.white};
         border-radius: 0.6rem;
         background-image: none;
@@ -100,7 +104,7 @@ const GenericButton = styled.button<{variant: string; size: string; text: string
 
 const Button:FC<ButtonProps> = (props) =>{
     return (
-        <GenericButton variant={props.variant} size={props.size} text={props.text}>{props.text}</GenericButton>
+        <GenericButton variant={props.variant} size={props.size} text={props.text} onClick={props.onClick} >{props.text}</GenericButton>
     )
 }
 export default Button;
