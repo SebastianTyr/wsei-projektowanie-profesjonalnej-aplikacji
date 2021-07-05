@@ -178,13 +178,15 @@ const RegistrationForm = () => {
                             <label htmlFor='gender'>Płeć</label>
                             <div>
                                 <Field
-                                    id='gender'
+                                    id='start'
+                                    aria-labelledby='gender'
                                     type='radio'
                                     name='gender'
                                     value='female'
                                 /> Kobieta
                                 <Field
-                                    id='gender'
+                                    id='end'
+                                    aria-labelledby='gender'
                                     type='radio'
                                     name='gender'
                                     value='male'
