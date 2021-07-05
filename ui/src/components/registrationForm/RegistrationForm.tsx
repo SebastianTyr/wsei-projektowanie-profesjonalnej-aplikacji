@@ -108,6 +108,7 @@ const RegistrationForm = () => {
         birthDate: Yup.date().required("Proszę podać datę urodzenia")
     })
 
+    // --------testowy komentarz ----- 
 
     return (
         <Wrapper>
