@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../styledHelpers/Colors';
-import { CreateAccountButton } from '../components/common';
-import RegistrationForm from '../components/registrationForm/RegistrationForm';
+import { Colors } from '../../../styledHelpers/Colors';
+import { CreateAccountButton } from '../../registrationForm/common';
+import RegistrationForm from '../../registrationForm/RegistrationForm';
 
 const Wrapper = styled.div`
     background-color: rgba(0,0,0,.4);

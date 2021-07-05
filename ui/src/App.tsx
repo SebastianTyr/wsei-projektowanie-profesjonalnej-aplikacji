@@ -2,8 +2,8 @@ import React from 'react';
 
 import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
-import LandingPage from './pages/landingPage/LandingPage';
-import MainPage from './pages//mainPage/MainPage';
+import LandingPage from './components/pages/landingPage/LandingPage';
+import MainPage from './components/pages/mainPage/MainPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
