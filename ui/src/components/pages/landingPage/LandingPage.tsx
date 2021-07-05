@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../../../styledHelpers/Colors';
-import { CreateAccountButton } from '../../registrationForm/common';
+import Button from '../../common/Button';
 import RegistrationForm from '../../registrationForm/RegistrationForm';
 
 const Wrapper = styled.div`
@@ -60,14 +60,6 @@ const Main = styled.main`
 const ButtonContainer = styled.div`
 
 `
-const LogButton = styled.button`
-    text-transform: uppercase;
-    background: ${Colors.white};
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-`
 
 const Section = styled.section`
     background: ${Colors.white};
@@ -101,18 +93,15 @@ const LandingPage: FC = () => {
                         <Logo />
                     </LogoContainer>
                     <ButtonContainer>
-                        <LogButton>Log in</LogButton>
+                        <Button type="text" variant="primary" size="lg" text="Log in"> </Button>
                     </ButtonContainer>
                 </Header>
                 <Main>
-                    {isCreating &&
+                    {isCreating ? (
                         <RegistrationForm />
-                    }
-                    {!isCreating &&
-                        <CreateAccountButton onClick={createButtonHandler}>
-                            Create Account
-                        </CreateAccountButton>
-                    }
+                    ) : (
+                        <Button type="text" variant="secondary" size="xl" text="Create Account" onClick={createButtonHandler}/>
+                    )}
                 </Main>
             </Wrapper>
             <Section>

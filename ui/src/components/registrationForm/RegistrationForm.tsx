@@ -1,15 +1,8 @@
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-
-
 import { Colors } from "../../styledHelpers/Colors";
-import { CreateAccountButton } from './common';
-
-
-
-
-
+import Button from "../common/Button";
 
 const Wrapper = styled.div`
     width: 600px;
@@ -67,11 +60,6 @@ const ItemsBox = styled.div`
 
 `;
 
-const CreateButton = styled(CreateAccountButton)`
-    background-color: ${Colors.redMain};
-    color: ${Colors.white};
-
-`;
 
 const ErrorBox = styled.div`
     font-size: 14px;
@@ -225,7 +213,7 @@ const RegistrationForm = () => {
                         </FormItem>
                     </ItemsBox>
                     <FormItem style={{ border: "none" }}>
-                        <CreateButton type='submit'>Zarejestruj się</CreateButton>
+                        <Button type='submit' variant="primary" size="lg" text="Zarejestruj się"/>
                     </FormItem>
                 </CostumForm>
             </Formik>
