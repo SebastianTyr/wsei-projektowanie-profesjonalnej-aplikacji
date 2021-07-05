@@ -4,6 +4,6 @@
     {
         Male = 10,
         Female = 20,
-        Unknown = 30
+        Other = 30
     }
 }

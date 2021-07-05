@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using GeoCoordinatePortable;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NTMY.Application.Interfaces.Users.Commands;
@@ -35,8 +37,6 @@ namespace NTMY.Web.Controllers
                 viewModel.SecondName,
                 viewModel.Email,
                 viewModel.Gender,
-                new Weight(viewModel.Weight.Value, viewModel.Weight.Unit),
-                new Height(viewModel.Height.Value, viewModel.Height.Unit),
                 viewModel.BirthDate,
                 viewModel.Password,
                 viewModel.ConfirmPassword);
@@ -63,5 +63,42 @@ namespace NTMY.Web.Controllers
 
             return Ok();
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("AddLike")]
+        public async Task<IActionResult> AddLike([FromBody] AddUserLikeViewModel viewModel)
+        {
+            var command = new AddUserLikeCommand(new AggregateId(viewModel.LikedUserId));
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("RemoveLike")]
+        public async Task<IActionResult> AddLike([FromBody] RemoveUserLikeViewModel viewModel)
+        {
+            var command = new RemoveUserLikeCommand(viewModel.LikedNo);
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut("SetAdditionalInformation")]
+        public async Task<IActionResult> SetAdditionalInformation([FromBody] SetUserAdditionalInformationViewModel viewModel) 
+        {
+            var command = new SetUserAdditionalInformationCommand(
+                new Height(viewModel.Height.Value, viewModel.Height.Unit),
+                new Weight(viewModel.Weight.Value, viewModel.Weight.Unit),
+                new Address(viewModel.Address.Street, viewModel.Address.City, viewModel.Address.PostCode, viewModel.Address.Country), 
+                viewModel.Description,
+                (Gender)viewModel.WantedGender,
+                new GeoCoordinate(viewModel.Coordinate.Latitude, viewModel.Coordinate.Longitude));
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+
+            return Ok();
+        }
+
     }
 }

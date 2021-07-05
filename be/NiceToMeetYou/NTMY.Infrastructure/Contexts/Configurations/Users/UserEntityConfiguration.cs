@@ -19,6 +19,7 @@ namespace NTMY.Infrastructure.Contexts.Configurations.Users
             builder.Property(x => x.UserName).HasMaxLength(255);
             builder.Property(x => x.FirstName).HasMaxLength(255);
             builder.Property(x => x.SecondName).HasMaxLength(255);
+            builder.HasMany<UserLikeEntity>().WithOne().HasForeignKey(x => x.Id);
         }
     }
 }

@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using GeoCoordinatePortable;
 using NTMY.Domain.Users.DataStructures;
 using NTMY.Domain.Users.Factories;
 using NTMY.Domain.Users.Policies;
 using NTMY.Domain.Users.Resources;
 using NTMY.SharedKernel;
+using PlaygroundShared;
 using PlaygroundShared.Domain;
 using PlaygroundShared.DomainEvents;
+using PlaygroundShared.Infrastructure;
 
 namespace NTMY.Domain.Users
 {
@@ -24,17 +29,46 @@ namespace NTMY.Domain.Users
         public Weight Weight { get; private set; }
         public Height Height { get; private set; }
         public Gender Gender { get; private set; }
+        public Gender WantedGender { get; private set; } = Gender.Other;
         public bool IsConfirmed { get; private set; }
         public UserStatus Status { get; private set; }
+        public string Description { get; private set; }
+        public GeoCoordinate Coordinate { get; private set; }
+        public DateTime? LastLoginDate { get; private set; }
+        public Address Address { get; private set; }
+
+        private List<Wedding> _incomingWeddings = new List<Wedding>();
+        public IEnumerable<Wedding> IncomingWeddings
+        {
+            get => _incomingWeddings;
+            private set => _incomingWeddings = value.ToList();
+        }
+
+        private List<UserLike> _likes = new List<UserLike>();
+        public IEnumerable<UserLike> Likes
+        {
+            get => _likes;
+            private set => _likes = value.ToList();
+        }
+
+        private List<UserRating> _ratings = new List<UserRating>();
+        private ICorrelationContext _correlationContext;
+
+        public IEnumerable<UserRating> Ratings
+        {
+            get => _ratings;
+            private set => _ratings = value.ToList();
+        }
 
         public User(
             UserDataStructure userDataStructure,
             IDomainEventsManager domainEventsManager,
             IPasswordHashingPolicyFactory passwordHashingPolicyFactory,
             IPasswordPolicyFactory passwordPolicyFactory,
-            IUserDomainEventFactory userDomainEventFactory) : base(userDataStructure.Id, domainEventsManager)
+            IUserDomainEventFactory userDomainEventFactory,
+            ICorrelationContext correlationContext) : base(userDataStructure.Id, domainEventsManager)
         {
-            SetDependencies(domainEventsManager, passwordHashingPolicyFactory, passwordPolicyFactory, userDomainEventFactory);
+            SetDependencies(domainEventsManager, passwordHashingPolicyFactory, passwordPolicyFactory, userDomainEventFactory, correlationContext);
             AssignFromDataStructure(userDataStructure);
             SetUserCreated();
 
@@ -46,16 +80,30 @@ namespace NTMY.Domain.Users
             
         }
 
-        public void SetDependencies(
-            IDomainEventsManager domainEventsManager,
+        public void SetDependencies(IDomainEventsManager domainEventsManager,
             IPasswordHashingPolicyFactory passwordHashingPolicyFactory,
             IPasswordPolicyFactory passwordPolicyFactory,
-            IUserDomainEventFactory userDomainEventFactory)
+            IUserDomainEventFactory userDomainEventFactory,
+            ICorrelationContext correlationContext)
         {
             base.SetDependencies(domainEventsManager);
             _passwordHashingPolicyFactory = passwordHashingPolicyFactory ?? throw new ArgumentNullException(nameof(passwordHashingPolicyFactory));
             _passwordPolicyFactory = passwordPolicyFactory ?? throw new ArgumentNullException(nameof(passwordPolicyFactory));
             _userDomainEventFactory = userDomainEventFactory ?? throw new ArgumentNullException(nameof(userDomainEventFactory));
+            _correlationContext = correlationContext ?? throw new ArgumentNullException(nameof(correlationContext));
+
+            Weight = Weight.Empty();
+            Height = Height.Empty();
+        }
+
+        public void SetAdditionalInformation(Height height, Weight weight, Address address, string description, Gender wantedGender, GeoCoordinate coordinate)
+        {
+            Height = height;
+            Weight = weight;
+            Address = address;
+            Description = description;
+            WantedGender = wantedGender;
+            Coordinate = coordinate;
         }
 
         public void SetPassword(string password, string confirmPassword)
@@ -88,6 +136,8 @@ namespace NTMY.Domain.Users
             {
                 throw new BusinessLogicException(UserResources.IncorrectCredentialsMessage);
             }
+
+            LastLoginDate = DateTime.UtcNow;
         }
 
         public void ActivateUser()
@@ -127,6 +177,139 @@ namespace NTMY.Domain.Users
             IsConfirmed = true;
         }
 
+        #region Weddings
+
+        public void AddIncomingWedding(DateTime date, Address address)
+        {
+            var wedding = new Wedding(_incomingWeddings.GetNextNo(), date, Address);
+            _incomingWeddings.Add(wedding);
+        }
+
+        public void UpdateIncomingWedding(int no, DateTime date, Address address)
+        {
+            var incomingWedding = GetWeddingOrThrow(no);
+            incomingWedding.Update(date, address);
+        }
+
+        public void RemoveIncomingWedding(int no)
+        {
+            var incomingWedding = GetWeddingOrThrow(no);
+            incomingWedding.MarkAsArchived();
+        }
+
+        private Wedding GetWeddingOrThrow(int no)
+        {
+            var wedding = _incomingWeddings.SingleOrDefault(x => x.No == no);
+            if (wedding == null)
+            {
+                throw new BusinessLogicException(UserResources.WeddingNotFoundMessage);
+            }
+
+            return wedding;
+        }
+
+        #endregion
+
+        #region Likes
+
+        public void AddLike(AggregateId userId)
+        {
+            if (!Status.Equals(UserStatus.Active))
+            {
+                throw new BusinessLogicException(UserResources.UserShouldBeActiveMessage);
+            }
+
+            if (_likes.Any(x => x.LikedUserId == userId && !x.IsArchived))
+            {
+                throw new BusinessLogicException(UserResources.UserAlreadyLikedMessage);
+            }
+
+            var like = new UserLike(_likes.GetNextNo(), userId);
+            _likes.Add(like);
+        }
+
+        public void RemoveLike(int no)
+        {
+            if (!Status.Equals(UserStatus.Active))
+            {
+                throw new BusinessLogicException(UserResources.UserShouldBeActiveMessage);
+            }
+
+            var like = GetLikeOrThrow(no);
+            like.MarkAsArchived();
+        }
+
+        private UserLike GetLikeOrThrow(int no)
+        {
+            var like = _likes.SingleOrDefault(x => x.No == no && !x.IsArchived);
+            if (like == null)
+            {
+                throw new BusinessLogicException(UserResources.UserLikeNotFoundMessage);
+            }
+
+            return like;
+        }
+
+        #endregion
+
+        #region Ratings
+
+        public void AddRating(RateType type, decimal rate)
+        {
+            ValidateRate(type, rate);
+
+            var rating = new UserRating(_ratings.GetNextNo(), _correlationContext.CurrentUser.UserId.Value, rate, type);
+            _ratings.Add(rating);
+        }
+
+        public void UpdateRating(int no, decimal rate)
+        {
+            var rating = GetRatingOrThrow(no);
+            if (rating.RatedBy != _correlationContext.CurrentUser.UserId.Value)
+            {
+                throw new BusinessLogicException(UserResources.RatingNotFoundMessage);
+            }
+
+            rating.Update(rate);
+        }
+
+        public void RemoveRating(int no)
+        {
+            var rating = GetRatingOrThrow(no);
+            if (rating.RatedBy != _correlationContext.CurrentUser.UserId.Value)
+            {
+                throw new BusinessLogicException(UserResources.RatingNotFoundMessage);
+            }
+
+            rating.MarkAsArchived();
+        }
+
+        private UserRating GetRatingOrThrow(int no)
+        {
+            var rating = _ratings.SingleOrDefault(x => x.No == no);
+            if (rating == null)
+            {
+                throw new BusinessLogicException(UserResources.RatingNotFoundMessage);
+            }
+
+            return rating;
+        }
+
+        private void ValidateRate(RateType type, in decimal rate)
+        {
+            if (!_likes.Any(x => x.LikedUserId == _correlationContext.CurrentUser.UserId.Value && !x.IsArchived))
+            {
+                throw new BusinessLogicException(UserResources.LikeNeededToRateUserMessage);
+            }
+
+            if (_ratings.Any(x => !x.IsArchived && x.RatedBy == _correlationContext.CurrentUser.UserId.Value && x.Type == type))
+            {
+                throw new BusinessLogicException(UserResources.RateAlreadyAddedMessage);
+            }
+        }
+
+        #endregion
+
         private void AssignFromDataStructure(UserDataStructure userDataStructure)
         {
             SetUserName(userDataStructure.UserName);
@@ -134,8 +317,6 @@ namespace NTMY.Domain.Users
             SetSecondName(userDataStructure.SecondName);
             SetEmail(userDataStructure.Email);
             BirthDate = userDataStructure.BirthDate;
-            Weight = userDataStructure.Weight;
-            Height = userDataStructure.Height;
             Gender = userDataStructure.Gender;
         }
 

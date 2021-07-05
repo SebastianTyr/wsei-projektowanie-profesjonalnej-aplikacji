@@ -35,9 +35,7 @@ namespace NTMY.Web.Extensions
                 "admin",
                 "admin",
                 "admin@admin.com",
-                Gender.Unknown,
-                Weight.Empty(),
-                Height.Empty(),
+                Gender.Other,
                 DateTime.Now,
                 "zaq1@WSX",
                 "zaq1@WSX");

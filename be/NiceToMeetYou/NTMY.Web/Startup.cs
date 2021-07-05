@@ -32,6 +32,7 @@ using PlaygroundShared.Infrastructure;
 using PlaygroundShared.Infrastructure.Repositories;
 using PlaygroundShared.IoC;
 using PlaygroundShared.Messages;
+using PlaygroundShared.Middlewares;
 
 namespace NTMY.Web
 {
@@ -72,6 +73,26 @@ namespace NTMY.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NTMY.Web", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
         }
         public void ConfigureContainer(ContainerBuilder builder)
@@ -132,7 +153,7 @@ namespace NTMY.Web
 
             //builder.RegisterRabbitMq("rawrabbit.json");
             builder.RegisterType<FakeMessagePublisher>().As<IMessagePublisher>().InstancePerLifetimeScope();
-            builder.Register(ctx => new CorrelationContext()).As<ICorrelationContext>();
+            builder.Register(ctx => new CorrelationContext()).As<ICorrelationContext>().InstancePerLifetimeScope();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -157,6 +178,9 @@ namespace NTMY.Web
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseCorrelationContextMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
