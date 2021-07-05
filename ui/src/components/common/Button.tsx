@@ -104,7 +104,7 @@ const GenericButton = styled.button<{variant: string; size: string; text: string
 
 const Button:FC<ButtonProps> = (props) =>{
     return (
-        <GenericButton variant={props.variant} size={props.size} text={props.text}>{props.text}</GenericButton>
+        <GenericButton variant={props.variant} size={props.size} text={props.text} onClick={props.onClick} >{props.text}</GenericButton>
     )
 }
 export default Button;
