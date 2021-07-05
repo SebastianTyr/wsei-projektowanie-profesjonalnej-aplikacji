@@ -30,6 +30,7 @@ const Reset = createGlobalStyle`
   button {
     border: none;
     cursor: pointer;
+    background: transparent;
     &:focus {
       outline: none;
     }
@@ -57,7 +58,7 @@ function App() {
         <GlobalStyle />
         <Scrollbar />
         {/* <LandingPage /> */}
-        <MainPage></MainPage>
+        <MainPage/>
     </>
   );
 }
