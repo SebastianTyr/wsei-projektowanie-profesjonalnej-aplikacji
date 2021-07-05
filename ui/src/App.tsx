@@ -56,8 +56,8 @@ function App() {
       <Reset />
       <GlobalStyle />
       <Scrollbar />
-      <LandingPage />
-      {/* <MainPage></MainPage> */}
+      {/* <LandingPage /> */}
+      <MainPage></MainPage>
     </>
   );
 }
