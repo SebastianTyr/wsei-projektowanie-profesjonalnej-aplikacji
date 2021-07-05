@@ -8,6 +8,9 @@ const Wrapper = styled.div`
     flex: 6;
     display: flex;
     flex-direction: column;
+    border: 1px solid red;
+    width: 1200px;
+    margin: 0 auto;
 `;
 
 
@@ -44,6 +47,7 @@ const CardWrapper = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-space-around;
 `;
 
 
