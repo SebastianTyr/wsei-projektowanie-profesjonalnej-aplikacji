@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+
+import DetailsForm from '../../profileForms/DetialsForm';
 import { FontSize } from '../../../styledHelpers/FontSize';
+import Button from '../../common/Button';
 
 
 const EditButtonBox = styled.span`
@@ -13,12 +17,25 @@ const EditButtonBox = styled.span`
 
 const ProfilePage = () => {
 
-    return(
+    const [isEditDetails, setIsEditDeatils] = useState<boolean>(false);
+
+    const editDetailsHandler = () => {
+        setIsEditDeatils(isEditDetails => !isEditDetails);
+    }
+
+    return (
         <>
-        Strona profilu - widok bez formularza
-        <EditButtonBox>
-            <button>Edit</button>
-        </EditButtonBox>
+            {isEditDetails ? (
+                <DetailsForm />
+            ) : (
+                <div>
+                    Strona profilu - widok bez formularzy
+                    <EditButtonBox>
+                        <Button variant="primary" type="text" size="md" text="Edytuj szczegóły" onClick={editDetailsHandler}></Button>
+                    </EditButtonBox>
+                </div>
+
+            )}
         </>
 
     );
