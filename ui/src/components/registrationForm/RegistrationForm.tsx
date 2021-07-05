@@ -213,7 +213,7 @@ const RegistrationForm = () => {
                         </FormItem>
                     </ItemsBox>
                     <FormItem style={{ border: "none" }}>
-                        <Button type='submit' variant="primary" size="lg" text="Zarejestruj się"/>
+                        <Button type='submit' variant="secondary" size="lg" text="Zarejestruj się"/>
                     </FormItem>
                 </CostumForm>
             </Formik>
