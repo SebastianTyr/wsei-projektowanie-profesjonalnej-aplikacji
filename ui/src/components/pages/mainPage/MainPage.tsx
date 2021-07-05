@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
 import LeftBar from './leftBar/LeftBar';
@@ -31,7 +31,6 @@ const MainPage: FC = () => {
                         <MainContent />
                     </Route>
                 </Switch>
-
             </Wrapper>
         </Router>
     );
