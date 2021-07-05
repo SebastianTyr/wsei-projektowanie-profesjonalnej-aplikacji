@@ -1,5 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import { Margin } from '../../../styledHelpers/Margin';
@@ -22,7 +25,7 @@ const RightButtonsBox = styled.div`
     display: flex;
 `;
 
-const SingleElementBox =styled.span`
+const SingleElementBox = styled.span`
     border: 1px solid ${Colors.redMain};
     display: block;
     margin-left: ${Margin[16]};
@@ -33,11 +36,15 @@ const SingleElementBox =styled.span`
 const TopBar: FC = () => {
     return (
         <Wrapper>
-            <LogoBox>Logo</LogoBox>
+            <Link to="/" >
+                <LogoBox>Logo</LogoBox>
+            </Link>
             <RightButtonsBox>
                 <SingleElementBox>Wiadomości</SingleElementBox>
                 <SingleElementBox>Nazwa Użtykownika</SingleElementBox>
-                <SingleElementBox>Zobacz profil</SingleElementBox>
+                <Link to="/profile" >
+                    <SingleElementBox>Zobacz profil</SingleElementBox>
+                </Link>
             </RightButtonsBox>
         </Wrapper>
     );

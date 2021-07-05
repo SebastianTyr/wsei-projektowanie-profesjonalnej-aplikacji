@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
@@ -53,11 +53,11 @@ const Scrollbar = createGlobalStyle`
 function App() {
   return (
     <>
-      <Reset />
-      <GlobalStyle />
-      <Scrollbar />
-      {/* <LandingPage /> */}
-      <MainPage></MainPage>
+        <Reset />
+        <GlobalStyle />
+        <Scrollbar />
+        {/* <LandingPage /> */}
+        <MainPage></MainPage>
     </>
   );
 }

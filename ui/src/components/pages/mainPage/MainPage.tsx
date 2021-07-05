@@ -1,9 +1,13 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
+
 import LeftBar from './leftBar/LeftBar';
 import MainContent from './MainContent';
-
 import TopBar from './TopBar';
+import ProfilePage from '../profilePage/ProfilePage';
+
 
 
 const Wrapper = styled.div`
@@ -13,22 +17,23 @@ const Wrapper = styled.div`
     flex-direction: column;
 
 `;
-const ContentWrapper = styled.div`
-    width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-`;
 
 const MainPage: FC = () => {
     return (
-        <Wrapper>
-            <TopBar/>
-            <ContentWrapper>
-                <LeftBar/>
-                <MainContent/>
-            </ContentWrapper>
-        </Wrapper>
+        <Router>
+            <Wrapper>
+                <TopBar />
+                <Switch>
+                    <Route path="/profile" exact>
+                        < ProfilePage />
+                    </Route>
+                    <Route path="/" exact>
+                        <MainContent />
+                    </Route>
+                </Switch>
+
+            </Wrapper>
+        </Router>
     );
 }
 
