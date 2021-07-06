@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 `;
 
 const HeaderWrapper = styled.h2`
-    border: 1px solid green;
     width: auto;
     text-align: center;
   
@@ -77,7 +76,7 @@ const ErrorBox = styled.div`
     color: ${Colors.redError};
 `;
 
-interface IDetailsData {
+interface IDetailsDataFromDB {
     height: {
         value: number,
         unit: string
@@ -100,30 +99,65 @@ interface IDetailsData {
     }
 };
 
+interface IDetailsDataFromForm {
+    heightValue: number,
+    weightValue: number,
+    addresStreet: string,
+    addresCity: string,
+    addresPostCode: string,
+    addresCountry: string,
+    description: string,
+    wantedGender: number
+};
+
+
+
 const DetailsForm = () => {
 
-    const initialValues: IDetailsData = {
-        height: {
-            value: 0,
-            unit: 'cm'
-        },
-        weight: {
-            value: 0,
-            unit: 'kg'
-        },
-        address: {
-            street: '',
-            city: '',
-            postCode: '',
-            country: ''
-        },
+    // const initialValues: IDetailsDataFromDB = {
+    //     height: {
+    //         value: 0,
+    //         unit: 'cm'
+    //     },
+    //     weight: {
+    //         value: 0,
+    //         unit: 'kg'
+    //     },
+    //     address: {
+    //         street: '',
+    //         city: '',
+    //         postCode: '',
+    //         country: ''
+    //     },
+    //     description: '',
+    //     wantedGender: 0,
+    //     coordinate: {
+    //         longitude: 0,
+    //         latitude: 0
+    //     }
+    // }
+
+    const initialValues: IDetailsDataFromForm = {
+        heightValue: 0,
+        weightValue: 0,
+        addresStreet: '',
+        addresCity: '',
+        addresPostCode: '',
+        addresCountry: '',
         description: '',
-        wantedGender: 0,
-        coordinate: {
-            longitude: 0,
-            latitude: 0
-        }
-    }
+        wantedGender: 0
+    };
+
+    const validationSchema = Yup.object({
+        heightValue: Yup.number().positive().required("Proszę podać wzrost"),
+        weightValue: Yup.number().positive().required("Proszę podać wagę"),
+        addresStreet: Yup.string().required("Prosze podać nazwę ulicy i numer"),
+        addresCity: Yup.string().required("Proszę podać miasto"),
+        addresPostCode: Yup.string().required("Proszę podać kod pocztowy"),
+        addresCountry: Yup.string().required("Proszę podać państwo"),
+        description: Yup.string().max(500, "Max 500 znaków").required("Prosze napisać o sobie"),
+        wantedGender: Yup.number().required("Proszę wskazać kogo poszukujesz")
+    })
 
     return (
         <Wrapper>
@@ -134,7 +168,6 @@ const DetailsForm = () => {
                 onSubmit={values => console.log(values)}
             >
                 <CustomForm>
-
                     <ItemsBox>
                         <FormItem>
                             <label htmlFor='height_value'>Wzrost ( cm ):</label>
@@ -143,6 +176,7 @@ const DetailsForm = () => {
                                 type='text'
                                 name='heightValue'
                             />
+                            <ErrorMessage name='heightValue' render={error => <ErrorBox> {error}</ErrorBox>} />
                         </FormItem>
                         <FormItem>
                             <label htmlFor='weight_value'>Waga ( kg ):</label>
@@ -151,6 +185,7 @@ const DetailsForm = () => {
                                 type='text'
                                 name='weightValue'
                             />
+                            <ErrorMessage name='weightValue' render={error => <ErrorBox> {error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
                     <TitleWrapper>Powiedz nam, gdzie mieszkasz, a my powiem, kto mieszka w Twojej okolicy</TitleWrapper>
@@ -160,16 +195,18 @@ const DetailsForm = () => {
                             <Field
                                 id='street'
                                 type='text'
-                                name='addres.street'
+                                name='addresStreet'
                             />
+                            <ErrorMessage name='addresStreet' render={error => <ErrorBox> {error}</ErrorBox>} />
                         </FormItem>
                         <FormItem>
                             <label htmlFor='city'>Miasto:</label>
                             <Field
                                 id='city'
                                 type='text'
-                                name='city'
+                                name='addresCity'
                             />
+                            <ErrorMessage name='addresCity' render={error => <ErrorBox> {error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
                     <ItemsBox>
@@ -178,16 +215,18 @@ const DetailsForm = () => {
                             <Field
                                 id='postCode'
                                 type='text'
-                                name='postCode'
+                                name='addresPostCode'
                             />
+                            <ErrorMessage name='addresPostCode' render={error => <ErrorBox> {error}</ErrorBox>} />
                         </FormItem>
                         <FormItem>
                             <label htmlFor='country'>Kraj:</label>
                             <Field
                                 id='country'
                                 type='text'
-                                name='country'
+                                name='addresCountry'
                             />
+                            <ErrorMessage name='addresCountry' render={error => <ErrorBox> {error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
                     <FormItem>
@@ -197,6 +236,7 @@ const DetailsForm = () => {
                             type='text'
                             name='description'
                         />
+                        <ErrorMessage name='description' render={error => <ErrorBox> {error}</ErrorBox>} />
                     </FormItem>
                     <FormItem>
                         <label htmlFor='wantedGender'>Kogo poszukujesz:</label>
@@ -216,6 +256,7 @@ const DetailsForm = () => {
                                 value='1'
                             /> Mężczyzny
                         </div>
+                        <ErrorMessage name='wantedGender' render={error => <ErrorBox> {error}</ErrorBox>} />
                     </FormItem>
                     <ButtonWrapper>
                         <Button type='submit' variant="secondary" size="lg" text="Dodaj  informacje" />
