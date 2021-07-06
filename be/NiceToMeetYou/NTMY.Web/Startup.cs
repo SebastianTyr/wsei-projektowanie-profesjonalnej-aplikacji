@@ -157,7 +157,7 @@ namespace NTMY.Web
 
             //builder.RegisterRabbitMq("rawrabbit.json");
             builder.RegisterType<EventsService>().As<IEventsService>();
-            builder.RegisterType<DomainEventMessagePublisher>().As<IMessagePublisher>().InstancePerLifetimeScope();
+            builder.RegisterType<FakeMessagePublisher>().As<IMessagePublisher>().InstancePerLifetimeScope();
             builder.Register(ctx => new CorrelationContext()).As<ICorrelationContext>().InstancePerLifetimeScope();
         }
 
