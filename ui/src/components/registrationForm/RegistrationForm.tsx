@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
+
 import { Colors } from "../../styledHelpers/Colors";
 import Button from "../common/Button";
 
@@ -18,7 +19,7 @@ const HeaderWrapper = styled.div`
 
 `;
 
-const CostumForm = styled(Form)`
+const CustomForm = styled(Form)`
     display: flex;
     flex-direction: column;
 `;
@@ -53,6 +54,10 @@ const FormItem = styled.div`
         justify-content: space-between;
 
     }
+`;
+
+const ButtonWrapper = styled(FormItem)`
+    border: none;
 `;
 
 const ItemsBox = styled.div`
@@ -122,7 +127,7 @@ const RegistrationForm = () => {
                 onSubmit={values => console.log(values)}
             >
 
-                <CostumForm>
+                <CustomForm>
                     <FormItem>
                         <label htmlFor='userName'>Nazwa Użytkownika</label>
                         <Field
@@ -212,10 +217,10 @@ const RegistrationForm = () => {
                             <ErrorMessage name="confirmPassword" render={error => <ErrorBox>{error}</ErrorBox>} />
                         </FormItem>
                     </ItemsBox>
-                    <FormItem style={{ border: "none" }}>
+                    <ButtonWrapper>
                         <Button type='submit' variant="secondary" size="lg" text="Zarejestruj się"/>
-                    </FormItem>
-                </CostumForm>
+                    </ButtonWrapper>
+                </CustomForm>
             </Formik>
         </Wrapper>
     );
