@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NTMY.Infrastructure.Contexts.Configurations.Pairs;
 using NTMY.Infrastructure.Contexts.Configurations.Users;
+using NTMY.Infrastructure.Persistance.Pairs;
 using NTMY.Infrastructure.Persistance.Users;
 
 namespace NTMY.Infrastructure.Contexts
@@ -8,6 +10,8 @@ namespace NTMY.Infrastructure.Contexts
     {
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserLikeEntity> UserLikes { get; set; }
+        public DbSet<PairEntity> Pairs { get; set; }
+        public DbSet<PairMessageEntity> PairMessages { get; set; }
 
         protected MainDbContext()
         {
@@ -21,6 +25,8 @@ namespace NTMY.Infrastructure.Contexts
         {
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserLikeEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PairEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PairMessageEntityConfiguration());
         }
     }
 }

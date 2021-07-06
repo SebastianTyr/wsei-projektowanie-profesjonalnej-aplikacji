@@ -6,5 +6,7 @@ namespace NTMY.Domain.Users.Factories
     {
         UserCreatedEvent PrepareUserCreatedEvent(User user);
         UserStatusChangedEvent PrepareUserStatusChangedEvent(User user, UserStatus oldStatus);
+        UserLikeAddedEvent PrepareUserLikeAddedEvent(User user, UserLike userLike);
+        UserLikeRemovedEvent PrepareUserLikeRemovedEvent(User user, UserLike userLike);
     }
 }
