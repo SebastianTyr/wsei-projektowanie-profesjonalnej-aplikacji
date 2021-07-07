@@ -226,6 +226,8 @@ namespace NTMY.Domain.Users
 
             var like = new UserLike(_likes.GetNextNo(), userId);
             _likes.Add(like);
+
+            DomainEvent(_userDomainEventFactory.PrepareUserLikeAddedEvent(this, like));
         }
 
         public void RemoveLike(int no)
@@ -237,6 +239,8 @@ namespace NTMY.Domain.Users
 
             var like = GetLikeOrThrow(no);
             like.MarkAsArchived();
+
+            DomainEvent(_userDomainEventFactory.PrepareUserLikeRemovedEvent(this, like));
         }
 
         private UserLike GetLikeOrThrow(int no)

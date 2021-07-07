@@ -13,8 +13,11 @@ using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NTMY.Application;
+using NTMY.Application.Notifications.Hubs;
 using NTMY.Application.Users;
 using NTMY.Application.Users.Handlers;
+using NTMY.Domain;
 using NTMY.Domain.Users;
 using NTMY.Domain.Users.Factories;
 using NTMY.Domain.Users.Repositories;
@@ -49,6 +52,7 @@ namespace NTMY.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSignalR();
 
             services.AddAuthentication(options => {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -120,7 +124,7 @@ namespace NTMY.Web
 
             builder.RegisterAssemblyTypes(typeof(UserEfRepository).Assembly).AsClosedTypesOf(typeof(IGenericRepository<>));
             builder.RegisterAssemblyTypes(typeof(UserEfRepository).Assembly).AsClosedTypesOf(typeof(IGenericEventRepository<>));
-            builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly).Where(x => x.IsAssignableTo<IRepository>()).AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(typeof(UserService).Assembly).Where(x => x.IsAssignableTo<IService>()).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(RegisterUserCommandHandler).Assembly)
@@ -152,6 +156,7 @@ namespace NTMY.Web
             }).As<IMapper>().InstancePerLifetimeScope();
 
             //builder.RegisterRabbitMq("rawrabbit.json");
+            builder.RegisterType<EventsService>().As<IEventsService>();
             builder.RegisterType<FakeMessagePublisher>().As<IMessagePublisher>().InstancePerLifetimeScope();
             builder.Register(ctx => new CorrelationContext()).As<ICorrelationContext>().InstancePerLifetimeScope();
         }
@@ -170,9 +175,10 @@ namespace NTMY.Web
 
             app.UseCors(ctx =>
             {
+                ctx.WithOrigins(Configuration["FrontendUrl"]);
+                ctx.AllowCredentials();
                 ctx.AllowAnyHeader();
                 ctx.AllowAnyMethod();
-                ctx.AllowAnyOrigin();
             });
 
             app.UseRouting();
@@ -180,11 +186,13 @@ namespace NTMY.Web
             app.UseAuthorization();
             app.UseAuthentication();
 
+            app.UseEventsPublisherMiddleware();
             app.UseCorrelationContextMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PairMessagesHub>("/pairMessages");
             });
 
             app.SeedDatabase();
