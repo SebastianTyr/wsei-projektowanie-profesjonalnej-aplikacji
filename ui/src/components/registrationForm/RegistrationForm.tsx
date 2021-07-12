@@ -61,8 +61,8 @@ interface IRegistrationData {
     email: string,
     password: string,
     confirmPassword: string,
-    weight: null,
-    height: null,
+    // weight: null,
+    // height: null,
     gender: string,
     birthDate: Date,
 }
@@ -77,8 +77,8 @@ const RegistrationForm = () => {
         email: '',
         password: '',
         confirmPassword: '',
-        weight: null,
-        height: null,
+        // weight: null,
+        // height: null,
         gender: '',
         birthDate: new Date()
     }
@@ -104,64 +104,89 @@ const RegistrationForm = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={values => {
+                    console.log(values)
+                    let userGender = (values.gender === 'female') ? 20 : 10;
+                    
+                    const newUser = {
+                        userName: values.userName,
+                        firstName: values.firstName,
+                        secondName: values.lastName,
+                        email: values.email,
+                        password: values.password,
+                        confirmPassword: values.confirmPassword,
+                        gender: userGender,
+                        birthDate: values.birthDate
+                        };
+                    
+                    console.log(newUser)
+                    fetch('https://localhost:5001/Users', {
+                        method: 'POST',
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(newUser)
+                    }).then(() => {
+                        console.log('new user data sent')
+                    });
+
+                    }
+                }
             >
-                <CustomForm>
-                    <FormItem>
-                        <Label htmlFor='userName' labelName="Nazwa Użytkownika" className="registration-form__label"/>
-                        <Input  id='userName' type='text' name='userName' className="registration-form__input"/>
-                        <ErrorMessage name='userName' render={error => <ErrorBox>{error}</ErrorBox>} />
+            <CustomForm>
+                <FormItem>
+                    <Label htmlFor='userName' labelName="Nazwa Użytkownika" className="registration-form__label" />
+                    <Input id='userName' type='text' name='userName' className="registration-form__input" />
+                    <ErrorMessage name='userName' render={error => <ErrorBox>{error}</ErrorBox>} />
+                </FormItem>
+                <ItemsBox>
+                    <FormItem style={{ marginRight: "20px" }}>
+                        <Label htmlFor='firstName' labelName="Imię" className="registration-form__label" />
+                        <Input id='firstName' type='text' name='firstName' className="registration-form__input" />
+                        <ErrorMessage name="firstName" render={error => <ErrorBox>{error}</ErrorBox>} />
                     </FormItem>
-                    <ItemsBox>
-                        <FormItem style={{ marginRight: "20px" }}>
-                            <Label htmlFor='firstName' labelName="Imię" className="registration-form__label"/>
-                            <Input id='firstName' type='text' name='firstName' className="registration-form__input"/>
-                            <ErrorMessage name="firstName" render={error => <ErrorBox>{error}</ErrorBox>} />
-                        </FormItem>
-                        <FormItem>
-                            <Label htmlFor='lastName' labelName="Nazwisko" className="registration-form__label"/>
-                            <Input id="lastName" type='text' name='lastName' className="registration-form__input"/>
-                            <ErrorMessage name='lastName' render={error => <ErrorBox>{error}</ErrorBox>} />
-                        </FormItem>
-                    </ItemsBox>
                     <FormItem>
-                        <Label htmlFor='email' labelName="Email" className="registration-form__label"/>
-                        <Input id='email' type='email' name='email' className="registration-form__input"/>
-                        <ErrorMessage name="email" render={error => <ErrorBox>{error}</ErrorBox>} />
+                        <Label htmlFor='lastName' labelName="Nazwisko" className="registration-form__label" />
+                        <Input id="lastName" type='text' name='lastName' className="registration-form__input" />
+                        <ErrorMessage name='lastName' render={error => <ErrorBox>{error}</ErrorBox>} />
                     </FormItem>
-                    <ItemsBox>
-                        <FormItem style={{ marginRight: "20px" }}>
-                            <Label htmlFor='gender' labelName="Płeć" className="registration-form__label"/>
-                            <RadioGroup>
-                                <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female'/> Kobieta
-                                <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male'/> Mężczyzna
-                            </RadioGroup>
-                            <ErrorMessage name="gender" render={error => <ErrorBox>{error}</ErrorBox>} />
-                        </FormItem>
-                        <FormItem>
-                            <Label htmlFor='birthDate' labelName="Data urodzenia" className="registration-form__label"/>
-                            <Input id='birthDate' type='date' name='birthDate' className="registration-form__input"/>
-                            <ErrorMessage name="birthDate" render={error => <ErrorBox>{error}</ErrorBox>} />
-                        </FormItem>
-                    </ItemsBox>
-                    <ItemsBox>
-                        <FormItem style={{ marginRight: "20px" }}>
-                            <Label htmlFor='password' labelName="Hasło" className="registration-form__label"/>
-                            <Input id='password' type='password' name='password' className="registration-form__input"/>
-                            <ErrorMessage name="password" render={error => <ErrorBox>{error}</ErrorBox>} />
-                        </FormItem>
-                        <FormItem>
-                            <Label htmlFor='confirmPassword' labelName="Powtórz Hasło" className="registration-form__label"/>
-                            <Input id='confirmPassword' type='password' name='confirmPassword' className="registration-form__input"/>
-                            <ErrorMessage name="confirmPassword" render={error => <ErrorBox>{error}</ErrorBox>} />
-                        </FormItem>
-                    </ItemsBox>
-                    <ButtonWrapper>
-                        <Button type='submit' variant="secondary" size="lg" text="Zarejestruj się"/>
-                    </ButtonWrapper>
-                </CustomForm>
+                </ItemsBox>
+                <FormItem>
+                    <Label htmlFor='email' labelName="Email" className="registration-form__label" />
+                    <Input id='email' type='email' name='email' className="registration-form__input" />
+                    <ErrorMessage name="email" render={error => <ErrorBox>{error}</ErrorBox>} />
+                </FormItem>
+                <ItemsBox>
+                    <FormItem style={{ marginRight: "20px" }}>
+                        <Label htmlFor='gender' labelName="Płeć" className="registration-form__label" />
+                        <RadioGroup>
+                            <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female' /> Kobieta
+                            <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male' /> Mężczyzna
+                        </RadioGroup>
+                        <ErrorMessage name="gender" render={error => <ErrorBox>{error}</ErrorBox>} />
+                    </FormItem>
+                    <FormItem>
+                        <Label htmlFor='birthDate' labelName="Data urodzenia" className="registration-form__label" />
+                        <Input id='birthDate' type='date' name='birthDate' className="registration-form__input" />
+                        <ErrorMessage name="birthDate" render={error => <ErrorBox>{error}</ErrorBox>} />
+                    </FormItem>
+                </ItemsBox>
+                <ItemsBox>
+                    <FormItem style={{ marginRight: "20px" }}>
+                        <Label htmlFor='password' labelName="Hasło" className="registration-form__label" />
+                        <Input id='password' type='password' name='password' className="registration-form__input" />
+                        <ErrorMessage name="password" render={error => <ErrorBox>{error}</ErrorBox>} />
+                    </FormItem>
+                    <FormItem>
+                        <Label htmlFor='confirmPassword' labelName="Powtórz Hasło" className="registration-form__label" />
+                        <Input id='confirmPassword' type='password' name='confirmPassword' className="registration-form__input" />
+                        <ErrorMessage name="confirmPassword" render={error => <ErrorBox>{error}</ErrorBox>} />
+                    </FormItem>
+                </ItemsBox>
+                <ButtonWrapper>
+                    <Button type='submit' variant="secondary" size="lg" text="Zarejestruj się" />
+                </ButtonWrapper>
+            </CustomForm>
             </Formik>
-        </Wrapper>
+        </Wrapper >
     );
 };
 

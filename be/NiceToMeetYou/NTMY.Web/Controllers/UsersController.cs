@@ -42,7 +42,6 @@ namespace NTMY.Web.Controllers
                 viewModel.ConfirmPassword);
 
             await _commandQueryDispatcherDecorator.DispatchAsync(command);
-            await _commandQueryDispatcherDecorator.DispatchAsync(new ActivateUserCommand(command.Id));
 
             return Ok();
         }
