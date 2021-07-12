@@ -49,7 +49,7 @@ const DescriptionBox = styled.span`
 
 `;
 
-const ButtonBox = styled.button``;
+const ButtonBox = styled.button` `;
 
 
 interface ICardItem {
@@ -67,7 +67,7 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
             <TextWrapper>
                 <NameBox>{props.name}</NameBox>
                 <DescriptionBox>{props.description}</DescriptionBox>
-                <ButtonBox>Zobacz profil</ButtonBox>
+                <ButtonBox type="button">Zobacz profil</ButtonBox>
             </TextWrapper>
         </Wrapper>
     );
