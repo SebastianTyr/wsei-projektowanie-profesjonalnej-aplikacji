@@ -139,6 +139,7 @@ const DetailsForm = () => {
 
             <Formik
                 initialValues={initialValues}
+                validationSchema={validationSchema}
                 onSubmit={values => console.log(values)}
             >
                 <CustomForm>
