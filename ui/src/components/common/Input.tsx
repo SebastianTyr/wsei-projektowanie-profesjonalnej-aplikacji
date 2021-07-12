@@ -1,7 +1,5 @@
-import { validateYupSchema } from "formik";
 import { FC } from "react";
 import styled from "styled-components";
-import { string } from "yup/lib/locale";
 import { Colors } from "../../styledHelpers/Colors";
 import { FontSize } from "../../styledHelpers/FontSize";
 
