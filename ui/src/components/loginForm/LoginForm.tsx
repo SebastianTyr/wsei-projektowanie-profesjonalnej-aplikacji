@@ -7,6 +7,7 @@ import Button from "../common/Button";
 import Label from "../common/Label";
 import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
+import ErrorBox from "../common/ErrorBox";
 
 
 const Wrapper = styled.div`
@@ -42,11 +43,6 @@ const FormItem = styled.div`
 
 const ButtonWrapper = styled(FormItem)`
     border: none;
-`;
-
-const ErrorBox = styled.div`
-    font-size: 14px;
-    color: ${Colors.redError};
 `;
 
 interface ILoginData {
@@ -92,12 +88,12 @@ const LoginForm = () => {
                     <FormItem>
                         <Label htmlFor='email' labelName="Email" className="registration-form__label" />
                         <Input id='email' type='email' name='email' className="registration-form__input" />
-                        <ErrorMessage name="email" render={error => <ErrorBox>{error}</ErrorBox>} />
+                        <ErrorMessage name="email" render={error => <ErrorBox errorText={error} />} />
                     </FormItem>
                     <FormItem>
                         <Label htmlFor='password' labelName="Hasło" className="registration-form__label" />
                         <Input id='password' type='password' name='password' className="registration-form__input" />
-                        <ErrorMessage name="password" render={error => <ErrorBox>{error}</ErrorBox>} />
+                        <ErrorMessage name="password" render={error => <ErrorBox errorText={error} />} />
                     </FormItem>
                     <ButtonWrapper>
                         <Button type='submit' variant="secondary" size="lg" text="Zaloguj się" />
