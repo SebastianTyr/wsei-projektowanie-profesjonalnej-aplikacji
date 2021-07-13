@@ -5,6 +5,7 @@ using GeoCoordinatePortable;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NTMY.Application.Interfaces;
 using NTMY.Application.Interfaces.Users.Commands;
 using NTMY.Application.Interfaces.Users.DTOs;
 using NTMY.Application.Interfaces.Users.Queries;
@@ -42,7 +43,6 @@ namespace NTMY.Web.Controllers
                 viewModel.ConfirmPassword);
 
             await _commandQueryDispatcherDecorator.DispatchAsync(command);
-            await _commandQueryDispatcherDecorator.DispatchAsync(new ActivateUserCommand(command.Id));
 
             return Ok();
         }
@@ -99,6 +99,15 @@ namespace NTMY.Web.Controllers
             await _commandQueryDispatcherDecorator.DispatchAsync(command);
 
             return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("Browse")]
+        public async Task<IActionResult> Browse(int maxDistance, int? maxAge, [FromQuery(Name = "genders")] Gender[] genders)
+        {
+            var query = new GetUsersQuery(maxDistance, maxAge, genders);
+
+            return Ok(await _commandQueryDispatcherDecorator.DispatchAsync<GetUsersQuery, ListDto<UserDto>>(query));
         }
 
     }

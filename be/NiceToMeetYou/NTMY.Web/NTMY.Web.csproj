@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NTMY.Application.Interfaces\NTMY.Application.Interfaces.csproj" />
+    <ProjectReference Include="..\NTMY.Application.ReadModels\NTMY.Application.ReadModels.csproj" />
     <ProjectReference Include="..\NTMY.Application\NTMY.Application.csproj" />
     <ProjectReference Include="..\NTMY.Domain\NTMY.Domain.csproj" />
     <ProjectReference Include="..\NTMY.Infrastructure\NTMY.Infrastructure.csproj" />

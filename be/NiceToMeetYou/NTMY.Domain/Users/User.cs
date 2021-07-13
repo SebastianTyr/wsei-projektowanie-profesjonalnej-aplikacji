@@ -71,6 +71,7 @@ namespace NTMY.Domain.Users
             SetDependencies(domainEventsManager, passwordHashingPolicyFactory, passwordPolicyFactory, userDomainEventFactory, correlationContext);
             AssignFromDataStructure(userDataStructure);
             SetUserCreated();
+            ActivateUser();
 
             DomainEvent(_userDomainEventFactory.PrepareUserCreatedEvent(this));
         }
@@ -142,7 +143,7 @@ namespace NTMY.Domain.Users
 
         public void ActivateUser()
         {
-            if (!Status.Equals(UserStatus.Created))
+            if (!Status.Equals(UserStatus.Created) && !Status.Equals(UserStatus.Active))
             {
                 throw new BusinessLogicException(UserResources.UserNotConfirmedMessage);
             }
