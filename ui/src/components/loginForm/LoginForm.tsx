@@ -69,7 +69,24 @@ const LoginForm = () => {
 
             <Formik
                 initialValues={initialValues}
-                onSubmit={values => console.log(values)}
+                onSubmit={values => {
+                    console.log(values)
+                
+                    const loginData = {
+                        email: values.email,
+                        password: values.password
+                    };
+                    
+                    console.log(loginData);
+
+                    fetch('https://localhost:5001/Users/signIn', {
+                        method: 'POST',
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(loginData)
+                    }).then(() => {
+                        console.log('login data sent')
+                    });
+                }}
             >
                 <CustomForm>
                     <FormItem>
