@@ -101,9 +101,10 @@ const LandingPage: FC = () => {
                         <Logo />
                     </LogoContainer>
                     <ButtonContainer>
-                        <Link to="/login">
                             <Button type="text" variant="primary" size="lg" text="Zaloguj się" onClick={loginButtonHandler} />
-                        </Link>
+                        {/* <Link to="/login">
+                            <Button type="text" variant="primary" size="lg" text="Zaloguj się" onClick={loginButtonHandler} /> 
+                        </Link>  */}
                     </ButtonContainer>
                 </Header>
                 <Main>

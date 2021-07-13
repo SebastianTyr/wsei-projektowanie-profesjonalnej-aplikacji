@@ -69,20 +69,18 @@ const LoginPage = () => {
 
     return (
         <Wrapper>
-        <Header>
-            <LogoContainer>
-                <Logo />
-            </LogoContainer>
-            <ButtonContainer>
-                <Link to="/login">
+            <Header>
+                <LogoContainer>
+                    <Logo />
+                </LogoContainer>
+                <ButtonContainer>
                     <Button type="text" variant="primary" size="lg" text="Zaloguj się" />
-                </Link>
-            </ButtonContainer>
-        </Header>
-        <Main>
-           <LoginForm />
-        </Main>
-    </Wrapper>
+                </ButtonContainer>
+            </Header>
+            <Main>
+                <LoginForm />
+            </Main>
+        </Wrapper>
     )
 }
 

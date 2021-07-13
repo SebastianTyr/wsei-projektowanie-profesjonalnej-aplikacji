@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import MainContent from './MainContent';
 import TopBar from './TopBar';
@@ -23,7 +23,7 @@ const MainPage: FC = () => {
                         < ProfilePage />
                     </Route>
                     <Route path="/login" exact>
-                        <LoginPage/>
+                        <LoginPage />
                     </Route>
                     <Route path="/" exact>
                         <MainContent />
