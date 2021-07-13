@@ -20,7 +20,7 @@ const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 1;
+    z-index: 2;
 `
 const LogoContainer = styled.div`
     display: block;

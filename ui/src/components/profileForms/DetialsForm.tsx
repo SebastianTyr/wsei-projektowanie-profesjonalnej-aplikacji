@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import { Colors } from '../../styledHelpers/Colors';
 import { Margin } from '../../styledHelpers/Margin';
 import Button from '../common/Button';
 import Label from '../common/Label';
 import Input from '../common/Input';
+import ErrorBox from "../common/ErrorBox";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -45,11 +45,6 @@ const ButtonWrapper = styled(FormItem)`
 const ItemsBox = styled.div`
     display: flex;
 `;
-const ErrorBox = styled.div`
-    font-size: 14px;
-    color: ${Colors.redError};
-`;
-
 interface IDetailsDataFromDB {
     height: {
         value: number,
@@ -147,12 +142,12 @@ const DetailsForm = () => {
                         <FormItem>
                             <Label htmlFor='height_value' labelName="Wzrost (cm):" className="details-form__label"/>
                             <Input id='height_value' type='text' name='heightValue' className="details-form__input"/>
-                            <ErrorMessage name='heightValue' render={error => <ErrorBox> {error}</ErrorBox>} />
+                            <ErrorMessage name='heightValue' render={error => <ErrorBox errorText={error} />} />
                         </FormItem>
                         <FormItem>
                             <Label htmlFor='weight_value' labelName="Waga (kg):" className="details-form__label"/>
                             <Input id='weight_value' type='text' name='weightValue' className="details-form__input"/>
-                            <ErrorMessage name='weightValue' render={error => <ErrorBox> {error}</ErrorBox>} />
+                            <ErrorMessage name='weightValue' render={error => <ErrorBox errorText={error} />} />
                         </FormItem>
                     </ItemsBox>
                     <TitleWrapper>Powiedz nam, gdzie mieszkasz, a my powiem, kto mieszka w Twojej okolicy</TitleWrapper>
@@ -160,24 +155,24 @@ const DetailsForm = () => {
                         <FormItem>
                             <Label htmlFor='street' labelName="Ulica:" className="details-form__label"/>
                             <Input id='street' type='text' name='addresStreet' className="details-form__input"/>
-                            <ErrorMessage name='addresStreet' render={error => <ErrorBox> {error}</ErrorBox>} />
+                            <ErrorMessage name='addresStreet' render={error => <ErrorBox errorText={error} />} />
                         </FormItem>
                         <FormItem>
                             <Label htmlFor='city' labelName="Miasto:" className="details-form__label"/>
                             <Input id='city' type='text' name='addresCity' className="details-form__input"/>
-                            <ErrorMessage name='addresCity' render={error => <ErrorBox> {error}</ErrorBox>} />
+                            <ErrorMessage name='addresCity' render={error => <ErrorBox errorText={error} />} />
                         </FormItem>
                     </ItemsBox>
                     <ItemsBox>
                         <FormItem>
                             <Label htmlFor='postCode' labelName="Kod pocztowy:" className="details-form__label"/>
                             <Input id='postCode' type='text' name='addresPostCode' className="details-form__input"/>
-                            <ErrorMessage name='addresPostCode' render={error => <ErrorBox> {error}</ErrorBox>} />
+                            <ErrorMessage name='addresPostCode' render={error => <ErrorBox errorText={error} />} />
                         </FormItem>
                         <FormItem>
                             <Label htmlFor='country' labelName="Kraj:" className="details-form__label"/>
                             <Input id='country' type='text' name='addresCountry' className="details-form__input"/>
-                            <ErrorMessage name='addresCountry' render={error => <ErrorBox> {error}</ErrorBox>} />
+                            <ErrorMessage name='addresCountry' render={error => <ErrorBox errorText={error} />} />
                         </FormItem>
                     </ItemsBox>
                     <FormItem>
@@ -187,7 +182,7 @@ const DetailsForm = () => {
                             type='text'
                             name='description'
                         />
-                        <ErrorMessage name='description' render={error => <ErrorBox> {error}</ErrorBox>} />
+                        <ErrorMessage name='description' render={error => <ErrorBox errorText={error} />} />
                     </FormItem>
                     <FormItem>
                         <Label htmlFor='wantedGender' labelName="Kogo poszukujesz:" className="details-form__label"/>
@@ -195,7 +190,7 @@ const DetailsForm = () => {
                             <Input id='start' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='0' className="details-form__input"/>Kobiety
                             <Input id='end' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='1' className="details-form__input"/>Mężczyzny
                         </RadioGroup>
-                        <ErrorMessage name='wantedGender' render={error => <ErrorBox> {error}</ErrorBox>} />
+                        <ErrorMessage name='wantedGender' render={error => <ErrorBox errorText={error} />} />
                     </FormItem>
                     <ButtonWrapper>
                         <Button type='submit' variant="secondary" size="lg" text="Dodaj  informacje" />
