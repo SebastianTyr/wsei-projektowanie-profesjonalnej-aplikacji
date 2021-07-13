@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Colors } from '../../../styledHelpers/Colors';
 import Button from '../../common/Button';
@@ -80,9 +81,16 @@ const Footer = styled.footer`
 const LandingPage: FC = () => {
 
     const [isCreating, setIsCreating] = useState<boolean>(false);
+    const [isLogin, setIsLogin] = useState<boolean>(false);
 
     const createButtonHandler = () => {
-        setIsCreating(isCreating => !isCreating);
+        setIsCreating(true);
+        setIsLogin(false);
+    };
+
+    const loginButtonHandler = () => {
+        setIsLogin(true);
+        setIsCreating(false);
     };
 
     return (
@@ -93,15 +101,19 @@ const LandingPage: FC = () => {
                         <Logo />
                     </LogoContainer>
                     <ButtonContainer>
-                        <Button type="text" variant="primary" size="lg" text="Log in"> </Button>
+                            <Button type="text" variant="primary" size="lg" text="Zaloguj się" onClick={loginButtonHandler} />
+                        {/* <Link to="/login">
+                            <Button type="text" variant="primary" size="lg" text="Zaloguj się" onClick={loginButtonHandler} /> 
+                        </Link>  */}
                     </ButtonContainer>
                 </Header>
                 <Main>
                     {isCreating ? (
                         <RegistrationForm />
                     ) : (
-                        <Button type="text" variant="secondary" size="xl" text="Create Account" onClick={createButtonHandler}/>
+                        <Button type="text" variant="secondary" size="xl" text="Utwórz konto" onClick={createButtonHandler} />
                     )}
+
                 </Main>
             </Wrapper>
             <Section>
