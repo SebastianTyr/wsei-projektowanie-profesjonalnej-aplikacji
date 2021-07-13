@@ -14,7 +14,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NTMY.Application;
+using NTMY.Application.Interfaces;
 using NTMY.Application.Notifications.Hubs;
+using NTMY.Application.ReadModels.Users;
 using NTMY.Application.Users;
 using NTMY.Application.Users.Handlers;
 using NTMY.Domain;
@@ -125,6 +127,7 @@ namespace NTMY.Web
             builder.RegisterAssemblyTypes(typeof(UserEfRepository).Assembly).AsClosedTypesOf(typeof(IGenericRepository<>));
             builder.RegisterAssemblyTypes(typeof(UserEfRepository).Assembly).AsClosedTypesOf(typeof(IGenericEventRepository<>));
             builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly).Where(x => x.IsAssignableTo<IRepository>()).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(UsersReadModel).Assembly).Where(x => x.IsAssignableTo<IReadModel>()).AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(typeof(UserService).Assembly).Where(x => x.IsAssignableTo<IService>()).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(RegisterUserCommandHandler).Assembly)
