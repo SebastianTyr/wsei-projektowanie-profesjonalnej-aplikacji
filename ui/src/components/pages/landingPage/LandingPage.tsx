@@ -3,7 +3,9 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Colors } from '../../../styledHelpers/Colors';
+import { Margin } from '../../../styledHelpers/Margin';
 import Button from '../../common/Button';
+import LoginForm from '../../loginForm/LoginForm';
 import RegistrationForm from '../../registrationForm/RegistrationForm';
 
 const Wrapper = styled.div`
@@ -58,7 +60,14 @@ const Main = styled.main`
         background: linear-gradient(180deg,rgba(0,0,0,.6) 0,transparent 100vh);
     }
 `
-const ButtonContainer = styled.div`
+
+const ButtonsContainer = styled.div`
+    display: flex;
+`;
+
+const SingleButtonContainer = styled.div`
+    display: flex;
+    margin-left: ${Margin[16]};
 
 `
 
@@ -98,22 +107,29 @@ const LandingPage: FC = () => {
             <Wrapper>
                 <Header>
                     <LogoContainer>
-                        <Logo />
+                            <Logo />
                     </LogoContainer>
-                    <ButtonContainer>
+                    <ButtonsContainer>
+                        <SingleButtonContainer>
+                            <Button type="text" variant="primary" size="lg" text="Zarejestruj się" onClick={createButtonHandler} />
+                        </SingleButtonContainer>
+                        <SingleButtonContainer>
                             <Button type="text" variant="primary" size="lg" text="Zaloguj się" onClick={loginButtonHandler} />
-                        {/* <Link to="/login">
-                            <Button type="text" variant="primary" size="lg" text="Zaloguj się" onClick={loginButtonHandler} /> 
-                        </Link>  */}
-                    </ButtonContainer>
+                        </SingleButtonContainer>
+                    </ButtonsContainer>
                 </Header>
                 <Main>
-                    {isCreating ? (
+                    {isCreating &&
                         <RegistrationForm />
-                    ) : (
-                        <Button type="text" variant="secondary" size="xl" text="Utwórz konto" onClick={createButtonHandler} />
-                    )}
+                    }
 
+                    {isLogin &&
+                        <LoginForm />
+                    }
+
+                    {(!isCreating && !isLogin) &&
+                        <Button type="text" variant="secondary" size="xl" text="Utwórz konto" onClick={createButtonHandler} />
+                    }
                 </Main>
             </Wrapper>
             <Section>

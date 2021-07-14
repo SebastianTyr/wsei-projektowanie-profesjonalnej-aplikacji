@@ -4,7 +4,6 @@ import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
 import LandingPage from './components/pages/landingPage/LandingPage';
 import MainPage from './components/pages/mainPage/MainPage';
-import LoginPage from './components/pages/loginPage/LoginPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -58,7 +57,6 @@ function App() {
         <Reset />
         <GlobalStyle />
         <Scrollbar />
-        <LoginPage />
         <LandingPage />
         <MainPage/>
     </>
