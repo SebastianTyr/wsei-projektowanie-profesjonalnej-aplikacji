@@ -29,7 +29,7 @@ const Wrapper = styled.div`
    }
 `;
 
-const HeaderWrapper = styled.h2`
+const HeaderWrapper = styled.div`
     text-align: center;
     color: ${Colors.red};
     font-size: ${FontSize[36]};
@@ -103,11 +103,9 @@ const RegistrationForm = () => {
 
     return (
         <Wrapper>
-
             <HeaderWrapper>
                 <h2>Utwórz Konto</h2>
             </HeaderWrapper>
-
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
