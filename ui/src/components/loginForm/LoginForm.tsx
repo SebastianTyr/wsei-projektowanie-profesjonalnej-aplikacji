@@ -79,9 +79,10 @@ const LoginForm = () => {
                         method: 'POST',
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify(loginData)
-                    }).then(() => {
-                        console.log('login data sent')
-                    });
+                    }).then((response) => response.json())
+                    .then((data => {
+                        console.log(data);
+                    }));
                 }}
             >
                 <CustomForm>
