@@ -1,9 +1,11 @@
-
-
 import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
 import LandingPage from './components/pages/landingPage/LandingPage';
 import MainPage from './components/pages/mainPage/MainPage';
+
+
+
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -50,6 +52,7 @@ const Scrollbar = createGlobalStyle`
     display: none;
   }
 `;
+
 
 function App() {
   return (
