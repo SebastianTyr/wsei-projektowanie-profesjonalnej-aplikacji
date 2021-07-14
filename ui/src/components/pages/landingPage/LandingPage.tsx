@@ -93,12 +93,12 @@ const LandingPage: FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
     const createButtonHandler = () => {
-        setIsCreating(true);
+        setIsCreating(!isCreating);
         setIsLogin(false);
     };
 
     const loginButtonHandler = () => {
-        setIsLogin(true);
+        setIsLogin(!isLogin);
         setIsCreating(false);
     };
 

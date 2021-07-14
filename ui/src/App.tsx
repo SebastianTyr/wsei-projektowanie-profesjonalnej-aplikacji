@@ -3,9 +3,7 @@ import { Colors } from './styledHelpers/Colors';
 import LandingPage from './components/pages/landingPage/LandingPage';
 import MainPage from './components/pages/mainPage/MainPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-
-
+import Modal from './components/common/Modal';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -64,8 +62,8 @@ function App() {
   return (
 
     <Router>
-
       <Reset />
+      <Modal />
       <GlobalStyle />
       <Scrollbar />
       <Switch>
