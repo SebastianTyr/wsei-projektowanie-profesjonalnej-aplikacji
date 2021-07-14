@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Formik, Form, ErrorMessage } from "formik";
-import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { Colors } from "../../styledHelpers/Colors";
@@ -10,7 +10,6 @@ import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
 import { FontSize } from "../../styledHelpers/FontSize";
-import { boolean } from "yup/lib/locale";
 import { useDispatch } from "react-redux";
 import { getIsAuthInfo } from '../../actions/authActions';
 type GetIsAuthInfo = ReturnType<typeof getIsAuthInfo>;
@@ -66,7 +65,8 @@ const LoginForm = () => {
 
     const dispatch = useDispatch();
 
-    // const [isAuth, setIsAuth] = useState<boolean>(false);
+    let history = useHistory();
+
 
     return (
         <Wrapper>
@@ -102,7 +102,7 @@ const LoginForm = () => {
                         .then((data => {
                             console.log(data);
                             sessionStorage.setItem("jwtToken", data.jwtToken);
-                        }));
+                        })).then(() => {history.push("/main")});
                 }}
             >
                 <CustomForm>
