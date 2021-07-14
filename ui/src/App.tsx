@@ -58,7 +58,6 @@ function App() {
         <Reset />
         <GlobalStyle />
         <Scrollbar />
-        <LoginPage />
         <LandingPage />
         <MainPage/>
     </>
