@@ -8,26 +8,37 @@ import Label from "../common/Label";
 import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
+import { FontSize } from "../../styledHelpers/FontSize";
 
 const Wrapper = styled.div`
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
     width: 600px;
     background: ${Colors.white};
     color: ${Colors.black};
     padding: 20px;
     z-index: 1;
-    border-radius: 5%;
+    border-radius: 2rem;
    .registration-form__label {
-       margin-bottom: ${Margin[8]};
-       
+        margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
    }
    .registration-form__input {
-       margin-bottom: ${Margin[8]};
+       margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};
+   }
+   .registration-form__error {
+       margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};
    }
 `;
 
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.h2`
+    text-align: center;
+    color: ${Colors.red};
+    font-size: ${FontSize[36]};
 `;
 
+const FormItemsContainer = styled.div`
+    margin-left: -${Margin[8]};
+    margin-right: -${Margin[8]};
+`
 const CustomForm = styled(Form)`
     display: flex;
     flex-direction: column;
@@ -103,55 +114,58 @@ const RegistrationForm = () => {
                 onSubmit={values => console.log(values)}
             >
                 <CustomForm>
-                    <FormItem>
-                        <Label htmlFor='userName' labelName="Nazwa Użytkownika" className="registration-form__label"/>
-                        <Input  id='userName' type='text' name='userName' className="registration-form__input"/>
-                        <ErrorMessage name='userName' render={error => <ErrorBox errorText={error} />} />
-                    </FormItem>
-                    <ItemsBox>
+                    <FormItemsContainer>
                         <FormItem>
-                            <Label htmlFor='firstName' labelName="Imię" className="registration-form__label"/>
-                            <Input id='firstName' type='text' name='firstName' className="registration-form__input"/>
-                            <ErrorMessage name="firstName" render={error => <ErrorBox errorText={error} />} />
+                            <Label htmlFor='userName' labelName="Nazwa Użytkownika" className="registration-form__label"/>
+                            <Input  id='userName' type='text' name='userName' className="registration-form__input"/>
+                            <ErrorMessage name='userName' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
                         </FormItem>
+                        <ItemsBox>
+                            <FormItem>
+                                <Label htmlFor='firstName' labelName="Imię" className="registration-form__label"/>
+                                <Input id='firstName' type='text' name='firstName' className="registration-form__input"/>
+                                <ErrorMessage name="firstName" render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
+                            </FormItem>
+                            <FormItem>
+                                <Label htmlFor='lastName' labelName="Nazwisko" className="registration-form__label"/>
+                                <Input id="lastName" type='text' name='lastName' className="registration-form__input"/>
+                                <ErrorMessage name='lastName' render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
+                            </FormItem>
+                        </ItemsBox>
                         <FormItem>
-                            <Label htmlFor='lastName' labelName="Nazwisko" className="registration-form__label"/>
-                            <Input id="lastName" type='text' name='lastName' className="registration-form__input"/>
-                            <ErrorMessage name='lastName' render={error => <ErrorBox errorText={error} />} />
+                            <Label htmlFor='email' labelName="Email" className="registration-form__label"/>
+                            <Input id='email' type='email' name='email' className="registration-form__input"/>
+                            <ErrorMessage name="email" render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
                         </FormItem>
-                    </ItemsBox>
-                    <FormItem>
-                        <Label htmlFor='email' labelName="Email" className="registration-form__label"/>
-                        <Input id='email' type='email' name='email' className="registration-form__input"/>
-                        <ErrorMessage name="email" render={error => <ErrorBox errorText={error} />} />
-                    </FormItem>
-                    <ItemsBox>
-                        <FormItem>
-                            <Label htmlFor='gender' labelName="Płeć" className="registration-form__label"/>
-                            <RadioGroup>
-                                <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female'/> Kobieta
-                                <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male'/> Mężczyzna
-                            </RadioGroup>
-                            <ErrorMessage name="gender" render={error => <ErrorBox errorText={error} />} />
-                        </FormItem>
-                        <FormItem>
-                            <Label htmlFor='birthDate' labelName="Data urodzenia" className="registration-form__label"/>
-                            <Input id='birthDate' type='date' name='birthDate' className="registration-form__input"/>
-                            <ErrorMessage name="birthDate" render={error => <ErrorBox errorText={error} />} />
-                        </FormItem>
-                    </ItemsBox>
-                    <ItemsBox>
-                        <FormItem>
-                            <Label htmlFor='password' labelName="Hasło" className="registration-form__label"/>
-                            <Input id='password' type='password' name='password' className="registration-form__input"/>
-                            <ErrorMessage name="password" render={error => <ErrorBox errorText={error} />} />
-                        </FormItem>
-                        <FormItem>
-                            <Label htmlFor='confirmPassword' labelName="Powtórz Hasło" className="registration-form__label"/>
-                            <Input id='confirmPassword' type='password' name='confirmPassword' className="registration-form__input"/>
-                            <ErrorMessage name="confirmPassword" render={error => <ErrorBox errorText={error} />} />
-                        </FormItem>
-                    </ItemsBox>
+                        <ItemsBox>
+                            <FormItem>
+                                <Label htmlFor='gender' labelName="Płeć" className="registration-form__label"/>
+                                <RadioGroup>
+                                    <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female'/> Kobieta
+                                    <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male'/> Mężczyzna
+                                </RadioGroup>
+                                <ErrorMessage name="gender" render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
+                            </FormItem>
+                            <FormItem>
+                                <Label htmlFor='birthDate' labelName="Data urodzenia" className="registration-form__label"/>
+                                <Input id='birthDate' type='date' name='birthDate' className="registration-form__input"/>
+                                <ErrorMessage name="birthDate" render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
+                            </FormItem>
+                        </ItemsBox>
+                        <ItemsBox>
+                            <FormItem>
+                                <Label htmlFor='password' labelName="Hasło" className="registration-form__label"/>
+                                <Input id='password' type='password' name='password' className="registration-form__input"/>
+                                <ErrorMessage name="password" render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
+                            </FormItem>
+                            <FormItem>
+                                <Label htmlFor='confirmPassword' labelName="Powtórz Hasło" className="registration-form__label"/>
+                                <Input id='confirmPassword' type='password' name='confirmPassword' className="registration-form__input"/>
+                                <ErrorMessage name="confirmPassword" render={error => <ErrorBox errorText={error} className="registration-form__error"/>} />
+                            </FormItem>
+                        </ItemsBox>
+                    </FormItemsContainer>
+                 
                     <ButtonWrapper>
                         <Button type='submit' variant="secondary" size="lg" text="Zarejestruj się"/>
                     </ButtonWrapper>
