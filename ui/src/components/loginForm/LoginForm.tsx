@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Formik, Form, ErrorMessage } from "formik";
+import { useState } from "react";
 import * as Yup from 'yup';
 
 import { Colors } from "../../styledHelpers/Colors";
@@ -9,7 +10,10 @@ import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
 import { FontSize } from "../../styledHelpers/FontSize";
-
+import { boolean } from "yup/lib/locale";
+import { useDispatch } from "react-redux";
+import { getIsAuthInfo } from '../../actions/authActions';
+type GetIsAuthInfo = ReturnType<typeof getIsAuthInfo>;
 
 const Wrapper = styled.div`
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
@@ -60,6 +64,10 @@ const LoginForm = () => {
         password: ''
     }
 
+    const dispatch = useDispatch();
+
+    // const [isAuth, setIsAuth] = useState<boolean>(false);
+
     return (
         <Wrapper>
             <HeaderWrapper>
@@ -70,21 +78,31 @@ const LoginForm = () => {
                 initialValues={initialValues}
                 onSubmit={values => {
                     console.log(values)
-                
+
                     const loginData = {
                         email: values.email,
                         password: values.password
                     };
-                    
+
                     console.log(loginData);
 
                     fetch('https://localhost:5001/Users/signIn', {
                         method: 'POST',
-                        headers: {"Content-Type": "application/json"},
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(loginData)
-                    }).then(() => {
-                        console.log('login data sent')
-                    });
+                    })
+                        .then((response) => {
+                            if (response.status === 200) {
+                                dispatch<GetIsAuthInfo>(getIsAuthInfo(true));
+                                return response.json();
+                            } else {
+                                alert("Upsss, upewnij się, że podałeś poprawny email i/lub poprawne hasło");
+                            }
+                        })
+                        .then((data => {
+                            console.log(data);
+                            sessionStorage.setItem("jwtToken", data.jwtToken);
+                        }));
                 }}
             >
                 <CustomForm>
