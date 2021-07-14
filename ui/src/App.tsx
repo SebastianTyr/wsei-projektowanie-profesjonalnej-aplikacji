@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: 0.3px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
   }
   ::selection {
     background-color: ${Colors.red};
