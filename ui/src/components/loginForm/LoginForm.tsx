@@ -30,7 +30,7 @@ const Wrapper = styled.div`
    }
 `;
 
-const HeaderWrapper = styled.h2`
+const HeaderWrapper = styled.div`
     text-align: center;
     color: ${Colors.red};
     font-size: ${FontSize[36]};

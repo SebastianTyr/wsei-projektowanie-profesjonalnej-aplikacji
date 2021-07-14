@@ -21,7 +21,7 @@ const Wrapper = styled.div`
         margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
     }
 `;
-const HeaderWrapper = styled.h2`
+const HeaderWrapper = styled.div`
     text-align: center;
     color: ${Colors.red};
     font-size: ${FontSize[36]};
@@ -142,8 +142,9 @@ const DetailsForm = () => {
 
     return (
         <Wrapper>
-            <HeaderWrapper>Podaj dodatkowe informacje, bądź bardziej widoczny dla innych użytkowników</HeaderWrapper>
-
+            <HeaderWrapper>
+                <h2>Podaj dodatkowe informacje, bądź bardziej widoczny dla innych użytkowników</h2>
+            </HeaderWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
