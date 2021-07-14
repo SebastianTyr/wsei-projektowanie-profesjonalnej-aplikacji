@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Formik, Form, ErrorMessage } from "formik";
+import { useState } from "react";
 import * as Yup from 'yup';
 
 import { Colors } from "../../styledHelpers/Colors";
@@ -8,6 +9,7 @@ import Label from "../common/Label";
 import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
+import { boolean } from "yup/lib/locale";
 
 
 const Wrapper = styled.div`
@@ -57,6 +59,8 @@ const LoginForm = () => {
         password: ''
     }
 
+    // const [isAuth, setIsAuth] = useState<boolean>(false);
+
     return (
         <Wrapper>
             <HeaderWrapper>
@@ -79,9 +83,12 @@ const LoginForm = () => {
                         method: 'POST',
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify(loginData)
-                    }).then(() => {
-                        console.log('login data sent')
-                    });
+                    })
+                    .then((response) => response.json())
+                    .then((data => {
+                        console.log(data);
+                        sessionStorage.setItem("jwtToken", data.jwtToken);
+                    }));
                 }}
             >
                 <CustomForm>
