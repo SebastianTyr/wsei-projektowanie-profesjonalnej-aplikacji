@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  ::selection {
+    background-color: ${Colors.red};
+    color: ${Colors.white};
+  }
 `;
 const Reset = createGlobalStyle`
   html {

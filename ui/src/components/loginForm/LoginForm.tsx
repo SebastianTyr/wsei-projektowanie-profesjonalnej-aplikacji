@@ -8,15 +8,17 @@ import Label from "../common/Label";
 import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
+import { FontSize } from "../../styledHelpers/FontSize";
 
 
 const Wrapper = styled.div`
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
     width: 600px;
     background: ${Colors.white};
     color: ${Colors.black};
     padding: 20px;
     z-index: 10000;
-    border-radius: 5%;
+    border-radius: 2rem;
    .registration-form__label {
        margin-bottom: ${Margin[8]};
    }
@@ -25,10 +27,11 @@ const Wrapper = styled.div`
    }
 `;
 
-const HeaderWrapper = styled.div`
-
+const HeaderWrapper = styled.h2`
+    text-align: center;
+    color: ${Colors.red};
+    font-size: ${FontSize[36]};
 `;
-
 const CustomForm = styled(Form)`
     display: flex;
     flex-direction: column;
