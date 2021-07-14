@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
 import LandingPage from './components/pages/landingPage/LandingPage';
 import MainPage from './components/pages/mainPage/MainPage';
+import Modal from './components/common/Modal';
 
 
 
@@ -63,6 +64,7 @@ function App() {
   return (
     <>
         <Reset />
+        <Modal />
         <GlobalStyle />
         <Scrollbar />
         <LandingPage />

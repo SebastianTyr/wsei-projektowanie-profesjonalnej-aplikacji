@@ -11,13 +11,6 @@ import ErrorBox from "../common/ErrorBox";
 import { FontSize } from "../../styledHelpers/FontSize";
 
 const Wrapper = styled.div`
-    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-    width: 600px;
-    background: ${Colors.white};
-    color: ${Colors.black};
-    padding: 20px;
-    z-index: 1;
-    border-radius: 2rem;
    .registration-form__label {
         margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
    }
@@ -30,9 +23,6 @@ const Wrapper = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-    text-align: center;
-    color: ${Colors.red};
-    font-size: ${FontSize[36]};
 `;
 
 const FormItemsContainer = styled.div`
@@ -102,8 +92,8 @@ const RegistrationForm = () => {
     })
 
     return (
-        <Wrapper>
-            <HeaderWrapper>
+        <Wrapper className="modal">
+            <HeaderWrapper className="modal__header">
                 <h2>Utwórz Konto</h2>
             </HeaderWrapper>
             <Formik

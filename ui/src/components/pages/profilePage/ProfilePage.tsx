@@ -16,7 +16,7 @@ const EditButtonBox = styled.span`
 const ProfilePage = () => {
     const [isEditDetails, setIsEditDeatils] = useState<boolean>(false);
     const editDetailsHandler = () => {
-        setIsEditDeatils(isEditDetails => !isEditDetails);
+        setIsEditDeatils(!isEditDetails);
     }
     return (
         <>

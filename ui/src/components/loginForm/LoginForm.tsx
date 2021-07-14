@@ -16,13 +16,6 @@ import { getIsAuthInfo } from '../../actions/authActions';
 type GetIsAuthInfo = ReturnType<typeof getIsAuthInfo>;
 
 const Wrapper = styled.div`
-    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-    width: 600px;
-    background: ${Colors.white};
-    color: ${Colors.black};
-    padding: 20px;
-    z-index: 10000;
-    border-radius: 2rem;
    .registration-form__label {
        margin-bottom: ${Margin[8]};
    }
@@ -30,24 +23,18 @@ const Wrapper = styled.div`
        margin-bottom: ${Margin[8]};
    }
 `;
-
 const HeaderWrapper = styled.div`
-    text-align: center;
-    color: ${Colors.red};
-    font-size: ${FontSize[36]};
 `;
 const CustomForm = styled(Form)`
     display: flex;
     flex-direction: column;
 `;
-
 const FormItem = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
     margin-bottom: 20px;
 `;
-
 const ButtonWrapper = styled(FormItem)`
     border: none;
 `;
@@ -69,8 +56,8 @@ const LoginForm = () => {
     // const [isAuth, setIsAuth] = useState<boolean>(false);
 
     return (
-        <Wrapper>
-            <HeaderWrapper>
+        <Wrapper className="modal">
+            <HeaderWrapper className="modal__header">
                 <h2>Zaloguj się</h2>
             </HeaderWrapper>
 

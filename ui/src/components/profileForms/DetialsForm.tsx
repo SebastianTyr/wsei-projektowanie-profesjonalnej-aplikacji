@@ -10,7 +10,6 @@ import { Colors } from '../../styledHelpers/Colors';
 import { FontSize } from '../../styledHelpers/FontSize';
 
 const Wrapper = styled.div`
-    width: 100%;
     .details-form__label {
         margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
     }
@@ -22,9 +21,6 @@ const Wrapper = styled.div`
     }
 `;
 const HeaderWrapper = styled.div`
-    text-align: center;
-    color: ${Colors.red};
-    font-size: ${FontSize[36]};
 `;
 const TitleWrapper = styled.span`
     display: block;
@@ -141,8 +137,8 @@ const DetailsForm = () => {
     })
 
     return (
-        <Wrapper>
-            <HeaderWrapper>
+        <Wrapper className="modal">
+            <HeaderWrapper className="modal__header">
                 <h2>Podaj dodatkowe informacje, bądź bardziej widoczny dla innych użytkowników</h2>
             </HeaderWrapper>
             <Formik
