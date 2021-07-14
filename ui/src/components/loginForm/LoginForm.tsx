@@ -87,7 +87,7 @@ const LoginForm = () => {
                     .then((response) => response.json())
                     .then((data => {
                         console.log(data);
-                        localStorage.setItem("jwtToken", data.jwtToken);
+                        sessionStorage.setItem("jwtToken", data.jwtToken);
                     }));
                 }}
             >
