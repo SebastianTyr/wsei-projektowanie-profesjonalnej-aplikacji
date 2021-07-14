@@ -2,10 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import { Colors } from './styledHelpers/Colors';
 import LandingPage from './components/pages/landingPage/LandingPage';
 import MainPage from './components/pages/mainPage/MainPage';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Modal from './components/common/Modal';
-
-
-
 
 
 const GlobalStyle = createGlobalStyle`
@@ -62,14 +60,22 @@ const Scrollbar = createGlobalStyle`
 
 function App() {
   return (
-    <>
-        <Reset />
-        <Modal />
-        <GlobalStyle />
-        <Scrollbar />
-        <LandingPage />
-        <MainPage/>
-    </>
+
+    <Router>
+      <Reset />
+      <Modal />
+      <GlobalStyle />
+      <Scrollbar />
+      <Switch>
+        <Route path='/' exact>
+          <LandingPage />
+        </Route>
+        <Route path='/main' exact>
+          <MainPage />
+        </Route>
+      </Switch>
+    </Router>
+
   );
 }
 export default App;
