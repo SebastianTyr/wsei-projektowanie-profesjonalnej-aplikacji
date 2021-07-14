@@ -10,7 +10,10 @@ import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
 import { boolean } from "yup/lib/locale";
+import { useDispatch } from "react-redux";
+import { getIsAuthInfo } from '../../actions/authActions';
 
+type GetIsAuthInfo = ReturnType<typeof getIsAuthInfo>;
 
 const Wrapper = styled.div`
     width: 600px;
@@ -59,6 +62,8 @@ const LoginForm = () => {
         password: ''
     }
 
+    const dispatch = useDispatch();
+
     // const [isAuth, setIsAuth] = useState<boolean>(false);
 
     return (
@@ -71,24 +76,31 @@ const LoginForm = () => {
                 initialValues={initialValues}
                 onSubmit={values => {
                     console.log(values)
-                
+
                     const loginData = {
                         email: values.email,
                         password: values.password
                     };
-                    
+
                     console.log(loginData);
 
                     fetch('https://localhost:5001/Users/signIn', {
                         method: 'POST',
-                        headers: {"Content-Type": "application/json"},
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(loginData)
                     })
-                    .then((response) => response.json())
-                    .then((data => {
-                        console.log(data);
-                        sessionStorage.setItem("jwtToken", data.jwtToken);
-                    }));
+                        .then((response) => {
+                            if (response.status === 200) {
+                                dispatch<GetIsAuthInfo>(getIsAuthInfo(true));
+                                return response.json();
+                            } else {
+                                alert("Upsss, upewnij się, że podałeś poprawny email i/lub poprawne hasło");
+                            }
+                        })
+                        .then((data => {
+                            console.log(data);
+                            sessionStorage.setItem("jwtToken", data.jwtToken);
+                        }));
                 }}
             >
                 <CustomForm>
