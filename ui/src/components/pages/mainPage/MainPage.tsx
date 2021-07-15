@@ -22,7 +22,7 @@ const MainPage: FC = () => {
                     <Route path="/profile" exact>
                         < ProfilePage />
                     </Route>
-                    <Route path="/" exact>
+                    <Route path="/main" exact>
                         <MainContent />
                     </Route>
                 </Switch>
