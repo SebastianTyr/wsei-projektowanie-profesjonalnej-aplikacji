@@ -94,7 +94,7 @@ const TopBar: FC = () => {
     return (
         <Wrapper>
             <LeftContainer>
-                <Link to="/">
+                <Link to="/main">
                     <LogoContainer>
                         <Logo/>
                     </LogoContainer>
