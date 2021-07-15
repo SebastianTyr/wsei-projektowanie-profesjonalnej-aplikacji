@@ -57,6 +57,24 @@ const SearchButtonContainer = styled.button`
 `;
 
 const MainContent: FC = () => {
+
+  const usersParams = new URLSearchParams({
+    maxDistance: '100',
+    genders: '20'
+  }).toString();
+
+  const url = `https://localhost:5001/Users/Browse?${usersParams}`;
+
+
+  fetch(url, {
+    method: 'GET',
+    headers: {"Authorization": "Bearer " + sessionStorage.getItem('jwtToken')}
+   
+  }).then(response => response.json())
+  .then((data => {
+    console.log(data)
+  }))
+
     return (
         <Wrapper>
             <SearchWrapper>
