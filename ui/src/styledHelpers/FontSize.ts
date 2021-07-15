@@ -8,5 +8,6 @@ export const FontSize = {
     20: "1.25rem",
     22: "1.4rem",
     24: "1.55rem",
+    36: "2.25rem",
   };
   

@@ -5,6 +5,7 @@ import { FontSize } from '../../styledHelpers/FontSize';
 
 interface ErrorBoxProps {
     errorText: string;
+    className?: string;
 }
 
 const Wrapper = styled.div<{errorText: string}>`
@@ -15,7 +16,7 @@ const Wrapper = styled.div<{errorText: string}>`
 
 const ErrorBox:FC<ErrorBoxProps> = (props) =>{
     return (
-        <Wrapper errorText={props.errorText}>{props.errorText}</Wrapper>
+        <Wrapper errorText={props.errorText} className={props.className}>{props.errorText}</Wrapper>
     )
 }
 export default ErrorBox;
