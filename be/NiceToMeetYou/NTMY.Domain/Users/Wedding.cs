@@ -11,18 +11,26 @@ namespace NTMY.Domain.Users
 
         public DateTime Date { get; private set; }
         public Address Address { get; private set; }
+        public string Description { get; private set; }
 
-        public Wedding(int no, DateTime date, Address address)
+        public Wedding(int no, DateTime date, Address address, string description)
         {
             No = no;
             SetDate(date);
             Address = address;
+            Description = description;
         }
 
-        public void Update(DateTime date, Address address)
+        private Wedding()
+        {
+
+        }
+
+        public void Update(DateTime date, Address address, string description)
         {
             SetDate(date);
             Address = address;
+            Description = description;
         }
 
         public void MarkAsArchived()

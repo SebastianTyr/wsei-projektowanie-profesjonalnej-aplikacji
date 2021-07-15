@@ -4,6 +4,7 @@ using AutoMapper;
 using GeoCoordinatePortable;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NTMY.Application.Interfaces;
 using NTMY.Application.Interfaces.Users.Commands;
@@ -105,10 +106,20 @@ namespace NTMY.Web.Controllers
         [HttpGet("Browse")]
         public async Task<IActionResult> Browse(int maxDistance, int? maxAge, [FromQuery(Name = "genders")] Gender[] genders)
         {
-            var query = new GetUsersQuery(maxDistance, maxAge, genders);
+            var baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            var query = new GetUsersQuery(maxDistance, maxAge, genders, baseUrl);
 
             return Ok(await _commandQueryDispatcherDecorator.DispatchAsync<GetUsersQuery, ListDto<UserDto>>(query));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("UploadPhoto"), DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadPhotoAsync(IFormFile file)
+        {
+            var command = new UploadUserPhotoCommand(file);
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+
+            return Ok();
+        }
     }
 }

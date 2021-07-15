@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using NTMY.Application.Interfaces.Users.DTOs;
 using NTMY.Application.Interfaces.Users.Queries;
@@ -51,11 +52,26 @@ FROM [dbo].[Users] AS U";
         public async Task<IEnumerable<UserDto>> GetUsersAsync(GetUsersQuery query)
         {
             var sqlQuery = $@"
+DECLARE @Ids TABLE(Id UNIQUEIDENTIFIER);
 {declareStatement}
+
+;WITH UsersWithDistance AS ({sqlWithStatement})
+INSERT INTO @Ids
+SELECT U.Id FROM UsersWithDistance AS U
+/**where**/
+
 ;WITH UsersWithDistance AS ({sqlWithStatement})
 
 SELECT * FROM UsersWithDistance AS U
-/**where**/";
+/**where**/
+
+SELECT P.Id
+    ,P.No AS FileNo
+    ,P.Name AS FileName
+    ,@BaseUrl + '/' + P.Path AS FileUrl
+FROM dbo.UserPhotos P
+INNER JOIN @Ids AS Ids ON Ids.Id = P.Id
+WHERE P.IsArchived = 0";
 
             var currentUser = await _userRepository.GetAsync(_correlationContext.CurrentUser.UserId.Value);
 
@@ -63,13 +79,24 @@ SELECT * FROM UsersWithDistance AS U
             var template = sqlBuilder.AddTemplate(sqlQuery, new
             {
                 CurrentLongitude = currentUser.Coordinate.Longitude.ToString().Replace(",", "."),
-                CurrentLatitude = currentUser.Coordinate.Latitude.ToString().Replace(",", ".")
+                CurrentLatitude = currentUser.Coordinate.Latitude.ToString().Replace(",", "."),
+                BaseUrl = query.BaseAppUrl
             });
 
             ApplyUsersWhereStatement(sqlBuilder, query);
 
             await using var connection = new SqlConnection(_sqlConnectionConfiguration.MainConnectionString);
-            return await connection.QueryAsync<UserDto>(template.RawSql, template.Parameters);
+            using var multi = await connection.QueryMultipleAsync(template.RawSql, template.Parameters);
+
+            var users = multi.Read<UserDto>().ToList();
+            var photos = multi.Read<UserPhotoDto>().ToList();
+
+            foreach (var userDto in users)
+            {
+                userDto.Photos = photos.Where(x => x.Id == userDto.Id).ToList();
+            }
+
+            return users;
         }
 
         private void ApplyUsersWhereStatement(SqlBuilder sqlBuilder, GetUsersQuery query)

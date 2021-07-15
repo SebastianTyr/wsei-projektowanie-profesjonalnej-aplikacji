@@ -22,7 +22,8 @@ namespace NTMY.Web.Extensions
         private static void MigrateDatabases(this IApplicationBuilder app)
         {
             var mainContext = app.ApplicationServices.GetService<DbContext>();
-            var eventContext = app.ApplicationServices.GetService<PlaygroundShared.Infrastructure.EF.EventDbContext.EventDbContext>();
+            var eventContext = app.ApplicationServices
+                .GetService<PlaygroundShared.Infrastructure.EF.EventDbContext.EventDbContext>();
 
             mainContext.Database.Migrate();
             eventContext.Database.Migrate();
@@ -57,3 +58,5 @@ namespace NTMY.Web.Extensions
         }
     }
 }
+
+    

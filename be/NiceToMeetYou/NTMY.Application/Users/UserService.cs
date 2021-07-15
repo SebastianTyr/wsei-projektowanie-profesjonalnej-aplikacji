@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using NTMY.Application.Interfaces.Users;
 using NTMY.Application.Interfaces.Users.DTOs;
@@ -95,6 +98,28 @@ namespace NTMY.Application.Users
             var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
             user.RemoveLike(no);
 
+            await _userRepository.PersistAsync(user);
+        }
+
+        public async Task AddPhotoAsync(IFormFile file)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            var folderName = Path.Combine("Resources/", "Images/");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            if (file.Length <= 0)
+            {
+                throw new BusinessLogicException(UserResources.IncorrectPhotoSizeMessage);
+            }
+
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fullPath = Path.Combine(pathToSave, fileName);
+
+            var dbPath = Path.Combine(folderName, fileName);
+            await using var stream = new FileStream(fullPath, FileMode.Create);
+            await file.CopyToAsync(stream);
+
+            user.AddPhoto(fileName, "jpg", file.Length, dbPath);
             await _userRepository.PersistAsync(user);
         }
 

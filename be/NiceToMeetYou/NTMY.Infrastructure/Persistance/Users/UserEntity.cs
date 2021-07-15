@@ -31,5 +31,7 @@ namespace NTMY.Infrastructure.Persistance.Users
         public string AddressPostCode { get; set; }
         public string AddressCountry { get; set; }
         public virtual List<UserLikeEntity> Likes { get; set; }
+        public virtual List<UserPhotoEntity> Photos { get; set; }
+        public virtual List<UserWeddingEntity> Weddings { get; set; }
     }
 }

@@ -8,12 +8,14 @@ namespace NTMY.Application.Interfaces.Users.Queries
         public int MaxDistance { get; }
         public int? MaxAge { get; }
         public Gender[] Gender { get; }
+        public string BaseAppUrl { get; }
 
-        public GetUsersQuery(int maxDistance, int? maxAge, Gender[] gender)
+        public GetUsersQuery(int maxDistance, int? maxAge, Gender[] gender, string baseAppUrl)
         {
             MaxDistance = maxDistance;
             MaxAge = maxAge;
             Gender = gender;
+            BaseAppUrl = baseAppUrl;
         }
     }
 }
