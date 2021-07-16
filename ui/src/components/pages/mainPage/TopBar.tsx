@@ -110,7 +110,7 @@ const TopBar: FC = () => {
                 </Link>
             </LeftContainer>
             <IconsSection> 
-            <PersonName>{userData.firstName}</PersonName>
+            <PersonName>{userData?.firstName}</PersonName>
                 <Messages>
                     <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon"/>
                     <Badge> 1 </Badge>
