@@ -6,8 +6,7 @@ import Button from '../common/Button';
 import Label from '../common/Label';
 import Input from '../common/Input';
 import ErrorBox from "../common/ErrorBox";
-import { Colors } from '../../styledHelpers/Colors';
-import { FontSize } from '../../styledHelpers/FontSize';
+
 
 const Wrapper = styled.div`
     .details-form__label {
@@ -91,28 +90,6 @@ interface IDetailsDataFromForm {
 
 const DetailsForm = () => {
 
-    // const initialValues: IDetailsDataFromDB = {
-    //     height: {
-    //         value: 0,
-    //         unit: 'cm'
-    //     },
-    //     weight: {
-    //         value: 0,
-    //         unit: 'kg'
-    //     },
-    //     address: {
-    //         street: '',
-    //         city: '',
-    //         postCode: '',
-    //         country: ''
-    //     },
-    //     description: '',
-    //     wantedGender: 0,
-    //     coordinate: {
-    //         longitude: 0,
-    //         latitude: 0
-    //     }
-    // }
 
     const initialValues: IDetailsDataFromForm = {
         heightValue: 0,
@@ -210,7 +187,6 @@ const DetailsForm = () => {
                 </CustomForm>
             </Formik>
         </Wrapper>
-
 
     );
 };
