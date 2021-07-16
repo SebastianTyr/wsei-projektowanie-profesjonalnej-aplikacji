@@ -121,5 +121,17 @@ namespace NTMY.Web.Controllers
 
             return Ok();
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("GetCurrentUserInfo")]
+        public async Task<IActionResult> GetCurrentUserInfo()
+        {
+            var baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            var query = new GetCurrentUserInfoQuery(baseUrl);
+            var result = await _commandQueryDispatcherDecorator
+                .DispatchAsync<GetCurrentUserInfoQuery, CurrentUserInfoDto>(query);
+
+            return Ok(_mapper.Map<CurrentUserViewModel>(result));
+        }
     }
 }

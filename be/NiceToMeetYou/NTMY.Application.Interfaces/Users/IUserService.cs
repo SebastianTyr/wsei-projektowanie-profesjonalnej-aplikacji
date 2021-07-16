@@ -20,5 +20,6 @@ namespace NTMY.Application.Interfaces.Users
         Task AddUserLikeAsync(AggregateId likedUserId);
         Task RemoveUserLikeAsync(int no);
         Task AddPhotoAsync(IFormFile fileStream);
+        Task<CurrentUserInfoDto> GetCurrentUserInfoAsync(string baseUrl);
     }
 }
