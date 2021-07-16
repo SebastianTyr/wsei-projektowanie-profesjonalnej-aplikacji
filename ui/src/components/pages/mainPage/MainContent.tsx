@@ -103,10 +103,16 @@ const MainContent: FC = () => {
         setAllUsers(data.items);
 
       }));
+
+      fetch('https://localhost:5001/Users​/GetCurrentUserInfo', {
+        method: "GET",
+        headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
+  
+      }).then(response => response.json())
+      .then(data => console.log(data))
   }, []);
-
+  
   console.log(allUsers);
-
 
   return (
     <Wrapper>
