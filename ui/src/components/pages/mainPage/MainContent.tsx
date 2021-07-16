@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { IState } from '../../../reducers';
+import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import { Padding } from '../../../styledHelpers/Padding';
@@ -75,6 +78,9 @@ interface ISingleUser {
 const MainContent: FC = () => {
 
   const [allUsers, setAllUsers] = useState<ISingleUser[]>([]);
+  const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
+    ...state.userData
+  }));
 
 
   const usersParams = new URLSearchParams({
@@ -104,6 +110,7 @@ const MainContent: FC = () => {
 
   return (
     <Wrapper>
+      {console.log(userData)}
       <SearchWrapper>
         <Search type="search" placeholder="Znajdź wymarzoną partnerkę/partnera" />
         <SearchButtonContainer>
