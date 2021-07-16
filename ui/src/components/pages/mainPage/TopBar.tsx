@@ -8,6 +8,9 @@ import { Margin } from '../../../styledHelpers/Margin';
 import IconButtonGeneric from '../../common/IconButtonGeneric';
 import { Gradient } from '../../../styledHelpers/Gradient';
 import { Border } from '../../../styledHelpers/Border';
+import { IState } from '../../../reducers';
+import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
+import { useSelector } from 'react-redux';
 
 
 const Wrapper = styled.div`
@@ -91,6 +94,12 @@ const Profile = styled.div`
   border: 0;
 `;
 const TopBar: FC = () => {
+
+    const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
+        ...state.userData
+      }));
+    
+
     return (
         <Wrapper>
             <LeftContainer>
@@ -101,7 +110,7 @@ const TopBar: FC = () => {
                 </Link>
             </LeftContainer>
             <IconsSection> 
-            <PersonName>Anna Mika</PersonName>
+            <PersonName>{userData?.firstName}</PersonName>
                 <Messages>
                     <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon"/>
                     <Badge> 1 </Badge>
