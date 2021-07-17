@@ -15,7 +15,7 @@ const Wrapper = styled.div`
     background-image: url("./media/images/landing-background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center -7.5rem;
+    background-position: center 66%;
     .landing-page__button {
         margin: 0 auto;
     }
@@ -67,7 +67,7 @@ const Main = styled.main`
 `
 const Content = styled.div`
     z-index: 1;
-    margin-top: 9.625rem;
+    margin-top: 2.625rem;
 `
 const InfoContainer = styled.div`
     margin-top: ${Margin[16]};
@@ -160,7 +160,10 @@ const LandingPage: FC = () => {
                                     <Info>Partner/Partnerka odmówili na kilka dni przed ?</Info>
                                 </div>
                                 <div>
-                                    <Info>Trafileś w dobre miejsce! Pomożemy ci znależć odpowiednią osobę na ten wyjątkowy wieczór.</Info>
+                                    <Info>Trafileś w dobre miejsce!</Info>
+                                </div>
+                                <div>
+                                    <Info>Pomożemy ci znależć odpowiednią osobę na ten wyjątkowy wieczór.</Info>
                                 </div>
                                 <div>
                                     <Info>Załóż konto i baw się świetnie na weselu !</Info>
