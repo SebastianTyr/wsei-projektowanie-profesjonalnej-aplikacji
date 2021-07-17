@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     }
     &__header {
         text-align: center;
-        color: ${Colors.red};
+        color: ${Colors.navy};
         font-size: ${FontSize[24]};
     }
   }

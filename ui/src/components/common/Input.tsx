@@ -3,6 +3,7 @@ import { Field } from "formik";
 import { Colors } from "../../styledHelpers/Colors";
 import { createGlobalStyle } from "styled-components";
 import { FontSize } from "../../styledHelpers/FontSize";
+import { Border } from "../../styledHelpers/Border";
 
 interface InputProps {
     id: string;
@@ -18,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${FontSize[16]};
     padding: 0.25em 0.5em;
     background-color: ${Colors.white};
-    border: 2px solid #8b8a8b;
+    border: ${Border.navy};
     border-radius: 4px;
     transition: 180ms box-shadow ease-in-out; */
     &:focus {

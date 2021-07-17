@@ -11,10 +11,13 @@ interface ButtonProps {
     size: string;
     text: string;
     type: string;
+    className?: string;
     onClick?: () => void;
 }
 
 const GenericButton = styled.button<{variant: string; size: string; text: string}>`
+    font-family: 'Roboto', sans-serif;
+    font-weight:  500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,7 +25,6 @@ const GenericButton = styled.button<{variant: string; size: string; text: string
     padding: ${Padding[8]} ${Padding[16]};
     font-size: ${FontSize[14]};
     z-index: 1;
-    font-weight: 600;
     letter-spacing: 0.02857em;
     text-transform: uppercase;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -104,7 +106,7 @@ const GenericButton = styled.button<{variant: string; size: string; text: string
 
 const Button:FC<ButtonProps> = (props) =>{
     return (
-        <GenericButton variant={props.variant} size={props.size} text={props.text} onClick={props.onClick} >{props.text}</GenericButton>
+        <GenericButton variant={props.variant} size={props.size} text={props.text} onClick={props.onClick} className={props.className}>{props.text}</GenericButton>
     )
 }
 export default Button;
