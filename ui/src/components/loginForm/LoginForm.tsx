@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from "formik";
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -8,8 +9,12 @@ import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
 import { useDispatch } from "react-redux";
-import { getIsAuthInfo } from '../../actions/authActions';
-type GetIsAuthInfo = ReturnType<typeof getIsAuthInfo>;
+import { getCurrentUserInfo } from '../../actions/loggedInUserActions';
+import { useEffect } from "react";
+type GetCurrentUserInfo = ReturnType<typeof getCurrentUserInfo>;
+
+// import { getIsAuthInfo } from '../../actions/authActions';
+// type GetIsAuthInfo = ReturnType<typeof getIsAuthInfo>;
 
 const Wrapper = styled.div`
    .registration-form__label {
@@ -38,6 +43,16 @@ interface ILoginData {
     password: string
 }
 
+interface ICurrentUser {
+    email: string,
+    firstName: string,
+    id: string,
+    secondName: string,
+    userName: string,
+    jwtToken: string
+
+}
+
 const LoginForm = () => {
 
     const initialValues: ILoginData = {
@@ -49,6 +64,27 @@ const LoginForm = () => {
 
     let history = useHistory();
 
+    const [currentUser, setCurrentUser] = useState<ICurrentUser>({
+        email: '',
+        firstName: '',
+        id: '',
+        secondName: '',
+        userName: '',
+        jwtToken: ''
+    })
+
+
+    useEffect(() => {
+        dispatch<GetCurrentUserInfo>(getCurrentUserInfo(
+            {
+                email: currentUser.email,
+                firstName: currentUser.firstName,
+                id: currentUser.id,
+                secondName: currentUser.secondName,
+                userName: currentUser.secondName
+            }
+        ));
+    }, [currentUser])
 
     return (
         <Wrapper className="modal">
@@ -75,7 +111,7 @@ const LoginForm = () => {
                     })
                         .then((response) => {
                             if (response.status === 200) {
-                                dispatch<GetIsAuthInfo>(getIsAuthInfo(true));
+
                                 return response.json();
                             } else {
                                 alert("Upsss, upewnij się, że podałeś poprawny email i/lub poprawne hasło");
@@ -84,10 +120,22 @@ const LoginForm = () => {
                         .then((data => {
                             console.log(data);
                             sessionStorage.setItem("jwtToken", data.jwtToken);
-                        })).then(() => {history.push("/main")});
+                            setCurrentUser(data);
+
+
+                            // dispatch<GetCurrentUserInfo>(getCurrentUserInfo({
+                            //     emial: data.email,
+                            //     fristName: data.firstName,
+                            //     id: data.id,
+                            //     secondName: data.secondName,
+                            //     userName: data.userName
+
+                            // }))
+                        })).then(() => { history.push("/main") });
                 }}
             >
                 <CustomForm>
+                    {console.log(currentUser)}
                     <FormItem>
                         <Label htmlFor='email' labelName="Email" className="registration-form__label" />
                         <Input id='email' type='email' name='email' className="registration-form__input" />

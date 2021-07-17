@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NTMY.Domain.Users;
 
 namespace NTMY.Application.Interfaces.Users.DTOs
@@ -15,5 +16,14 @@ namespace NTMY.Application.Interfaces.Users.DTOs
         public string HeightUnit { get; set; }
         public Gender Gender { get; set; }
         public string Description { get; set; }
+        public List<UserPhotoDto> Photos { get; set; }
+    }
+
+    public class UserPhotoDto
+    {
+        public Guid Id { get; set; }
+        public int FileNo { get; set; }
+        public string FileName { get; set; }
+        public string FileUrl { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace NTMY.Domain.Users
         private IUserDomainEventFactory _userDomainEventFactory;
         private IPasswordHashingPolicyFactory _passwordHashingPolicyFactory;
         private IPasswordPolicyFactory _passwordPolicyFactory;
+        private ICorrelationContext _correlationContext;
 
         public string UserName { get; private set; }
         public string PasswordHash { get; private set; }
@@ -52,12 +53,18 @@ namespace NTMY.Domain.Users
         }
 
         private List<UserRating> _ratings = new List<UserRating>();
-        private ICorrelationContext _correlationContext;
-
         public IEnumerable<UserRating> Ratings
         {
             get => _ratings;
             private set => _ratings = value.ToList();
+        }
+
+        private List<UserPhoto> _photos = new List<UserPhoto>();
+
+        public IEnumerable<UserPhoto> Photos
+        {
+            get => _photos;
+            private set => _photos = value.ToList();
         }
 
         public User(
@@ -180,16 +187,16 @@ namespace NTMY.Domain.Users
 
         #region Weddings
 
-        public void AddIncomingWedding(DateTime date, Address address)
+        public void AddIncomingWedding(DateTime date, Address address, string description)
         {
-            var wedding = new Wedding(_incomingWeddings.GetNextNo(), date, Address);
+            var wedding = new Wedding(_incomingWeddings.GetNextNo(), date, Address, description);
             _incomingWeddings.Add(wedding);
         }
 
-        public void UpdateIncomingWedding(int no, DateTime date, Address address)
+        public void UpdateIncomingWedding(int no, DateTime date, Address address, string description)
         {
             var incomingWedding = GetWeddingOrThrow(no);
-            incomingWedding.Update(date, address);
+            incomingWedding.Update(date, address, description);
         }
 
         public void RemoveIncomingWedding(int no)
@@ -311,6 +318,33 @@ namespace NTMY.Domain.Users
             {
                 throw new BusinessLogicException(UserResources.RateAlreadyAddedMessage);
             }
+        }
+
+        #endregion
+
+        #region Photos
+
+        public void AddPhoto(string name, string format, long sizeInBytes, string path)
+        {
+            var photo = new UserPhoto(_photos.GetNextNo(), path, name, format, sizeInBytes);
+            _photos.Add(photo);
+        }
+
+        public void RemovePhoto(int no)
+        {
+            var photo = GetPhotoOrThrow(no);
+            photo.MarkAsArchived();
+        }
+
+        private UserPhoto GetPhotoOrThrow(int no)
+        {
+            var photo = _photos.SingleOrDefault(x => x.No == no);
+            if (photo == null)
+            {
+                throw new BusinessLogicException(UserResources.PhotoNotFoundMessage);
+            }
+
+            return photo;
         }
 
         #endregion

@@ -1,5 +1,9 @@
-import { FC } from 'react';
+import { useEffect } from 'react';
+import { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { IState } from '../../../reducers';
+import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import { Padding } from '../../../styledHelpers/Padding';
@@ -56,42 +60,80 @@ const SearchButtonContainer = styled.button`
   justify-content: center;
 `;
 
+
+interface ISingleUser {
+  age: number
+  description: string | null
+  distance: number
+  firstName: string
+  gender: number
+  heightUnit: string
+  heightValue: number
+  id: string
+  weightUnit: string
+  weightValue: number
+};
+
+
 const MainContent: FC = () => {
-    return (
-        <Wrapper>
-            <SearchWrapper>
-                <Search type="search" placeholder="Znajdź wymarzoną partnerkę/partnera" />
-                <SearchButtonContainer>
-                    <IconButtonGeneric className="md" src="./media/icons/search.svg" alt="search icon"/>
-                </SearchButtonContainer>
-            </SearchWrapper>
 
-            <CardWrapper>
-                <CardItem   image="./photos/userAvatar_2.jpg"
-                            name="Aniela Kowalska"
-                            description="Najlepsza towarzyszka na wesele"
-                />
-                <CardItem   image="./photos/userAvatar_2.jpg"
-                            name="Jolanta Fajna"
-                            description="Udana zabawa do rana"
-                />
-                <CardItem   image="./photos/userAvatar_2.jpg"
-                            name="Jan Nowak"
-                            description="Nie daj sie zmylić pozorom"
-                />
-                <CardItem   image="./photos/userAvatar_2.jpg"
-                            name="Stanisław Polak"
-                            description="Wiem co to tradycja"
-                />
-                <CardItem   image="./photos/userAvatar_2.jpg"
-                            name="Jan Jan"
-                            description="Kulturalny pan do zabawy"
-                />
-               
-            </CardWrapper>
-        </Wrapper>
+  const [allUsers, setAllUsers] = useState<ISingleUser[]>([]);
+  const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
+    ...state.userData
+  }));
 
-    );
+
+  const usersParams = new URLSearchParams({
+    maxDistance: '10',
+    genders: '20'
+  }).toString();
+
+  const url = `https://localhost:5001/Users/Browse?${usersParams}`;
+
+  useEffect(() => {
+
+
+    fetch(url, {
+      method: 'GET',
+      headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
+
+    }).then(response => response.json())
+      .then((data => {
+        console.log(data);
+        setAllUsers(data.items);
+
+      }));
+  }, []);
+
+  console.log(allUsers);
+
+
+  return (
+    <Wrapper>
+      {console.log(userData)}
+      <SearchWrapper>
+        <Search type="search" placeholder="Znajdź wymarzoną partnerkę/partnera" />
+        <SearchButtonContainer>
+          <IconButtonGeneric className="md" src="./media/icons/search.svg" alt="search icon" />
+        </SearchButtonContainer>
+      </SearchWrapper>
+
+      <CardWrapper>
+        {
+          allUsers?.map((user) => {
+            return (
+              <CardItem key={user.id}
+              image="./photos/userAvatar_2.jpg"
+              name={user.firstName}
+              description="Najlepsza towarzyszka na wesele"
+              />
+              )
+          })
+        }
+      </CardWrapper>
+    </Wrapper>
+
+  );
 
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using NTMY.Domain.Users;
 
 namespace NTMY.Application.Interfaces.Users.DTOs
 {
@@ -10,8 +11,9 @@ namespace NTMY.Application.Interfaces.Users.DTOs
         public string FirstName { get; }
         public string SecondName { get;}
         public string JwtToken { get; }
+        public Gender Gender { get; }
 
-        public LoggedUserDto(Guid id, string userName, string email, string firstName, string secondName, string jwtToken)
+        public LoggedUserDto(Guid id, string userName, string email, string firstName, string secondName, string jwtToken, Gender gender)
         {
             Id = id;
             UserName = userName;
@@ -19,6 +21,7 @@ namespace NTMY.Application.Interfaces.Users.DTOs
             FirstName = firstName;
             SecondName = secondName;
             JwtToken = jwtToken;
+            Gender = gender;
         }
     }
 }

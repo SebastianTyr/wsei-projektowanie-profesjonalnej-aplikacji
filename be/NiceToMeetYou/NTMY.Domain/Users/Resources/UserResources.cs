@@ -16,5 +16,7 @@
         public const string RateAlreadyAddedMessage = nameof(RateAlreadyAddedMessage);
         public const string RatingNotFoundMessage = nameof(RatingNotFoundMessage);
         public const string UserShouldBeActiveMessage = nameof(UserShouldBeActiveMessage);
+        public const string PhotoNotFoundMessage = nameof(PhotoNotFoundMessage);
+        public const string IncorrectPhotoSizeMessage = nameof(IncorrectPhotoSizeMessage);
     }
 }

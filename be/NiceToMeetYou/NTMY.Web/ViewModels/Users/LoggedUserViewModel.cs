@@ -1,4 +1,5 @@
 ﻿using System;
+using NTMY.Domain.Users;
 
 namespace NTMY.Web.ViewModels.Users
 {
@@ -10,5 +11,6 @@ namespace NTMY.Web.ViewModels.Users
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string JwtToken { get; set; }
+        public Gender Gender { get; set; }
     }
 }

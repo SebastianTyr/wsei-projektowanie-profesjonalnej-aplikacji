@@ -10,6 +10,8 @@ namespace NTMY.Infrastructure.Contexts
     {
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserLikeEntity> UserLikes { get; set; }
+        public DbSet<UserWeddingEntity> UserWeddings { get; set; }
+        public DbSet<UserPhotoEntity> UserPhotos { get; set; }
         public DbSet<PairEntity> Pairs { get; set; }
         public DbSet<PairMessageEntity> PairMessages { get; set; }
 
@@ -25,6 +27,8 @@ namespace NTMY.Infrastructure.Contexts
         {
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserLikeEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserPhotoEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserWeddingEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PairEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PairMessageEntityConfiguration());
         }

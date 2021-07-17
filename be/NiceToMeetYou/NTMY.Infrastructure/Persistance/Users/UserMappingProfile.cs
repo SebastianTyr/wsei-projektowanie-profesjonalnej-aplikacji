@@ -26,11 +26,23 @@ namespace NTMY.Infrastructure.Persistance.Users
                 .ForMember(x => x.CoordinateLatitude, opt => opt.MapFrom(x => x.Coordinate.Latitude))
                 .ForMember(x => x.CoordinateLongitude, opt => opt.MapFrom(x => x.Coordinate.Longitude))
                 .ForMember(x => x.Likes, opt => opt.MapFrom(x => x.Likes))
+                .ForMember(x => x.Weddings, opt => opt.MapFrom(x => x.IncomingWeddings))
+                .ForMember(x => x.Photos, opt => opt.MapFrom(x => x.Photos))
                 .AfterMap((u, e) =>
                 {
                     foreach (var userLikeEntity in e.Likes)
                     {
                         userLikeEntity.Id = e.Id;
+                    }
+
+                    foreach (var userWeddingEntity in e.Weddings)
+                    {
+                        userWeddingEntity.Id = e.Id;
+                    }
+
+                    foreach (var userPhotoEntity in e.Photos)
+                    {
+                        userPhotoEntity.Id = e.Id;
                     }
                 });
 
@@ -41,13 +53,29 @@ namespace NTMY.Infrastructure.Persistance.Users
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => new Address(x.AddressStreet, x.AddressCity, x.AddressPostCode, x.AddressCountry)))
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => new GeoCoordinate(x.CoordinateLatitude, x.CoordinateLongitude)))
-                .ForMember(x => x.Likes, opt => opt.MapFrom(x => x.Likes));
+                .ForMember(x => x.Likes, opt => opt.MapFrom(x => x.Likes))
+                .ForMember(x => x.IncomingWeddings, opt => opt.MapFrom(x => x.Weddings))
+                .ForMember(x => x.Photos, opt => opt.MapFrom(x => x.Photos));
 
             CreateMap<UserLike, UserLikeEntity>()
                 .ForMember(x => x.LikedUserId, opt => opt.MapFrom(x => x.LikedUserId.Id));
 
             CreateMap<UserLikeEntity, UserLike>()
                 .ForMember(x => x.LikedUserId, opt => opt.MapFrom(x => new AggregateId(x.LikedUserId)));
+
+            CreateMap<Wedding, UserWeddingEntity>()
+                .ForMember(x => x.AddressCity, opt => opt.MapFrom(x => x.Address.City))
+                .ForMember(x => x.AddressStreet, opt => opt.MapFrom(x => x.Address.Street))
+                .ForMember(x => x.AddressPostCode, opt => opt.MapFrom(x => x.Address.PostCode))
+                .ForMember(x => x.AddressCountry, opt => opt.MapFrom(x => x.Address.Country));
+
+            CreateMap<UserPhoto, UserPhotoEntity>();
+            CreateMap<UserPhotoEntity, UserPhoto>();
+
+            CreateMap<UserWeddingEntity, Wedding>()
+                .ForMember(x => x.Address,
+                    opt => opt.MapFrom(x =>
+                        new Address(x.AddressStreet, x.AddressCity, x.AddressPostCode, x.AddressCountry)));
 
             CreateMap<IDomainEvent, UserEventEntity>()
                 .ConstructUsing(x => new UserEventEntity()

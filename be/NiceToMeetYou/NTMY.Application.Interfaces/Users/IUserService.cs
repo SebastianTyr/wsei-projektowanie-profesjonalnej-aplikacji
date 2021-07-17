@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Microsoft.AspNetCore.Http;
 using NTMY.Application.Interfaces.Users.DTOs;
 using NTMY.Domain.Users;
 using NTMY.Domain.Users.DataStructures;
@@ -17,5 +19,7 @@ namespace NTMY.Application.Interfaces.Users
         Task SetAdditionalInformationAsync(UserAdditionalInformationDataStructure dataStructure);
         Task AddUserLikeAsync(AggregateId likedUserId);
         Task RemoveUserLikeAsync(int no);
+        Task AddPhotoAsync(IFormFile fileStream);
+        Task<CurrentUserInfoDto> GetCurrentUserInfoAsync(string baseUrl);
     }
 }

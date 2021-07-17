@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import isAuth, { IAuthReducer } from './isAuthReducers';
+import userData, { ILoggedInReducer} from './loggedInUserReducers';
 
 export default combineReducers({
-    isAuth,
+    userData,
 })
 
 export interface IState {
-    isAuth: IAuthReducer,
+    userData: ILoggedInReducer
 }
