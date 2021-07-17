@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Colors } from '../../../styledHelpers/Colors';
+import { FontSize } from '../../../styledHelpers/FontSize';
 import { Margin } from '../../../styledHelpers/Margin';
+import { Padding } from '../../../styledHelpers/Padding';
 import Button from '../../common/Button';
 import LoginForm from '../../loginForm/LoginForm';
 import RegistrationForm from '../../registrationForm/RegistrationForm';
@@ -14,6 +15,10 @@ const Wrapper = styled.div`
     background-image: url("./media/images/landing-background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center 66%;
+    .landing-page__button {
+        margin: 0 auto;
+    }
 `
 const Header = styled.header`
     background: ${Colors.white};
@@ -47,8 +52,8 @@ const Main = styled.main`
     bottom: 0;
     left: 0;
     min-height: 60vh;
-    padding: 1rem;
-    color: white;
+    padding: ${Padding[16]};
+    color: ${Colors.white};
     height: calc(100vh - 82px);
     &:before {
         content: "";
@@ -60,29 +65,49 @@ const Main = styled.main`
         background: linear-gradient(180deg,rgba(0,0,0,.6) 0,transparent 100vh);
     }
 `
-
+const Content = styled.div`
+    z-index: 1;
+    margin-top: 2.625rem;
+`
+const InfoContainer = styled.div`
+    margin-top: ${Margin[16]};
+    margin-bottom: 3rem;
+`
+const Info = styled.p`
+    display: inline-block;
+    color: ${Colors.white};
+    z-index: 1;
+    text-shadow: 2px 1px 6px ${Colors.red};
+    margin-bottom: ${Margin[8]};
+    font-size: ${FontSize[36]};
+`
 const ButtonsContainer = styled.div`
     display: flex;
 `;
-
 const SingleButtonContainer = styled.div`
     display: flex;
     margin-left: ${Margin[16]};
-
 `
-
 const Section = styled.section`
-    background: ${Colors.white};
+    background-color: ${Colors.white};
+    padding: ${Padding[16]};
+    min-height: 50rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+const SectionHowItWorks = styled.section`
+    background-color: ${Colors.white};
     padding: 1rem;
-    min-height: 1000px;
+    min-height: 25rem;
     display: flex;
     align-items: center;
     justify-content: center;
 `
 const Footer = styled.footer`
-    background: ${Colors.white};
-    padding: 1rem;
-    min-height: 500px;
+    background: ${Colors.navy};
+    padding: ${Padding[16]};
+    min-height: 6.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,21 +147,41 @@ const LandingPage: FC = () => {
                     {isCreating &&
                         <RegistrationForm />
                     }
-
                     {isLogin &&
                         <LoginForm />
                     }
-
                     {(!isCreating && !isLogin) &&
-                        <Button type="text" variant="secondary" size="xl" text="Utwórz konto" onClick={createButtonHandler} />
+                        <Content>
+                            <InfoContainer>
+                                <div>
+                                    <Info>Zbliża się wesele, a Ty nie masz z kim iść?</Info>
+                                </div>
+                                <div>
+                                    <Info>Partner/Partnerka odmówili na kilka dni przed ?</Info>
+                                </div>
+                                <div>
+                                    <Info>Trafileś w dobre miejsce!</Info>
+                                </div>
+                                <div>
+                                    <Info>Pomożemy ci znależć odpowiednią osobę na ten wyjątkowy wieczór.</Info>
+                                </div>
+                                <div>
+                                    <Info>Załóż konto i baw się świetnie na weselu !</Info>
+                                </div>
+                            </InfoContainer>
+                            <Button type="text" variant="secondary" size="xl" text="Załóż konto" className="landing-page__button" onClick={createButtonHandler} />
+                        </Content>
                     }
                 </Main>
             </Wrapper>
             <Section>
-                Section
+               cos
             </Section>
+            <SectionHowItWorks>
+              
+            </SectionHowItWorks>
             <Footer>
-                Footer
+             
             </Footer>
         </>
     );

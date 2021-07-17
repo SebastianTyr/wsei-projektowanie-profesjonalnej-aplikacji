@@ -8,12 +8,12 @@ import Modal from './components/common/Modal';
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background-color: ${Colors.gray01};
+    font-family: 'Roboto', sans-serif;
+    background-color: ${Colors.gray05};
     min-height: 100vh;
     width: 100%;
     color: ${Colors.black};
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 0.3px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -49,6 +49,10 @@ const Reset = createGlobalStyle`
     &:focus {
       outline: none;
     }
+  }
+  p {
+    padding: 0;
+    margin: 0;
   }
 `;
 const Scrollbar = createGlobalStyle`

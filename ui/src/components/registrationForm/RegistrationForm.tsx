@@ -94,7 +94,7 @@ const RegistrationForm = () => {
     return (
         <Wrapper className="modal">
             <HeaderWrapper className="modal__header">
-                <h2>Utwórz Konto</h2>
+                <h2>Załóż Konto</h2>
             </HeaderWrapper>
             <Formik
                 initialValues={initialValues}
