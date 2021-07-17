@@ -8,5 +8,7 @@ export const Padding = {
     40: "2.5rem",
     48: "3rem",
     56: "3.5rem",
+    60: "3.75rem",
+    128: "8rem",
   };
   

@@ -22,10 +22,9 @@ const GlobalStyle = createGlobalStyle`
     border: ${Border.navy};
     border-radius: 4px;
     transition: 180ms box-shadow ease-in-out; */
-    &:focus {
-        border-color: ${Colors.red};
+    &::focus, &::active {
+        border: ${Border.red};
         box-shadow: 0 0 0 3px rgba(255, 120, 84, 0.4);
-        outline: 3px solid transparent;
     }
     &:not(textarea) {
         line-height: 1;
@@ -45,6 +44,11 @@ const GlobalStyle = createGlobalStyle`
         cursor: not-allowed;
     }
 }
+    textarea {
+        resize: none;
+        border: ${Border.navy};
+        border-radius: 4px;
+    }
 `;
 
 const Input:FC<InputProps>= (props) => {

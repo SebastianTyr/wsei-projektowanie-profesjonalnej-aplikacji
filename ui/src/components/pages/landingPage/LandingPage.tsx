@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { FC } from 'react';
 import styled from 'styled-components';
+import { Border } from '../../../styledHelpers/Border';
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
+import { Gradient } from '../../../styledHelpers/Gradient';
 import { Margin } from '../../../styledHelpers/Margin';
 import { Padding } from '../../../styledHelpers/Padding';
 import Button from '../../common/Button';
@@ -90,19 +92,119 @@ const SingleButtonContainer = styled.div`
 `
 const Section = styled.section`
     background-color: ${Colors.white};
-    padding: ${Padding[16]};
-    min-height: 50rem;
+    padding:  ${Padding[128]} ${Padding[16]};
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 `
-const SectionHowItWorks = styled.section`
-    background-color: ${Colors.white};
-    padding: 1rem;
-    min-height: 25rem;
+const SectionHeader = styled.h2`
+    font-size: ${FontSize[36]};
+    color: ${Colors.navy};
+    margin-bottom: 100px;
+`
+const InstructionContainer = styled.div`
+    width: 80%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    p {
+        font-size: ${FontSize[24]};
+        font-weight: 500;
+        color: ${Colors.navy};
+    }
+    svg path{
+        fill: ${Colors.white};
+    }
+`
+const Register = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+const RegisterImageContainer = styled.div`
+    width: 200px;
+    height: 200px;
+    margin-bottom: ${Margin[56]};
+    padding: ${Padding[16]};
+    border: ${Border.red};
+    background-color: ${Colors.white};
+    border-radius: 0.6rem;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    &:hover {
+        box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    }
+    &:active {
+        box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+    }
+`
+const RegisterImage = styled.div`
+    width: 100%;
+    height: 100%;
+    background-image: url("./media/icons/register.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+`
+const Find = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+const FindImageContainer = styled.div`
+    width: 200px;
+    height: 200px;
+    margin-bottom: ${Margin[56]};
+    padding: ${Padding[16]};
+    border: ${Border.red};
+    background-color: ${Colors.white};
+    border-radius: 0.6rem;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    &:hover {
+        box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    }
+    &:active {
+        box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+    }
+`
+const FindImage = styled.div`
+    width: 100%;
+    height: 100%;
+    background-image: url("./media/icons/find.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+`
+const HaveFun = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+const HaveFunImageContainer = styled.div`
+    width: 200px;
+    height: 200px;
+    margin-bottom: ${Margin[56]};
+    padding: ${Padding[16]};
+    border: ${Border.red};
+    background-color: ${Colors.white};
+    border-radius: 0.6rem;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    &:hover {
+        box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    }
+    &:active {
+        box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+    }
+`
+const HaveFunImage = styled.div`
+    width: 100%;
+    height: 100%;
+    background-image: url("./media/icons/dance.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 const Footer = styled.footer`
     background: ${Colors.navy};
@@ -175,11 +277,28 @@ const LandingPage: FC = () => {
                 </Main>
             </Wrapper>
             <Section>
-               cos
+               <SectionHeader> Jak to działa? </SectionHeader>
+               <InstructionContainer>
+                    <Register>
+                        <RegisterImageContainer>
+                            <RegisterImage/>
+                        </RegisterImageContainer>
+                        <p>Zarejestruj się</p>
+                    </Register>
+                    <Find>
+                        <FindImageContainer> 
+                            <FindImage/>
+                        </FindImageContainer>
+                        <p>Znajdź partnera</p>
+                    </Find>
+                    <HaveFun>
+                        <HaveFunImageContainer> 
+                            <HaveFunImage/>
+                        </HaveFunImageContainer>
+                        <p>Bawcie się do rana!</p>
+                    </HaveFun>
+               </InstructionContainer>
             </Section>
-            <SectionHowItWorks>
-              
-            </SectionHowItWorks>
             <Footer>
              
             </Footer>
