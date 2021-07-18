@@ -105,7 +105,7 @@ const RegistrationForm = (props: any) => {
 
     return (
         <>
-            {/* test */}
+            
             {isRegistered &&
                 <LoginWrapper>
                     <h2>Aby aktytować konto, proszę się zalogować</h2>
