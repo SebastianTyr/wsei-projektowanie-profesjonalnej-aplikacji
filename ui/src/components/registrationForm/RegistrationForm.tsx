@@ -93,7 +93,7 @@ const RegistrationForm = (props: any) => {
         firstName: Yup.string().required('Proszę podać imię'),
         lastName: Yup.string().required('Proszę podać nazwisko'),
         email: Yup.string().email('Email niepoprawny').required('Proszę podać email'),
-        password: Yup.string().min(6, 'Hasło musi mieć co najmniej 6 znaków').required('Proszę podać hasło'),
+        password: Yup.string().min(8, 'Hasło musi mieć co najmniej 8 znaków').required('Proszę podać hasło'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Hasło musi się zgadzać').required('Proszę powtórzyć hasło'),
         gender: Yup.string().required('Proszę wskazać płeć'),
         birthDate: Yup.date().required("Proszę podać datę urodzenia")
