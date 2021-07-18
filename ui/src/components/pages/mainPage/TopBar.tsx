@@ -93,37 +93,47 @@ const Profile = styled.div`
   position: relative;
   border: 0;
 `;
+
+const WeddingWrapper = styled.div`
+    border: 1px solid red;
+    margin-right: ${Margin[16]};
+    padding: 10px;
+`;
+
+
 const TopBar: FC = () => {
 
-    const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
+    const { userData } = useSelector<IState, ILoggedInReducer>(state => ({
         ...state.userData
-      }));
-    
+    }));
+
 
     return (
         <Wrapper>
             <LeftContainer>
                 <Link to="/main">
                     <LogoContainer>
-                        <Logo/>
+                        <Logo />
                     </LogoContainer>
                 </Link>
             </LeftContainer>
-            <IconsSection> 
-            <PersonName>{userData?.firstName}</PersonName>
+            <IconsSection>
+                <PersonName>Cześć, {userData?.firstName}!</PersonName>
+                <Link to="/weddings">
+                    <WeddingWrapper>
+                        <span>Wesela</span>
+                    </WeddingWrapper>
+                </Link>
                 <Messages>
-                    <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon"/>
+                    <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
                     <Badge> 1 </Badge>
                 </Messages>
-          
+
                 <Link to="/profile">
                     <Profile>
-                        <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon"/>
+                        <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
                     </Profile>
                 </Link>
-               
-
-
             </IconsSection>
         </Wrapper>
     );

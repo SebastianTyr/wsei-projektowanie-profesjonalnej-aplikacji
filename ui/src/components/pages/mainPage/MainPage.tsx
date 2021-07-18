@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainContent from './MainContent';
 import TopBar from './TopBar';
 import ProfilePage from '../profilePage/ProfilePage';
+import WeddingsPage from '../weddingsPage/WeddingsPage';
 
 
 const Wrapper = styled.div`
@@ -21,6 +22,9 @@ const MainPage: FC = () => {
                 <Switch>
                     <Route path="/profile" exact>
                         < ProfilePage />
+                    </Route>
+                    <Route path="/weddings">
+                        <WeddingsPage/>
                     </Route>
                     <Route path="/main" exact>
                         <MainContent />
