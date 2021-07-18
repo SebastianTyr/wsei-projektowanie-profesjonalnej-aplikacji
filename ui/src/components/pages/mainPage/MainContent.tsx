@@ -88,12 +88,13 @@ const MainContent: FC = () => {
     genders: '20'
   }).toString();
 
-  const url = `https://localhost:5001/Users/Browse?${usersParams}`;
+  const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
+  const urlLoggedInUser =  `https://localhost:5001/Users​/GetCurrentUserInfo`;
 
   useEffect(() => {
 
 
-    fetch(url, {
+    fetch(urlSelectedUsers, {
       method: 'GET',
       headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
 
@@ -104,7 +105,7 @@ const MainContent: FC = () => {
 
       }));
 
-      fetch('https://localhost:5001/Users​/GetCurrentUserInfo', {
+      fetch( urlLoggedInUser, {
         method: "GET",
         headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
   

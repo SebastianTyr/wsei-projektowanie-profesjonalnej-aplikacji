@@ -62,6 +62,7 @@ const ImageForm = () => {
     const fileUploadHandler = () => {
         const fd = new FormData();
         fd.append('image', selectedFile, selectedFile.name);
+        console.log(fd);
         fetch('https://localhost:5001/Users/UploadPhoto', {
             method: 'POST',
             headers: { 
@@ -72,7 +73,8 @@ const ImageForm = () => {
         }).then(response => console.log(response));
 
     
-    }
+    };
+
 
 
     return (
@@ -94,7 +96,8 @@ const ImageForm = () => {
                     </PreviewWrapper>
                 }
                 <div>
-                    <Button onClick={fileUploadHandler} type="submit" variant="secondary" size="lg" text="Dodaj zjdęcie" />
+                    {/* <Button onClick={fileUploadHandler} type="submit" variant="secondary" size="lg" text="Dodaj zjdęcie" /> */}
+                    <button onClick={fileUploadHandler}>Dodaj zdjęcie</button>
                 </div>
             </form>
         </Wrapper>
