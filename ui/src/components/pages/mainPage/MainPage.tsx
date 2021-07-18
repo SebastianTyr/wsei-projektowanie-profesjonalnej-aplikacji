@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -6,6 +6,8 @@ import MainContent from './MainContent';
 import TopBar from './TopBar';
 import ProfilePage from '../profilePage/ProfilePage';
 import WeddingsPage from '../weddingsPage/WeddingsPage';
+import { boolean } from 'yup/lib/locale';
+import LandingPage from '../landingPage/LandingPage';
 
 
 const Wrapper = styled.div`
@@ -15,22 +17,36 @@ const Wrapper = styled.div`
 `;
 
 const MainPage: FC = () => {
+
+    const [isLoggedOut, setIsLoggedOut] = useState<boolean>(false);
+
+    const loggedOutHandler = () => {
+        setIsLoggedOut(true);
+        sessionStorage.removeItem('jwtToken');
+
+    }
+
     return (
         <Router>
-            <Wrapper>
-                <TopBar />
-                <Switch>
-                    <Route path="/profile" exact>
-                        < ProfilePage />
-                    </Route>
-                    <Route path="/weddings">
-                        <WeddingsPage/>
-                    </Route>
-                    <Route path="/main" exact>
-                        <MainContent />
-                    </Route>
-                </Switch>
-            </Wrapper>
+            {!isLoggedOut &&
+                <Wrapper>
+                    <TopBar loggedOut={loggedOutHandler} />
+                    <Switch>
+                        <Route path="/profile" exact>
+                            < ProfilePage />
+                        </Route>
+                        <Route path="/weddings" exact>
+                            <WeddingsPage />
+                        </Route>
+                        <Route path="/main" exact>
+                            <MainContent />
+                        </Route>
+                    </Switch>
+                </Wrapper>
+            }
+            {isLoggedOut &&
+                <LandingPage/>
+            }
         </Router>
     );
 }
