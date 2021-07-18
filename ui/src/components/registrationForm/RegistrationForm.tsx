@@ -99,7 +99,33 @@ const RegistrationForm = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={values => {
+                    console.log(values)
+                    let userGender = (values.gender === 'female') ? 20 : 10;
+                    
+                    const newUser = {
+                        userName: values.userName,
+                        firstName: values.firstName,
+                        secondName: values.lastName,
+                        email: values.email,
+                        password: values.password,
+                        confirmPassword: values.confirmPassword,
+                        gender: userGender,
+                        birthDate: values.birthDate
+                        };
+                    
+                    console.log(newUser)
+                    fetch('https://localhost:5001/Users', {
+                        method: 'POST',
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(newUser)
+                    }).then(() => {
+                        console.log('new user data sent')
+                    });
+
+                    }
+                }
+
             >
                 <CustomForm>
                     <FormItemsContainer>
