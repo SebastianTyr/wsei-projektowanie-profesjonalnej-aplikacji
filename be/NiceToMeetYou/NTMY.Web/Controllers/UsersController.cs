@@ -133,5 +133,43 @@ namespace NTMY.Web.Controllers
 
             return Ok(_mapper.Map<CurrentUserViewModel>(result));
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("AddIncomingWeddingToUser")]
+        public async Task<IActionResult> AddIncomingWeddingToUser([FromBody] AddIncomingWeddingToUserViewModel viewModel)
+        {
+            var command = new AddIncomingWeddingToUserCommand(
+                viewModel.Date,
+                new Address(viewModel.Address.Street, viewModel.Address.City, viewModel.Address.PostCode, viewModel.Address.Country),
+                viewModel.Description);
+
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut("UpdateUserIncomingWedding")]
+        public async Task<IActionResult> UpdateUserIncomingWedding([FromBody] UpdateUserIncomingWeddingViewModel viewModel)
+        {
+            var command = new UpdateUserIncomingWeddingCommand(
+                viewModel.No,
+                viewModel.Date,
+                new Address(viewModel.Address.Street, viewModel.Address.City, viewModel.Address.PostCode, viewModel.Address.Country),
+                viewModel.Description);
+
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("RemoveUserIncomingWedding")]
+        public async Task<IActionResult> RemoveUserIncomingWedding([FromBody] RemoveUserIncomingWeddingViewModel viewModel)
+        {
+            var command = new RemoveUserIncomingWeddingCommand(viewModel.No);
+
+            await _commandQueryDispatcherDecorator.DispatchAsync(command);
+            return Ok();
+        }
+
     }
 }
