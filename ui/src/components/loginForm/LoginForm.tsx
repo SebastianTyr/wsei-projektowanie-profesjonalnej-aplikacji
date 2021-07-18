@@ -121,16 +121,6 @@ const LoginForm = () => {
                             console.log(data);
                             sessionStorage.setItem("jwtToken", data.jwtToken);
                             setCurrentUser(data);
-
-
-                            // dispatch<GetCurrentUserInfo>(getCurrentUserInfo({
-                            //     emial: data.email,
-                            //     fristName: data.firstName,
-                            //     id: data.id,
-                            //     secondName: data.secondName,
-                            //     userName: data.userName
-
-                            // }))
                         })).then(() => { history.push("/main") });
                 }}
             >
