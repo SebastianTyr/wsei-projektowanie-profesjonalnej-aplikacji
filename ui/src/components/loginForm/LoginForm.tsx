@@ -3,14 +3,11 @@ import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from "formik";
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-
-import { Colors } from "../../styledHelpers/Colors";
 import Button from "../common/Button";
 import Label from "../common/Label";
 import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
-import { FontSize } from "../../styledHelpers/FontSize";
 import { useDispatch } from "react-redux";
 import { getCurrentUserInfo } from '../../actions/loggedInUserActions';
 import { useEffect } from "react";
@@ -26,8 +23,6 @@ const Wrapper = styled.div`
    .registration-form__input {
        margin-bottom: ${Margin[8]};
    }
-`;
-const HeaderWrapper = styled.div`
 `;
 const CustomForm = styled(Form)`
     display: flex;
@@ -93,9 +88,9 @@ const LoginForm = () => {
 
     return (
         <Wrapper className="modal">
-            <HeaderWrapper className="modal__header">
+            <div className="modal__header">
                 <h2>Zaloguj się</h2>
-            </HeaderWrapper>
+            </div>
 
             <Formik
                 initialValues={initialValues}

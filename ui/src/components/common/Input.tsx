@@ -3,6 +3,7 @@ import { Field } from "formik";
 import { Colors } from "../../styledHelpers/Colors";
 import { createGlobalStyle } from "styled-components";
 import { FontSize } from "../../styledHelpers/FontSize";
+import { Border } from "../../styledHelpers/Border";
 
 interface InputProps {
     id: string;
@@ -18,13 +19,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${FontSize[16]};
     padding: 0.25em 0.5em;
     background-color: ${Colors.white};
-    border: 2px solid #8b8a8b;
+    border: ${Border.navy};
     border-radius: 4px;
     transition: 180ms box-shadow ease-in-out; */
-    &:focus {
-        border-color: ${Colors.red};
+    &::focus, &::active {
+        border: ${Border.red};
         box-shadow: 0 0 0 3px rgba(255, 120, 84, 0.4);
-        outline: 3px solid transparent;
     }
     &:not(textarea) {
         line-height: 1;
@@ -44,6 +44,11 @@ const GlobalStyle = createGlobalStyle`
         cursor: not-allowed;
     }
 }
+    textarea {
+        resize: none;
+        border: ${Border.navy};
+        border-radius: 4px;
+    }
 `;
 
 const Input:FC<InputProps>= (props) => {
