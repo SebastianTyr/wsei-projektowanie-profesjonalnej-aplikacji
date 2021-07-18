@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
@@ -11,6 +11,7 @@ import { Border } from '../../../styledHelpers/Border';
 import { IState } from '../../../reducers';
 import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { useSelector } from 'react-redux';
+import { boolean } from 'yup/lib/locale';
 
 
 const Wrapper = styled.div`
@@ -100,42 +101,58 @@ const WeddingWrapper = styled.div`
     padding: 10px;
 `;
 
+const LogoutWrapper = styled.div`
+    margin-left: ${Margin[16]};
+    button {
+        border: 1px solid red;
+        padding: 10px;
+    }
+`;
 
-const TopBar: FC = () => {
+interface ITopBarProps {
+    loggedOut(): void;
+}
+
+const TopBar: FC<ITopBarProps> = (props) => {
+
 
     const { userData } = useSelector<IState, ILoggedInReducer>(state => ({
         ...state.userData
     }));
 
-
     return (
-        <Wrapper>
-            <LeftContainer>
-                <Link to="/main">
-                    <LogoContainer>
-                        <Logo />
-                    </LogoContainer>
-                </Link>
-            </LeftContainer>
-            <IconsSection>
-                <PersonName>Cześć, {userData?.firstName}!</PersonName>
-                <Link to="/weddings">
-                    <WeddingWrapper>
-                        <span>Wesela</span>
-                    </WeddingWrapper>
-                </Link>
-                <Messages>
-                    <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
-                    <Badge> 1 </Badge>
-                </Messages>
 
-                <Link to="/profile">
-                    <Profile>
-                        <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
-                    </Profile>
-                </Link>
-            </IconsSection>
-        </Wrapper>
+            <Wrapper>
+                <LeftContainer>
+                    <Link to="/main">
+                        <LogoContainer>
+                            <Logo />
+                        </LogoContainer>
+                    </Link>
+                </LeftContainer>
+                <IconsSection>
+                    <PersonName>Cześć, {userData?.firstName}!</PersonName>
+                    <Link to="/weddings">
+                        <WeddingWrapper>
+                            <span>Wesela</span>
+                        </WeddingWrapper>
+                    </Link>
+                    <Messages>
+                        <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
+                        <Badge> 1 </Badge>
+                    </Messages>
+                    <Link to="/profile">
+                        <Profile>
+                            <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
+                        </Profile>
+                    </Link>
+                    <LogoutWrapper>
+                        <Link to='/'>
+                            <button type='button' onClick={props.loggedOut}>Wyloguj się</button>
+                        </Link>
+                    </LogoutWrapper>
+                </IconsSection>
+            </Wrapper>
     );
 }
 
