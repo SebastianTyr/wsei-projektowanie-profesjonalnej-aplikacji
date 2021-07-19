@@ -34,11 +34,8 @@ const PreviewWrapper = styled.div`
 `;
 
 const ImageForm = () => {
-
-
+    const selectedFile = React.useRef<any>(null);
     const [isSelect, setIsSelect] = useState<boolean>(false);
-
-    let selectedFile: any;
 
     const history = useHistory();
 
@@ -55,29 +52,25 @@ const ImageForm = () => {
         if(curFile.length === 0)
             setIsSelect(false);
 
-        
-        selectedFile = curFile[0];
-        console.log(selectedFile.name);
-        
+        selectedFile.current = curFile;
     };
 
-    const fileUploadHandler = () => {
+    const fileUploadHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log(selectedFile)
+        event.preventDefault();
+
         const fd = new FormData();
-        fd.append('image', selectedFile);
-        console.log(fd);
+        Array.from(selectedFile.current).forEach((file) => fd.append("file", file as Blob))
         fetch('https://localhost:5001/Users/UploadPhoto', {
             method: 'POST',
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'),
-                "Content-Type": "multipart/form-data"
+                "accept": "*/*"
             },
             body: fd
         }).then(response => console.log(response))
         .then(() => { history.push("/main") });
-
-    
     };
-
 
 
     return (
@@ -99,7 +92,6 @@ const ImageForm = () => {
                     </PreviewWrapper>
                 }
                 <div>
-                    {/* <Button onClick={fileUploadHandler} type="submit" variant="secondary" size="lg" text="Dodaj zjdęcie" /> */}
                     <button onClick={fileUploadHandler}>Dodaj zdjęcie</button>
                 </div> 
             </form>
