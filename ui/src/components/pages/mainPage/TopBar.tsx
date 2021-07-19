@@ -39,10 +39,17 @@ const Logo = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
 `
-const PersonName = styled.span`
+const PersonNameContainer = styled.div`
     display: block;
-    font-size: ${FontSize[16]};
+    font-size: ${FontSize[18]};
+    color: ${Colors.navy};
+    font-weight: 600;
     margin-right: ${Margin[16]};
+
+    span {
+        color: ${Colors.red};
+        font-size: ${FontSize[24]};
+    }
 `;
 const LeftContainer = styled.div`
   display: flex;
@@ -105,10 +112,17 @@ const Logout = styled.button`
   border-radius: 50%;
   position: relative;
 `;
-const WeddingWrapper = styled.div`
-    border: 1px solid red;
-    margin-right: ${Margin[16]};
-    padding: 10px;
+const Weddings = styled.button`
+  width: 40px;
+  height: 40px;
+  margin-right: ${Margin[8]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: ${Gradient.pinkOrange};
+  border-radius: 50%;
+  position: relative;
+  border: 0;
 `;
 
 interface ITopBarProps {
@@ -133,11 +147,11 @@ const TopBar: FC<ITopBarProps> = (props) => {
                     </Link>
                 </LeftContainer>
                 <IconsSection>
-                    <PersonName>Cześć, {userData?.firstName}!</PersonName>
+                    <PersonNameContainer>Cześć, <span>{userData?.firstName} </span>!</PersonNameContainer>
                     <Link to="/weddings">
-                        <WeddingWrapper>
-                            <span>Wesela</span>
-                        </WeddingWrapper>
+                        <Weddings>
+                            <IconButtonGeneric className="md" src="./media/icons/weddings.svg" alt="weddings icon" />
+                        </Weddings>
                     </Link>
                     <Messages>
                         <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
