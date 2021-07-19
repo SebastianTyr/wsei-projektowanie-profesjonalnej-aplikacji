@@ -75,7 +75,7 @@ interface ISingleUser {
 };
 
 
-const MainContent: FC = () => {
+const MainContent = () => {
 
   const [allUsers, setAllUsers] = useState<ISingleUser[]>([]);
   const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
@@ -88,12 +88,14 @@ const MainContent: FC = () => {
     genders: '20'
   }).toString();
 
-  const url = `https://localhost:5001/Users/Browse?${usersParams}`;
+  const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
+  const urlLoggedInUser =  'https://localhost:5001/Users​/GetCurrentUserInfo';
+  const newUrl = 'https://localhost:5001/Users/GetCurrentUserInfo';
 
   useEffect(() => {
 
 
-    fetch(url, {
+    fetch(urlSelectedUsers, {
       method: 'GET',
       headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
 
@@ -103,10 +105,16 @@ const MainContent: FC = () => {
         setAllUsers(data.items);
 
       }));
+
+      fetch( newUrl, {
+        method: "GET",
+        headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
+  
+      }).then(response => response.json())
+      .then(data => console.log(data))
   }, []);
-
+  
   console.log(allUsers);
-
 
   return (
     <Wrapper>
