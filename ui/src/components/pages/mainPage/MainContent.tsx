@@ -90,6 +90,7 @@ const MainContent = () => {
 
   const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
   const urlLoggedInUser =  'https://localhost:5001/Users​/GetCurrentUserInfo';
+  const newUrl = 'https://localhost:5001/Users/GetCurrentUserInfo';
 
   useEffect(() => {
 
@@ -105,7 +106,7 @@ const MainContent = () => {
 
       }));
 
-      fetch( urlLoggedInUser, {
+      fetch( newUrl, {
         method: "GET",
         headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
   

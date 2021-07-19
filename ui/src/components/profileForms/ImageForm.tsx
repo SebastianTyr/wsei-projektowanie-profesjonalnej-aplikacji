@@ -63,7 +63,7 @@ const ImageForm = () => {
 
     const fileUploadHandler = () => {
         const fd = new FormData();
-        fd.append('image', selectedFile, selectedFile.name);
+        fd.append('image', selectedFile);
         console.log(fd);
         fetch('https://localhost:5001/Users/UploadPhoto', {
             method: 'POST',
