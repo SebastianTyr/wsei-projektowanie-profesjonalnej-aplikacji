@@ -1,11 +1,10 @@
-import { File } from '@babel/types';
-import React, { ChangeEvent } from 'react';
+
+import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 
-import Button from '../common/Button';
 
 
 const Wrapper = styled.div`
@@ -17,8 +16,7 @@ const Wrapper = styled.div`
 const ItemWrapper = styled.div`
     display: flex;
     flex-direction: column;
-// label ostylowac, żeby wyglądał jak button - użytkownik intuicyjnie 
-//powinien wiedzieć, że żeby dodać zdjęcie musi kliknąć w label
+
     label {
         margin: 10px 0;
     }
