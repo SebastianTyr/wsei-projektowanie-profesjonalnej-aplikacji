@@ -6,6 +6,8 @@ import Button from '../common/Button';
 import Label from '../common/Label';
 import Input from '../common/Input';
 import ErrorBox from "../common/ErrorBox";
+import { Colors } from '../../styledHelpers/Colors';
+import { FontSize } from '../../styledHelpers/FontSize';
 
 
 const Wrapper = styled.div`

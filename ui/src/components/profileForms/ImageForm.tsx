@@ -1,6 +1,7 @@
 import { File } from '@babel/types';
 import React, { ChangeEvent } from 'react';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 
@@ -39,6 +40,7 @@ const ImageForm = () => {
 
     let selectedFile: any;
 
+    const history = useHistory();
 
     const onChangeHandler = (event: any) => {
 
@@ -70,7 +72,8 @@ const ImageForm = () => {
                 "Content-Type": "multipart/form-data"
             },
             body: fd
-        }).then(response => console.log(response));
+        }).then(response => console.log(response))
+        .then(() => { history.push("/main") });
 
     
     };
@@ -98,7 +101,7 @@ const ImageForm = () => {
                 <div>
                     {/* <Button onClick={fileUploadHandler} type="submit" variant="secondary" size="lg" text="Dodaj zjdęcie" /> */}
                     <button onClick={fileUploadHandler}>Dodaj zdjęcie</button>
-                </div>
+                </div> 
             </form>
         </Wrapper>
     )

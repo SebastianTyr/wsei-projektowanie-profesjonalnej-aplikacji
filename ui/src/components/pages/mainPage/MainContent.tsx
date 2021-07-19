@@ -75,7 +75,7 @@ interface ISingleUser {
 };
 
 
-const MainContent: FC = () => {
+const MainContent = () => {
 
   const [allUsers, setAllUsers] = useState<ISingleUser[]>([]);
   const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
@@ -89,7 +89,7 @@ const MainContent: FC = () => {
   }).toString();
 
   const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
-  const urlLoggedInUser =  `https://localhost:5001/Users​/GetCurrentUserInfo`;
+  const urlLoggedInUser =  'https://localhost:5001/Users​/GetCurrentUserInfo';
 
   useEffect(() => {
 
