@@ -26,7 +26,7 @@ const FormItem = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: ${Margin[16]};
 `;
 const SectionHeader = styled.span`
     font-size: ${FontSize[20]};
@@ -40,6 +40,7 @@ const InputContainer = styled.div`
 `;
 const SingleItem = styled.div`
     width: 50%;
+    margin-bottom: ${Margin[8]};
 `;
 const ItemsBox = styled.div`
     display: flex;
