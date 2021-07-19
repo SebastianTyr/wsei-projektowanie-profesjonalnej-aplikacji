@@ -1,8 +1,8 @@
-
+import AnnouncementForm from "../../announcementForm/announcementForm";
 
 const WeddingsPage = () => {
     return (
-        <>Wesela</>
+        <AnnouncementForm/>
     )
 };
 
