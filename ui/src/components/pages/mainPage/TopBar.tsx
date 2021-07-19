@@ -55,7 +55,7 @@ const IconsSection = styled.div`
   justify-content: flex-end;
   flex: 2;
 `;
-const Messages = styled.div`
+const Messages = styled.button`
   width: 40px;
   height: 40px;
   display: flex;
@@ -83,9 +83,10 @@ const Badge = styled.span`
   justify-content: center;
   align-items: center;
 `;
-const Profile = styled.div`
+const Profile = styled.button`
   width: 40px;
   height: 40px;
+  margin-right: ${Margin[8]};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,19 +95,20 @@ const Profile = styled.div`
   position: relative;
   border: 0;
 `;
-
+const Logout = styled.button`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: ${Gradient.pinkOrange};
+  border-radius: 50%;
+  position: relative;
+`;
 const WeddingWrapper = styled.div`
     border: 1px solid red;
     margin-right: ${Margin[16]};
     padding: 10px;
-`;
-
-const LogoutWrapper = styled.div`
-    margin-left: ${Margin[16]};
-    button {
-        border: 1px solid red;
-        padding: 10px;
-    }
 `;
 
 interface ITopBarProps {
@@ -146,11 +148,11 @@ const TopBar: FC<ITopBarProps> = (props) => {
                             <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
                         </Profile>
                     </Link>
-                    <LogoutWrapper>
-                        <Link to='/'>
-                            <button type='button' onClick={props.loggedOut}>Wyloguj się</button>
-                        </Link>
-                    </LogoutWrapper>
+                    <Link to='/'>
+                        <Logout type='button' onClick={props.loggedOut}>
+                            <IconButtonGeneric className="md" src="./media/icons/logout.svg" alt="logout icon" />
+                        </Logout>
+                    </Link>
                 </IconsSection>
             </Wrapper>
     );
