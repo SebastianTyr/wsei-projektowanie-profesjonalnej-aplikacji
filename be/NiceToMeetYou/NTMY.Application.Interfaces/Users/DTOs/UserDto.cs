@@ -17,13 +17,7 @@ namespace NTMY.Application.Interfaces.Users.DTOs
         public Gender Gender { get; set; }
         public string Description { get; set; }
         public List<UserPhotoDto> Photos { get; set; }
-    }
-
-    public class UserPhotoDto
-    {
-        public Guid Id { get; set; }
-        public int FileNo { get; set; }
-        public string FileName { get; set; }
-        public string FileUrl { get; set; }
+        public DateTime IncomingWeddingDate { get; set; }
+        public string IncomingWeddingDescription { get; set; }
     }
 }

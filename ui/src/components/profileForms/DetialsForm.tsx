@@ -24,6 +24,8 @@ const HeaderWrapper = styled.div`
 const TitleWrapper = styled.span`
     display: block;
     font-weight: 600;
+    color: ${Colors.navy};
+    font-size: ${FontSize[18]};
     margin: 0 ${Margin[8]} ${Margin[16]} ${Margin[8]};  
 `;
 const CustomForm = styled(Form)`
@@ -116,7 +118,7 @@ const DetailsForm = () => {
     return (
         <Wrapper className="modal">
             <HeaderWrapper className="modal__header">
-                <h2>Podaj dodatkowe informacje, bądź bardziej widoczny dla innych użytkowników</h2>
+                <h2>Podaj dodatkowe informacje i bądź bardziej widoczny dla innych użytkowników</h2>
             </HeaderWrapper>
             <Formik
                 initialValues={initialValues}
@@ -165,6 +167,8 @@ const DetailsForm = () => {
                         <FormItem>
                             <Label htmlFor='description' labelName="Pozwól poznać się lepiej, napisz coś o sobie:" className="details-form__label"/>
                             <Field as='textarea'
+                                cols="30" 
+                                rows="5"
                                 id='description'
                                 type='text'
                                 name='description'
@@ -175,8 +179,10 @@ const DetailsForm = () => {
                         <FormItem>
                             <Label htmlFor='wantedGender' labelName="Kogo poszukujesz:" className="details-form__label"/>
                             <RadioGroup>
-                                <Input id='start' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='0' className="details-form__input"/>Kobiety
-                                <Input id='end' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='1' className="details-form__input"/>Mężczyzny
+                                <Input id='start' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='0' className="details-form__input"/>
+                                <Label htmlFor='start' labelName="Kobiety" className="details-form__label"/>
+                                <Input id='end' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='1' className="details-form__input"/>
+                                <Label htmlFor='end' labelName="Mężczyzny" className="details-form__label"/>
                             </RadioGroup>
                             <ErrorMessage name='wantedGender' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
                         </FormItem>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using NTMY.Application.Interfaces.Users.DTOs;
 using NTMY.Application.Interfaces.Users.Queries;
@@ -40,7 +39,10 @@ SELECT U.[Id]
 	  ,geography::STGeomFromText('POINT(' + 
                 CAST(U.[CoordinateLongitude] AS VARCHAR(20)) + ' ' + 
                 CAST(U.[CoordinateLatitude] AS VARCHAR(20)) + ')', 4326).STDistance(@CurrentCoordinate) / 1000 AS Distance
-FROM [dbo].[Users] AS U";
+      ,W.Date AS IncomingWeddingDate
+      ,W.Description AS IncomingWeddingDescription
+FROM [dbo].[Users] AS U
+OUTER APPLY(SELECT TOP 1 UW.Id, UW.Description, UW.Date FROM dbo.UserWeddings AS UW WHERE UW.Id = U.Id AND UW.IsArchived = 0 ORDER BY UW.Date) AS W";
 
         public UsersReadModel(ISqlConnectionConfiguration sqlConnectionConfiguration, ICorrelationContext correlationContext, IUserRepository userRepository)
         {

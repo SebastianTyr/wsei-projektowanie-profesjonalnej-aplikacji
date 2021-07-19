@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using Microsoft.AspNetCore.Http;
@@ -21,5 +22,8 @@ namespace NTMY.Application.Interfaces.Users
         Task RemoveUserLikeAsync(int no);
         Task AddPhotoAsync(IFormFile fileStream);
         Task<CurrentUserInfoDto> GetCurrentUserInfoAsync(string baseUrl);
+        Task AddUserIncomingWeddingAsync(DateTime date, Address address, string description);
+        Task UpdateUserIncomingWeddingAsync(int no, DateTime date, Address address, string description);
+        Task RemoveUserIncomingWeddingAsync(int no);
     }
 }

@@ -151,6 +151,30 @@ namespace NTMY.Application.Users
                 }));
         }
 
+        public async Task AddUserIncomingWeddingAsync(DateTime date, Address address, string description)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            user.AddIncomingWedding(date, address, description);
+
+            await _userRepository.PersistAsync(user);
+        }
+
+        public async Task UpdateUserIncomingWeddingAsync(int no, DateTime date, Address address, string description)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            user.UpdateIncomingWedding(no, date, address, description);
+
+            await _userRepository.PersistAsync(user);
+        }
+
+        public async Task RemoveUserIncomingWeddingAsync(int no)
+        {
+            var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
+            user.RemoveIncomingWedding(no);
+
+            await _userRepository.PersistAsync(user);
+        }
+
         private async Task<User> GetUserOrThrowAsync(AggregateId id)
         {
             var user = await _userRepository.GetAsync(id);
