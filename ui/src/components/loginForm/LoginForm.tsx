@@ -87,7 +87,9 @@ const LoginForm = () => {
     }, [currentUser])
 
     return (
-        <Wrapper className="modal">
+        <div className="modal">
+            <div className="modal__background"> </div>
+            <Wrapper className="modal__container">
             <div className="modal__header">
                 <h2>Zaloguj się</h2>
             </div>
@@ -140,10 +142,9 @@ const LoginForm = () => {
                         <Button type='submit' variant="secondary" size="lg" text="Zaloguj się" />
                     </ButtonWrapper>
                 </CustomForm>
-
-
             </Formik>
         </Wrapper>
+        </div>
     )
 };
 

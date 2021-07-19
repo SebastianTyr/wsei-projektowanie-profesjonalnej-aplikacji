@@ -12,5 +12,7 @@ export const Colors = {
     gray03: "#ACAFB3",
     gray04: "#444444",
     gray05: "#F5F7F9",
+
+    blackTransparent: "rgba(0, 0, 0, 0.6)",
   };
   

@@ -90,88 +90,91 @@ const AnnouncementForm = () => {
     });
 
     return (
-        <Wrapper className="modal">
-            <div className="modal__header">
-                <h2>Dodaj wydarzenie</h2>
-            </div>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={values => {
-                    console.log(values)
-                    const announcement = {
-                        date: values.date,
-                        address: { street: values.address.street, city: values.address.city, postCode: values.address.postCode, country: values.address.country },
-                        description: values.description
-                    }
+        <div className="modal">
+            <div className="modal__background"> </div>
+            <Wrapper className="modal__container">
+                <div className="modal__header">
+                    <h2>Dodaj wydarzenie</h2>
+                </div>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={values => {
+                        console.log(values)
+                        const announcement = {
+                            date: values.date,
+                            address: { street: values.address.street, city: values.address.city, postCode: values.address.postCode, country: values.address.country },
+                            description: values.description
+                        }
 
-                    fetch('https://localhost:5001/Users/AddIncomingWeddingToUser', {
-                        method: 'POST',
-                        headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'), "Content-Type": "application/json" },
-                        body: JSON.stringify(announcement)
-                    })
-                }}
-            >
-                <CustomForm>
+                        fetch('https://localhost:5001/Users/AddIncomingWeddingToUser', {
+                            method: 'POST',
+                            headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'), "Content-Type": "application/json" },
+                            body: JSON.stringify(announcement)
+                        })
+                    }}
+                >
+                    <CustomForm>
 
-                    <FormItem>
-                        <Label htmlFor='Date' labelName="Data" className="registration-form__label" />
-                        <Input id='Date' type='date' name='date' className="registration-form__input" />
-                        <ErrorMessage name='date' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
-                    </FormItem>
-                        <SectionHeader>Adres:</SectionHeader>
                         <FormItem>
-                            <ItemsBox>
-                                <SingleItem>
-                                    <Label htmlFor='address' labelName="Ulica" className="registration-form__label" />
-                                    <InputContainer>
-                                        <Input id='address' type='text' name='address.street' className="registration-form__input" />
-                                        <ErrorMessage name="address.street" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
-                                    </InputContainer>
-                                </SingleItem>
-                                <SingleItem>
-                                    <Label htmlFor='city' labelName="Miasto" className="registration-form__label" />
-                                    <InputContainer>
-                                        <Input id='city' type='text' name='address.city' className="registration-form__input" />
-                                        <ErrorMessage name="address.city" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
-                                    </InputContainer>
-                                </SingleItem>
-                            </ItemsBox>
-                            <ItemsBox>
-                                <SingleItem>
-                                    <Label htmlFor='postCode' labelName="Kod pocztowy" className="registration-form__label" />
-                                    <InputContainer>
-                                        <Input id='postCode' type='text' name='address.postCode' className="registration-form__input" />
-                                        <ErrorMessage name="address.postCode" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
-                                    </InputContainer>
-                                </SingleItem>
-                                <SingleItem>
-                                    <Label htmlFor='country' labelName="Kraj" className="registration-form__label" />
-                                    <InputContainer>
-                                        <Input id='country' type='text' name='address.country' className="registration-form__input" />
-                                        <ErrorMessage name="address.country" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
-                                    </InputContainer>
-                                </SingleItem>
-                            </ItemsBox>
+                            <Label htmlFor='Date' labelName="Data" className="registration-form__label" />
+                            <Input id='Date' type='date' name='date' className="registration-form__input" />
+                            <ErrorMessage name='date' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
                         </FormItem>
-                        <FormItem>
-                            <Label htmlFor='description' labelName="Opis" className="registration-form__label" />
-                            <Field as='textarea'
-                                cols="30" 
-                                rows="5"
-                                id='description'
-                                type='text'
-                                name='description'
-                                className="registration-form__input"
-                            />
-                            <ErrorMessage name='description' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
-                        </FormItem>
-                    <ButtonWrapper>
-                        <Button type='submit' variant="secondary" size="lg" text="Dodaj wydarzenie" />
-                    </ButtonWrapper>
-                </CustomForm>
-            </Formik>
-        </Wrapper>
+                            <SectionHeader>Adres:</SectionHeader>
+                            <FormItem>
+                                <ItemsBox>
+                                    <SingleItem>
+                                        <Label htmlFor='address' labelName="Ulica" className="registration-form__label" />
+                                        <InputContainer>
+                                            <Input id='address' type='text' name='address.street' className="registration-form__input" />
+                                            <ErrorMessage name="address.street" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                        </InputContainer>
+                                    </SingleItem>
+                                    <SingleItem>
+                                        <Label htmlFor='city' labelName="Miasto" className="registration-form__label" />
+                                        <InputContainer>
+                                            <Input id='city' type='text' name='address.city' className="registration-form__input" />
+                                            <ErrorMessage name="address.city" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                        </InputContainer>
+                                    </SingleItem>
+                                </ItemsBox>
+                                <ItemsBox>
+                                    <SingleItem>
+                                        <Label htmlFor='postCode' labelName="Kod pocztowy" className="registration-form__label" />
+                                        <InputContainer>
+                                            <Input id='postCode' type='text' name='address.postCode' className="registration-form__input" />
+                                            <ErrorMessage name="address.postCode" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                        </InputContainer>
+                                    </SingleItem>
+                                    <SingleItem>
+                                        <Label htmlFor='country' labelName="Kraj" className="registration-form__label" />
+                                        <InputContainer>
+                                            <Input id='country' type='text' name='address.country' className="registration-form__input" />
+                                            <ErrorMessage name="address.country" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                        </InputContainer>
+                                    </SingleItem>
+                                </ItemsBox>
+                            </FormItem>
+                            <FormItem>
+                                <Label htmlFor='description' labelName="Opis" className="registration-form__label" />
+                                <Field as='textarea'
+                                    cols="30" 
+                                    rows="5"
+                                    id='description'
+                                    type='text'
+                                    name='description'
+                                    className="registration-form__input"
+                                />
+                                <ErrorMessage name='description' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                            </FormItem>
+                        <ButtonWrapper>
+                            <Button type='submit' variant="secondary" size="lg" text="Dodaj wydarzenie" />
+                        </ButtonWrapper>
+                    </CustomForm>
+                </Formik>
+            </Wrapper>
+        </div>
     )
 }
 

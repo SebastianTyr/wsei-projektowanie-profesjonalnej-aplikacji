@@ -116,84 +116,86 @@ const DetailsForm = () => {
     })
 
     return (
-        <Wrapper className="modal">
-            <div className="modal__header">
-                <h2>Podaj dodatkowe informacje i bądź bardziej widoczny dla innych użytkowników</h2>
-            </div>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
-            >
-                <CustomForm>
-                    <FormItemsContainer>
-                        <ItemsBox>
+        <div className="modal">
+        <div className="modal__background"> </div>
+            <Wrapper className="modal__container">
+                <div className="modal__header">
+                    <h2>Podaj dodatkowe informacje i bądź bardziej widoczny dla innych użytkowników</h2>
+                </div>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={values => console.log(values)}
+                >
+                    <CustomForm>
+                        <FormItemsContainer>
+                            <ItemsBox>
+                                <FormItem>
+                                    <Label htmlFor='height_value' labelName="Wzrost (cm):" className="details-form__label"/>
+                                    <Input id='height_value' type='text' name='heightValue' className="details-form__input"/>
+                                    <ErrorMessage name='heightValue' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                </FormItem>
+                                <FormItem>
+                                    <Label htmlFor='weight_value' labelName="Waga (kg):" className="details-form__label"/>
+                                    <Input id='weight_value' type='text' name='weightValue' className="details-form__input"/>
+                                    <ErrorMessage name='weightValue' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                </FormItem>
+                            </ItemsBox>
+                            <TitleWrapper>Powiedz nam, gdzie mieszkasz, a my powiem, kto mieszka w Twojej okolicy</TitleWrapper>
+                            <ItemsBox>
+                                <FormItem>
+                                    <Label htmlFor='street' labelName="Ulica:" className="details-form__label"/>
+                                    <Input id='street' type='text' name='addresStreet' className="details-form__input"/>
+                                    <ErrorMessage name='addresStreet' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                </FormItem>
+                                <FormItem>
+                                    <Label htmlFor='city' labelName="Miasto:" className="details-form__label"/>
+                                    <Input id='city' type='text' name='addresCity' className="details-form__input"/>
+                                    <ErrorMessage name='addresCity' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                </FormItem>
+                            </ItemsBox>
+                            <ItemsBox>
+                                <FormItem>
+                                    <Label htmlFor='postCode' labelName="Kod pocztowy:" className="details-form__label"/>
+                                    <Input id='postCode' type='text' name='addresPostCode' className="details-form__input"/>
+                                    <ErrorMessage name='addresPostCode' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                </FormItem>
+                                <FormItem>
+                                    <Label htmlFor='country' labelName="Kraj:" className="details-form__label"/>
+                                    <Input id='country' type='text' name='addresCountry' className="details-form__input"/>
+                                    <ErrorMessage name='addresCountry' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                </FormItem>
+                            </ItemsBox>
                             <FormItem>
-                                <Label htmlFor='height_value' labelName="Wzrost (cm):" className="details-form__label"/>
-                                <Input id='height_value' type='text' name='heightValue' className="details-form__input"/>
-                                <ErrorMessage name='heightValue' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                <Label htmlFor='description' labelName="Pozwól poznać się lepiej, napisz coś o sobie:" className="details-form__label"/>
+                                <Field as='textarea'
+                                    cols="30" 
+                                    rows="5"
+                                    id='description'
+                                    type='text'
+                                    name='description'
+                                    className="details-form__input"
+                                />
+                                <ErrorMessage name='description' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
                             </FormItem>
                             <FormItem>
-                                <Label htmlFor='weight_value' labelName="Waga (kg):" className="details-form__label"/>
-                                <Input id='weight_value' type='text' name='weightValue' className="details-form__input"/>
-                                <ErrorMessage name='weightValue' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
+                                <Label htmlFor='wantedGender' labelName="Kogo poszukujesz:" className="details-form__label"/>
+                                <RadioGroup>
+                                    <Input id='start' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='0' className="details-form__input"/>
+                                    <Label htmlFor='start' labelName="Kobiety" className="details-form__label"/>
+                                    <Input id='end' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='1' className="details-form__input"/>
+                                    <Label htmlFor='end' labelName="Mężczyzny" className="details-form__label"/>
+                                </RadioGroup>
+                                <ErrorMessage name='wantedGender' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
                             </FormItem>
-                        </ItemsBox>
-                        <TitleWrapper>Powiedz nam, gdzie mieszkasz, a my powiem, kto mieszka w Twojej okolicy</TitleWrapper>
-                        <ItemsBox>
-                            <FormItem>
-                                <Label htmlFor='street' labelName="Ulica:" className="details-form__label"/>
-                                <Input id='street' type='text' name='addresStreet' className="details-form__input"/>
-                                <ErrorMessage name='addresStreet' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
-                            </FormItem>
-                            <FormItem>
-                                <Label htmlFor='city' labelName="Miasto:" className="details-form__label"/>
-                                <Input id='city' type='text' name='addresCity' className="details-form__input"/>
-                                <ErrorMessage name='addresCity' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
-                            </FormItem>
-                        </ItemsBox>
-                        <ItemsBox>
-                            <FormItem>
-                                <Label htmlFor='postCode' labelName="Kod pocztowy:" className="details-form__label"/>
-                                <Input id='postCode' type='text' name='addresPostCode' className="details-form__input"/>
-                                <ErrorMessage name='addresPostCode' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
-                            </FormItem>
-                            <FormItem>
-                                <Label htmlFor='country' labelName="Kraj:" className="details-form__label"/>
-                                <Input id='country' type='text' name='addresCountry' className="details-form__input"/>
-                                <ErrorMessage name='addresCountry' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
-                            </FormItem>
-                        </ItemsBox>
-                        <FormItem>
-                            <Label htmlFor='description' labelName="Pozwól poznać się lepiej, napisz coś o sobie:" className="details-form__label"/>
-                            <Field as='textarea'
-                                cols="30" 
-                                rows="5"
-                                id='description'
-                                type='text'
-                                name='description'
-                                className="details-form__input"
-                            />
-                            <ErrorMessage name='description' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
-                        </FormItem>
-                        <FormItem>
-                            <Label htmlFor='wantedGender' labelName="Kogo poszukujesz:" className="details-form__label"/>
-                            <RadioGroup>
-                                <Input id='start' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='0' className="details-form__input"/>
-                                <Label htmlFor='start' labelName="Kobiety" className="details-form__label"/>
-                                <Input id='end' aria-labelledby='wantedGender' type='radio' name='wantedGender' value='1' className="details-form__input"/>
-                                <Label htmlFor='end' labelName="Mężczyzny" className="details-form__label"/>
-                            </RadioGroup>
-                            <ErrorMessage name='wantedGender' render={error => <ErrorBox errorText={error} className="details-form__error"/>} />
-                        </FormItem>
-                    </FormItemsContainer>
-                    <ButtonWrapper>
-                        <Button type='submit' variant="secondary" size="lg" text="Dodaj  informacje" />
-                    </ButtonWrapper>
-                </CustomForm>
-            </Formik>
-        </Wrapper>
-
+                        </FormItemsContainer>
+                        <ButtonWrapper>
+                            <Button type='submit' variant="secondary" size="lg" text="Dodaj  informacje" />
+                        </ButtonWrapper>
+                    </CustomForm>
+                </Formik>
+            </Wrapper>
+        </div>
     );
 };
 
