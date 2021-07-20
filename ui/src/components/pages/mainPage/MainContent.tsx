@@ -120,7 +120,7 @@ const MainContent = () => {
       .then(data => console.log(data))
   }, []);
   
-  console.log(allUsers[2].photos);
+  console.log(allUsers[2]?.photos);
 
   return (
     <Wrapper>
@@ -134,7 +134,7 @@ const MainContent = () => {
 
       <CardWrapper>
         {
-          allUsers?.map((user) => {
+          allUsers?.map((user?) => {
             return (
               <CardItem key={user.id}
               image={(user.photos.length > 0 ) ? user.photos[0].fileUrl  :  "./photos/userAvatar.png" }
