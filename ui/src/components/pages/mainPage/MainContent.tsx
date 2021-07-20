@@ -133,7 +133,7 @@ const MainContent = () => {
               <CardItem key={user.id}
               image="./photos/userAvatar_2.jpg"
               name={user.firstName}
-              description={(user.description === null) ? "Ten użytkownik jest nieśmiały, nie lubi pisać o sobie." : user.description}
+              description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
               />
               )
           })
