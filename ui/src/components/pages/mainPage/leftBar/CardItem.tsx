@@ -6,9 +6,11 @@ import { Colors } from '../../../../styledHelpers/Colors';
 import { FontSize } from '../../../../styledHelpers/FontSize';
 import { Gradient } from '../../../../styledHelpers/Gradient';
 import { Margin } from '../../../../styledHelpers/Margin';
+import { Border } from '../../../../styledHelpers/Border';
 
 
 const Wrapper = styled.div`
+    border: ${Border.red};
     position: relative;
     background-color: ${Colors.white};
     width: 33.333%;
@@ -22,7 +24,7 @@ const Wrapper = styled.div`
 
 const ImageBox = styled.div`
     height: 60%;
-    width: auto;
+    width: 100%;
     display: flex;
     align-items: center;
     overflow: hidden;

@@ -137,7 +137,7 @@ const MainContent = () => {
           allUsers?.map((user) => {
             return (
               <CardItem key={user.id}
-              image={(user.photos.length > 0 ) ? user.photos[0].fileUrl  :  "./photos/userAvatar.png" }
+              image={(user.photos.length > 0 ) ? user.photos[0].fileUrl  :  "./media/icons/avatar.svg" }
               name={user.firstName}
               description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
               />
