@@ -120,7 +120,7 @@ const MainContent = () => {
       .then(data => console.log(data))
   }, []);
   
-  console.log(allUsers[2].photos);
+  console.log(allUsers[2]?.photos);
 
   return (
     <Wrapper>
