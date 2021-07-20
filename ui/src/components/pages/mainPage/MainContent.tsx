@@ -126,6 +126,8 @@ const MainContent = () => {
         </SearchButtonContainer>
       </SearchWrapper>
 
+      <h2>Te osoby możesz chcieć poznać. Kliknij łapkę w górę i nawiąż kontakt</h2>
+
       <CardWrapper>
         {
           allUsers?.map((user?) => {
