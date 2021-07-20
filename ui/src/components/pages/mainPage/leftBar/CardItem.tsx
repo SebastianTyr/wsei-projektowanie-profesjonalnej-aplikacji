@@ -68,7 +68,6 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
                 <NameBox>{props.name}</NameBox>
                 <DescriptionBox>{props.description}</DescriptionBox>
                 <ButtonBox type="button">Zobacz profil</ButtonBox>
-                <ButtonBox type="button">Wiadomość</ButtonBox>
             </TextWrapper>
         </Wrapper>
     );
