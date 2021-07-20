@@ -8,6 +8,7 @@ import TopBar from './TopBar';
 import ProfilePage from '../profilePage/ProfilePage';
 import WeddingsPage from '../weddingsPage/WeddingsPage';
 import LandingPage from '../landingPage/LandingPage';
+import MessagePage from '../messagePage/MessagePage';
 import { getCurrentUserDetails } from '../../../actions/currentUserDetailsActions';
 import { useEffect } from 'react';
 
@@ -15,7 +16,9 @@ import { useEffect } from 'react';
 type GetCurrentUserDetails = ReturnType<typeof getCurrentUserDetails>;
 
 
+
 const Wrapper = styled.div`
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -47,7 +50,10 @@ const MainPage: FC = () => {
                     <TopBar loggedOut={loggedOutHandler} />
                     <Switch>
                         <Route path="/profile" exact>
-                            < ProfilePage />
+                            <ProfilePage/>
+                        </Route>
+                        <Route path="/message" exact>
+                            <MessagePage/>
                         </Route>
                         <Route path="/weddings" exact>
                             <WeddingsPage />

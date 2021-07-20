@@ -153,10 +153,12 @@ const TopBar: FC<ITopBarProps> = (props) => {
                             <IconButtonGeneric className="md" src="./media/icons/weddings.svg" alt="weddings icon" />
                         </Weddings>
                     </Link>
+                    <Link to="/message">
                     <Messages>
                         <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
                         <Badge> 1 </Badge>
                     </Messages>
+                    </Link>
                     <Link to="/profile">
                         <Profile>
                             <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
