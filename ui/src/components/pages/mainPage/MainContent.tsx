@@ -82,15 +82,15 @@ const MainContent = () => {
     ...state.userData
   }));
 
+  const wantedGender = (userData?.gender === 10) ? 20 : 10;
 
   const usersParams = new URLSearchParams({
     maxDistance: '10',
-    genders: '20'
+    genders: wantedGender.toString()
   }).toString();
 
   const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
-  const urlLoggedInUser =  'https://localhost:5001/Users​/GetCurrentUserInfo';
-  const newUrl = 'https://localhost:5001/Users/GetCurrentUserInfo';
+  const urlGetCurrentUserDetails = 'https://localhost:5001/Users/GetCurrentUserInfo';
 
   useEffect(() => {
 
@@ -106,7 +106,7 @@ const MainContent = () => {
 
       }));
 
-      fetch( newUrl, {
+      fetch( urlGetCurrentUserDetails, {
         method: "GET",
         headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
   
@@ -133,7 +133,7 @@ const MainContent = () => {
               <CardItem key={user.id}
               image="./photos/userAvatar_2.jpg"
               name={user.firstName}
-              description="Najlepsza towarzyszka na wesele"
+              description={(user.description === null) ? "Ten użytkownik jest nieśmiały, nie lubi pisać o sobie." : user.description}
               />
               )
           })
