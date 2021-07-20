@@ -96,7 +96,7 @@ const MainContent = () => {
   }).toString();
 
   const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
-  const urlGetCurrentUserDetails = 'https://localhost:5001/Users/GetCurrentUserInfo';
+ 
 
   useEffect(() => {
 
@@ -112,12 +112,7 @@ const MainContent = () => {
 
       }));
 
-      fetch( urlGetCurrentUserDetails, {
-        method: "GET",
-        headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
-  
-      }).then(response => response.json())
-      .then(data => console.log(data))
+      
   }, []);
   
   console.log(allUsers[2]?.photos);
