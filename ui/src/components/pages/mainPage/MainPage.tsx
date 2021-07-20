@@ -6,6 +6,7 @@ import MainContent from './MainContent';
 import TopBar from './TopBar';
 import ProfilePage from '../profilePage/ProfilePage';
 import WeddingsPage from '../weddingsPage/WeddingsPage';
+import MessagePage from '../messagePage/MessagePage';
 
 
 const Wrapper = styled.div`
@@ -21,7 +22,10 @@ const MainPage: FC = () => {
                 <TopBar />
                 <Switch>
                     <Route path="/profile" exact>
-                        < ProfilePage />
+                        <ProfilePage/>
+                    </Route>
+                    <Route path="/message" exact>
+                        <MessagePage/>
                     </Route>
                     <Route path="/weddings">
                         <WeddingsPage/>
