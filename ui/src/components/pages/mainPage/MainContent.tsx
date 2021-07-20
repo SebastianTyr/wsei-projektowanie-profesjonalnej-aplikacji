@@ -105,14 +105,13 @@ const MainContent = () => {
       method: 'GET',
       headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
 
-    }).then(response => response.json())
-      .then((data => {
+    })
+    .then(response => response.json())
+    .then((data => {
         console.log(data);
         setAllUsers(data.items);
 
       }));
-
-      
   }, []);
   
   console.log(allUsers[2]?.photos);
