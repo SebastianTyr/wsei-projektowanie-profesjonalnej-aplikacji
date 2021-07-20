@@ -62,7 +62,7 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
     return(
         <Wrapper>
             <ImageBox>
-                <img src='./photos/userAvatar_2.jpg' alt='user'></img>
+                <img src={props.image} alt='user'></img>
             </ImageBox>
             <TextWrapper>
                 <NameBox>{props.name}</NameBox>

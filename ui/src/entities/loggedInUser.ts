@@ -3,5 +3,6 @@ export interface ILoggedInUser {
     firstName: string,
     id: string,
     secondName: string,
-    userName: string
+    userName: string,
+    gender: number
 };
