@@ -49,7 +49,8 @@ interface ICurrentUser {
     id: string,
     secondName: string,
     userName: string,
-    jwtToken: string
+    jwtToken: string,
+    gender: number
 
 }
 
@@ -70,8 +71,9 @@ const LoginForm = () => {
         id: '',
         secondName: '',
         userName: '',
-        jwtToken: ''
-    })
+        jwtToken: '',
+        gender: 0
+    });
 
 
     useEffect(() => {
@@ -81,7 +83,8 @@ const LoginForm = () => {
                 firstName: currentUser.firstName,
                 id: currentUser.id,
                 secondName: currentUser.secondName,
-                userName: currentUser.secondName
+                userName: currentUser.secondName,
+                gender: currentUser.gender
             }
         ));
     }, [currentUser])

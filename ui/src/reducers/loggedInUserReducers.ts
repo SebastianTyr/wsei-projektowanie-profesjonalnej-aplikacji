@@ -11,7 +11,8 @@ const defaultState = (): ILoggedInReducer => ({
         firstName: '',
         id: '',
         secondName: '',
-        userName: ''
+        userName: '',
+        gender: 0,
     }
 });
 
