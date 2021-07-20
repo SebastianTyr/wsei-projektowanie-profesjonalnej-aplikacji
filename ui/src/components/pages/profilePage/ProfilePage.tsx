@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import DetailsForm from '../../profileForms/DetialsForm';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import Button from '../../common/Button';
+import ImageForm from '../../profileForms/ImageForm';
 
 
 const EditButtonBox = styled.span`
@@ -28,6 +29,7 @@ const ProfilePage = () => {
                     <EditButtonBox>
                         <Button variant="primary" type="text" size="md" text="Edytuj szczegóły" onClick={editDetailsHandler}></Button>
                     </EditButtonBox>
+                    <ImageForm/>
                 </div>
 
             )}

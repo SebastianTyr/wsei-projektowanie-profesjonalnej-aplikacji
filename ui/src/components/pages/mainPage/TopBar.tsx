@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
@@ -11,6 +11,7 @@ import { Border } from '../../../styledHelpers/Border';
 import { IState } from '../../../reducers';
 import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { useSelector } from 'react-redux';
+import { boolean } from 'yup/lib/locale';
 
 
 const Wrapper = styled.div`
@@ -38,10 +39,17 @@ const Logo = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
 `
-const PersonName = styled.span`
+const PersonNameContainer = styled.div`
     display: block;
-    font-size: ${FontSize[16]};
+    font-size: ${FontSize[18]};
+    color: ${Colors.navy};
+    font-weight: 600;
     margin-right: ${Margin[16]};
+
+    span {
+        color: ${Colors.red};
+        font-size: ${FontSize[24]};
+    }
 `;
 const LeftContainer = styled.div`
   display: flex;
@@ -54,7 +62,7 @@ const IconsSection = styled.div`
   justify-content: flex-end;
   flex: 2;
 `;
-const Messages = styled.div`
+const Messages = styled.button`
   width: 40px;
   height: 40px;
   display: flex;
@@ -82,9 +90,10 @@ const Badge = styled.span`
   justify-content: center;
   align-items: center;
 `;
-const Profile = styled.div`
+const Profile = styled.button`
   width: 40px;
   height: 40px;
+  margin-right: ${Margin[8]};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,49 +102,73 @@ const Profile = styled.div`
   position: relative;
   border: 0;
 `;
-
-const WeddingWrapper = styled.div`
-    border: 1px solid red;
-    margin-right: ${Margin[16]};
-    padding: 10px;
+const Logout = styled.button`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: ${Gradient.pinkOrange};
+  border-radius: 50%;
+  position: relative;
+`;
+const Weddings = styled.button`
+  width: 40px;
+  height: 40px;
+  margin-right: ${Margin[8]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: ${Gradient.pinkOrange};
+  border-radius: 50%;
+  position: relative;
+  border: 0;
 `;
 
+interface ITopBarProps {
+    loggedOut(): void;
+}
 
-const TopBar: FC = () => {
+const TopBar: FC<ITopBarProps> = (props) => {
+
 
     const { userData } = useSelector<IState, ILoggedInReducer>(state => ({
         ...state.userData
     }));
 
-
     return (
-        <Wrapper>
-            <LeftContainer>
-                <Link to="/main">
-                    <LogoContainer>
-                        <Logo />
-                    </LogoContainer>
-                </Link>
-            </LeftContainer>
-            <IconsSection>
-                <PersonName>Cześć, {userData?.firstName}!</PersonName>
-                <Link to="/weddings">
-                    <WeddingWrapper>
-                        <span>Wesela</span>
-                    </WeddingWrapper>
-                </Link>
-                <Messages>
-                    <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
-                    <Badge> 1 </Badge>
-                </Messages>
 
-                <Link to="/profile">
-                    <Profile>
-                        <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
-                    </Profile>
-                </Link>
-            </IconsSection>
-        </Wrapper>
+            <Wrapper>
+                <LeftContainer>
+                    <Link to="/main">
+                        <LogoContainer>
+                            <Logo />
+                        </LogoContainer>
+                    </Link>
+                </LeftContainer>
+                <IconsSection>
+                    <PersonNameContainer>Cześć, <span>{userData?.firstName} </span>!</PersonNameContainer>
+                    <Link to="/weddings">
+                        <Weddings>
+                            <IconButtonGeneric className="md" src="./media/icons/weddings.svg" alt="weddings icon" />
+                        </Weddings>
+                    </Link>
+                    <Messages>
+                        <IconButtonGeneric className="md" src="./media/icons/comments.svg" alt="messages icon" />
+                        <Badge> 1 </Badge>
+                    </Messages>
+                    <Link to="/profile">
+                        <Profile>
+                            <IconButtonGeneric className="md" src="./media/icons/profile.svg" alt="profile icon" />
+                        </Profile>
+                    </Link>
+                    <Link to='/'>
+                        <Logout type='button' onClick={props.loggedOut}>
+                            <IconButtonGeneric className="md" src="./media/icons/logout.svg" alt="logout icon" />
+                        </Logout>
+                    </Link>
+                </IconsSection>
+            </Wrapper>
     );
 }
 

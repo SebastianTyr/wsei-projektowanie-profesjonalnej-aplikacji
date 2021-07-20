@@ -9,6 +9,7 @@ import ErrorBox from "../common/ErrorBox";
 import { Colors } from '../../styledHelpers/Colors';
 import { FontSize } from '../../styledHelpers/FontSize';
 
+
 const Wrapper = styled.div`
     .details-form__label {
         margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
@@ -19,8 +20,6 @@ const Wrapper = styled.div`
     .details-form__error {
         margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
     }
-`;
-const HeaderWrapper = styled.div`
 `;
 const TitleWrapper = styled.span`
     display: block;
@@ -93,28 +92,6 @@ interface IDetailsDataFromForm {
 
 const DetailsForm = () => {
 
-    // const initialValues: IDetailsDataFromDB = {
-    //     height: {
-    //         value: 0,
-    //         unit: 'cm'
-    //     },
-    //     weight: {
-    //         value: 0,
-    //         unit: 'kg'
-    //     },
-    //     address: {
-    //         street: '',
-    //         city: '',
-    //         postCode: '',
-    //         country: ''
-    //     },
-    //     description: '',
-    //     wantedGender: 0,
-    //     coordinate: {
-    //         longitude: 0,
-    //         latitude: 0
-    //     }
-    // }
 
     const initialValues: IDetailsDataFromForm = {
         heightValue: 0,
@@ -140,9 +117,9 @@ const DetailsForm = () => {
 
     return (
         <Wrapper className="modal">
-            <HeaderWrapper className="modal__header">
+            <div className="modal__header">
                 <h2>Podaj dodatkowe informacje i bądź bardziej widoczny dla innych użytkowników</h2>
-            </HeaderWrapper>
+            </div>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -216,7 +193,6 @@ const DetailsForm = () => {
                 </CustomForm>
             </Formik>
         </Wrapper>
-
 
     );
 };
