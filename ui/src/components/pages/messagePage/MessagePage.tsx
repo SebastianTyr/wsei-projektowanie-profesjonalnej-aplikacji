@@ -81,28 +81,18 @@ const NameBox = styled.span`
 `;
 
 interface IToUserMessage {
-    image: string;
     name: string;
 };
 
-interface ISingleUser {
-    age: number
-    description: string | null
-    firstName: string
-    id: string
-    photos: [
-      {
-        fileNo: number,
-        fileUrl: string
-      }
-    ]
+interface IPair {
+    pairId: string
+    likedUserFirstName: string
   };
 
 const ToUserMessage: FC<IToUserMessage> = (props: IToUserMessage) => {
     return (
         <UserMessageWrapper>
             <ImageBox>
-                <img src={props.image} alt='user'></img>
                 <TextWrapper>
                     <NameBox>{props.name}</NameBox>
                 </TextWrapper>
@@ -113,19 +103,9 @@ const ToUserMessage: FC<IToUserMessage> = (props: IToUserMessage) => {
 
 const MessagePage = () => {
 
-    const [allUsers, setAllUsers] = useState<ISingleUser[]>([]);
-    const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
-      ...state.userData
-    }));
+    const [pairedUsers, setUserPair] = useState<IPair[]>([]);
   
-    const wantedGender = (userData?.gender === 10) ? 20 : 10;
-  
-    const usersParams = new URLSearchParams({
-      maxDistance: '10',
-      genders: wantedGender.toString()
-    }).toString();
-  
-    const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
+    const urlSelectedUsers = `https://localhost:5001/Pairs`;
    
   
     useEffect(() => {
@@ -139,22 +119,21 @@ const MessagePage = () => {
       .then(response => response.json())
       .then((data => {
           console.log(data);
-          setAllUsers(data.items);
+          setUserPair(data.items);
   
         }));
     }, []);
     
-    console.log(allUsers[2]?.photos);
+    console.log(pairedUsers);
 
     return (
         <Wrapper>
             <UserList>
             {
-                allUsers?.map((user?) => {
+                pairedUsers?.map((user?) => {
                     return (
-                        <ToUserMessage key={user.id}
-                        image={(user.photos.length > 0 ) ? user.photos[0].fileUrl  :  "./media/icons/avatar.svg" }
-                        name={user.firstName}/>
+                        <ToUserMessage key={user.pairId}
+                        name={user.likedUserFirstName}/>
                     )
                 })
             }
