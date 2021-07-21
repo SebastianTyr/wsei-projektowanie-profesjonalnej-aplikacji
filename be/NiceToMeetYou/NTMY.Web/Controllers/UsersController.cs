@@ -171,5 +171,15 @@ namespace NTMY.Web.Controllers
             return Ok();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("GetIncomingWeddings")]
+        public async Task<IActionResult> GetIncomingWeddings(int maxDistance, int? maxAge, [FromQuery(Name = "genders")] Gender[] genders)
+        {
+            var query = new GetIncomingWeddingsQuery(maxDistance, maxAge, genders);
+            
+            var result = await _commandQueryDispatcherDecorator.DispatchAsync<GetIncomingWeddingsQuery, ListDto<UserWeddingDto>>(query);
+            return Ok(result);
+        }
+
     }
 }

@@ -189,7 +189,7 @@ namespace NTMY.Domain.Users
 
         public void AddIncomingWedding(DateTime date, Address address, string description)
         {
-            var wedding = new Wedding(_incomingWeddings.GetNextNo(), date, Address, description);
+            var wedding = new Wedding(_incomingWeddings.GetNextNo(), date, address, description);
             _incomingWeddings.Add(wedding);
         }
 
