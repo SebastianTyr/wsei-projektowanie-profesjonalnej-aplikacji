@@ -8,12 +8,16 @@ import Label from "../common/Label";
 import Input from "../common/Input";
 import { Margin } from "../../styledHelpers/Margin";
 import ErrorBox from "../common/ErrorBox";
-import { FontSize } from "../../styledHelpers/FontSize";
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import LoginForm from "../loginForm/LoginForm";
 
 const Wrapper = styled.div`
+   .registration-form__woman-label {
+        margin: 0 ${Margin[8]};  
+   }
+   .registration-form__man-label {
+        margin: 0 ${Margin[8]};   
+   }
    .registration-form__label {
         margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};  
    }
@@ -46,6 +50,7 @@ const FormItem = styled.div`
 const RadioGroup = styled.div`
     display: flex;
     align-items: center;
+    margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]}; 
 `
 const ButtonWrapper = styled(FormItem)`
     border: none;
@@ -176,8 +181,10 @@ const RegistrationForm = (props: any) => {
                                     <FormItem>
                                         <Label htmlFor='gender' labelName="Płeć" className="registration-form__label" />
                                         <RadioGroup>
-                                            <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female' /> Kobieta
-                                            <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male' /> Mężczyzna
+                                            <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female' /> 
+                                            <Label htmlFor='start' labelName="Kobieta" className="registration-form__woman-label"/>
+                                            <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male' /> 
+                                            <Label htmlFor='end' labelName="Mężczyzna" className="registration-form__man-label"/>
                                         </RadioGroup>
                                         <ErrorMessage name="gender" render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
                                     </FormItem>

@@ -72,41 +72,49 @@ interface ISingleUser {
   id: string
   weightUnit: string
   weightValue: number
+  photos: [
+    {
+      fileNo: number,
+      fileUrl: string
+    }
+  ]
 };
 
 
-const MainContent: FC = () => {
+const MainContent = () => {
 
   const [allUsers, setAllUsers] = useState<ISingleUser[]>([]);
   const { userData } = useSelector<IState, ILoggedInReducer>( state => ({
     ...state.userData
   }));
 
+  const wantedGender = (userData?.gender === 10) ? 20 : 10;
 
   const usersParams = new URLSearchParams({
     maxDistance: '10',
-    genders: '20'
+    genders: wantedGender.toString()
   }).toString();
 
-  const url = `https://localhost:5001/Users/Browse?${usersParams}`;
+  const urlSelectedUsers = `https://localhost:5001/Users/Browse?${usersParams}`;
+ 
 
   useEffect(() => {
 
 
-    fetch(url, {
+    fetch(urlSelectedUsers, {
       method: 'GET',
       headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
 
-    }).then(response => response.json())
-      .then((data => {
+    })
+    .then(response => response.json())
+    .then((data => {
         console.log(data);
         setAllUsers(data.items);
 
       }));
   }, []);
-
-  console.log(allUsers);
-
+  
+  console.log(allUsers[2]?.photos);
 
   return (
     <Wrapper>
@@ -118,14 +126,17 @@ const MainContent: FC = () => {
         </SearchButtonContainer>
       </SearchWrapper>
 
+      <h2>Te osoby możesz chcieć poznać. Kliknij łapkę w górę by nawiązać kontakt!</h2>
+
       <CardWrapper>
         {
-          allUsers?.map((user) => {
+          allUsers?.map((user?) => {
             return (
               <CardItem key={user.id}
-              image="./photos/userAvatar_2.jpg"
+              image={(user.photos.length > 0 ) ? user.photos[0].fileUrl  :  "./media/icons/avatar.svg" }
               name={user.firstName}
-              description="Najlepsza towarzyszka na wesele"
+              description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
+              id={user.id}
               />
               )
           })
