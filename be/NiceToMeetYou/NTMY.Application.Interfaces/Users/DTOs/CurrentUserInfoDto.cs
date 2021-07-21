@@ -24,8 +24,9 @@ namespace NTMY.Application.Interfaces.Users.DTOs
         public double Latitude { get;  }
         public Address Address { get; }
         public List<UserPhotoDto> Photos { get; }
+        public List<CurrentUserWeddingDto> Weddings { get; }
 
-        public CurrentUserInfoDto(Guid id, string userName, string email, string firstName, string secondName, Gender gender, Gender wantedGender, DateTime birthDate, Weight weight, Height height, bool isConfirmed, string description, GeoCoordinate geoCoordinate, Address address, IEnumerable<UserPhotoDto> photos)
+        public CurrentUserInfoDto(Guid id, string userName, string email, string firstName, string secondName, Gender gender, Gender wantedGender, DateTime birthDate, Weight weight, Height height, bool isConfirmed, string description, GeoCoordinate geoCoordinate, Address address, IEnumerable<UserPhotoDto> photos, IEnumerable<CurrentUserWeddingDto> weddings)
         {
             Id = id;
             UserName = userName;
@@ -43,6 +44,7 @@ namespace NTMY.Application.Interfaces.Users.DTOs
             Latitude = geoCoordinate.Latitude;
             Address = address;
             Photos = photos.ToList();
+            Weddings = weddings.ToList();
         }
     }
 }
