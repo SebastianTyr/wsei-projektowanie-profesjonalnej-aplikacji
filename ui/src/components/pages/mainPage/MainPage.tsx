@@ -11,6 +11,7 @@ import LandingPage from '../landingPage/LandingPage';
 import MessagePage from '../messagePage/MessagePage';
 import { getCurrentUserDetails } from '../../../actions/currentUserDetailsActions';
 import { useEffect } from 'react';
+import * as signalR from '@microsoft/signalr';
 
 
 type GetCurrentUserDetails = ReturnType<typeof getCurrentUserDetails>;
@@ -42,6 +43,16 @@ const MainPage: FC = () => {
     }, []);
 
 
+
+    const hubConnection: signalR.HubConnection = new signalR.HubConnectionBuilder().withUrl('https://localhost:5001/pairMessages', {
+        accessTokenFactory: () => String(sessionStorage.getItem('jwtToken'))}).build();
+      hubConnection.start()
+        .then(() => console.log('Connection started'))
+        .catch(err => console.log(err));
+      
+      hubConnection.on('pairCreated', data => alert(`Nowa para między ${data.firstUserFirstName} - ${data.secondUserFirstName}`));
+      
+      
 
     return (
         <Router>
