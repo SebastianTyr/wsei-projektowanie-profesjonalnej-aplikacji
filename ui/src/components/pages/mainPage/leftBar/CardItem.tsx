@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import IconButtonGeneric from '../../../common/IconButtonGeneric';
 
@@ -74,12 +74,30 @@ interface ICardItem {
     image: string;
     name: string;
     description: string;
+    id: string
 }
 
 const CardItem: FC<ICardItem> = (props: ICardItem) => {
+
+    const [selectedUserId, setSelectedUserId] = useState({likedUserId: props.id});
+    console.log(selectedUserId);
+
+    const postHandler = () => {
+        const urlAddLike = 'https://localhost:5001/Users/AddLike';
+        fetch(urlAddLike, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('jwtToken')
+            },
+            body: JSON.stringify(selectedUserId)
+        })
+        .then((response) => console.log(response));
+    }
+
     return(
         <Wrapper>
-            <ButtonBox>
+            <ButtonBox onClick={postHandler}>
                 <IconButtonGeneric className="lg" src="./media/icons/like.svg" alt="like icon" />
             </ButtonBox>
             <ImageBox>
