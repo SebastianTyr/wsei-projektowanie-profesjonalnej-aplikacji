@@ -7,6 +7,7 @@ namespace NTMY.Application.Interfaces.Users.ReadModels
 {
     public interface IUsersReadModel : IReadModel
     {
-        public Task<IEnumerable<UserDto>> GetUsersAsync(GetUsersQuery query);
+        Task<IEnumerable<UserDto>> GetUsersAsync(GetUsersQuery query);
+        Task<IEnumerable<UserWeddingDto>> GetIncomingWeddingsAsync(GetIncomingWeddingsQuery query);
     }
 }
