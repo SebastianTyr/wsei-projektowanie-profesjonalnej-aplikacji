@@ -78,7 +78,7 @@ interface ISingleUser {
       fileUrl: string
     }
   ],
-  incomingWddingDate: string,
+  incomingWddingDate: Date,
   incomingWeddingDescription: string | null
 };
 

@@ -81,7 +81,7 @@ interface ICardItem {
     name: string;
     description: string;
     id: string;
-    weddingDate: string;
+    weddingDate: Date;
     weddingDescription: string | null
 }
 
@@ -117,7 +117,7 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
             </TextWrapper>
             {(props.weddingDescription != null) ?
                 <TextWrapper>
-                    <WeddingHeader>Zbliża się wesele!</WeddingHeader>
+                    <WeddingHeader>Zbliża się wesele: {props.weddingDate}</WeddingHeader>
                     <WeddingDescription>{props.weddingDescription}</WeddingDescription>
                 </TextWrapper>
                 :
