@@ -3,14 +3,14 @@ import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-
-
+import { Border } from '../../styledHelpers/Border';
 
 
 const Wrapper = styled.div`
-    border: 1px solid red;
-    margin: 20px 0 0 20px;
-    width: 300px;
+    border: ${Border.red};
+    border-radius: 1rem;
+    width: 100%;
+    height: 60%;
 `;
 
 const ItemWrapper = styled.div`
