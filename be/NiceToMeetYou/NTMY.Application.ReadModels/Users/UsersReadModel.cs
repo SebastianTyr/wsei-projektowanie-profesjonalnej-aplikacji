@@ -135,6 +135,8 @@ ORDER BY W.Date
             });
 
             ApplyUsersWhereStatement(sqlBuilder, new GetUsersQuery(query.MaxDistance, query.MaxAge, query.Gender, null));
+            sqlBuilder.Where(@"W.Date >= @Date", new {@Date = DateTime.UtcNow});
+            sqlBuilder.Where("W.IsArchived = 0");
 
             await using var connection = new SqlConnection(_sqlConnectionConfiguration.MainConnectionString);
             return await connection.QueryAsync<UserWeddingDto>(template.RawSql, template.Parameters);
