@@ -17,16 +17,15 @@ const Wrapper = styled.div`
 `;
 
 const UserList = styled.div`
-
-    min-height: 100vh;
-    max-width: 60vh;
+    border: 1px solid red;
+    min-height: 300px;
 `;
 
 const UserMessage = styled.div`
-    min-height: 100vh;
-    max-width: 700vh;
+    border: 1px solid blue;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Message = styled.input`
@@ -44,7 +43,6 @@ const Message = styled.input`
         color: ${Colors.gray03};
         font-weight: 300;
     }
-    margin-left: 100vh;
 `;
 
 const UserMessageWrapper = styled.div`
