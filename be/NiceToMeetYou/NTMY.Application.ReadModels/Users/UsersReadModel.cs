@@ -101,6 +101,47 @@ WHERE P.IsArchived = 0";
             return users;
         }
 
+        public async Task<IEnumerable<UserWeddingDto>> GetIncomingWeddingsAsync(GetIncomingWeddingsQuery query)
+        {
+            var sqlQuery = $@"
+{declareStatement}
+;WITH UsersWithDistance AS ({sqlWithStatement})
+
+SELECT 
+    U.Id AS UserId
+    ,U.FirstName
+    ,U.Distance AS UserDistance
+    ,U.Gender
+    ,W.No AS WeddingNo
+    ,W.Description
+    ,W.Date
+    ,W.AddressStreet
+    ,W.AddressCity
+    ,W.AddressPostCode
+    ,W.AddressCountry
+FROM dbo.UserWeddings AS W
+INNER JOIN UsersWithDistance AS U ON U.Id = W.Id
+/**where**/
+ORDER BY W.Date
+";
+
+            var currentUser = await _userRepository.GetAsync(_correlationContext.CurrentUser.UserId.Value);
+
+            var sqlBuilder = new SqlBuilder();
+            var template = sqlBuilder.AddTemplate(sqlQuery, new
+            {
+                CurrentLongitude = currentUser.Coordinate.Longitude.ToString().Replace(",", "."),
+                CurrentLatitude = currentUser.Coordinate.Latitude.ToString().Replace(",", "."),
+            });
+
+            ApplyUsersWhereStatement(sqlBuilder, new GetUsersQuery(query.MaxDistance, query.MaxAge, query.Gender, null));
+            sqlBuilder.Where(@"W.Date >= @Date", new {@Date = DateTime.UtcNow});
+            sqlBuilder.Where("W.IsArchived = 0");
+
+            await using var connection = new SqlConnection(_sqlConnectionConfiguration.MainConnectionString);
+            return await connection.QueryAsync<UserWeddingDto>(template.RawSql, template.Parameters);
+        }
+
         private void ApplyUsersWhereStatement(SqlBuilder sqlBuilder, GetUsersQuery query)
         {
             if (query.Gender != null && query.Gender.Any())
