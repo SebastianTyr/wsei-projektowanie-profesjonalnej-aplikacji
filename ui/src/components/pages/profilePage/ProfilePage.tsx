@@ -247,11 +247,11 @@ const ProfilePage = () => {
                                             </tr>
                                             <tr>
                                                 <td>Płeć:</td>
-                                                <td>{currentUserDetails?.gender}</td>
+                                                <td>{(currentUserDetails?.gender === 10? "mężczyzna" : "kobieta")}</td>
                                             </tr>
                                             <tr>
                                                 <td>Data urodzenia:</td>
-                                                <td>{currentUserDetails?.birthDate}</td>
+                                                <td>{currentUserDetails?.birthDate.toString().substring(0, 10)}</td>
                                             </tr>
                                         </table>
                                     </InfoContainer>
