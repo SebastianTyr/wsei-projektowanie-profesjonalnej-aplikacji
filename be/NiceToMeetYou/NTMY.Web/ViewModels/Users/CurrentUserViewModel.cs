@@ -21,5 +21,6 @@ namespace NTMY.Web.ViewModels.Users
         public CoordinateViewModel Coordinate { get; set; }
         public AddressViewModel Address { get; set; }
         public List<UserPhotoViewModel> Photos { get; set; }
+        public List<CurrentUserWeddingViewModel> Weddings { get; set; }
     }
 }

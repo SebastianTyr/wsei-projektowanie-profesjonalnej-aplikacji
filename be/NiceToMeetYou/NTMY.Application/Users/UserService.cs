@@ -128,7 +128,7 @@ namespace NTMY.Application.Users
         {
             var user = await GetUserOrThrowAsync(_correlationContext.CurrentUser.UserId.Value);
             return new CurrentUserInfoDto(
-                user.Id.Id, 
+                user.Id.Id,
                 user.UserName,
                 user.Email,
                 user.FirstName,
@@ -142,13 +142,21 @@ namespace NTMY.Application.Users
                 user.Description,
                 user.Coordinate,
                 user.Address,
-                user.Photos.Select(x => new UserPhotoDto()
+                user.Photos.Where(x => !x.IsArchived).Select(x => new UserPhotoDto()
                 {
                     FileName = x.Name,
                     FileNo = x.No,
                     FileUrl = baseUrl + "/" + x.Path,
                     Id = user.Id.Id
-                }));
+                }),
+                user.IncomingWeddings.Where(x => !x.IsArchived).Select(x => new CurrentUserWeddingDto()
+                {
+                    Description = x.Description,
+                    Address = x.Address,
+                    Date = x.Date,
+                    WeddingNo = x.No
+                }).ToList());
+                
         }
 
         public async Task AddUserIncomingWeddingAsync(DateTime date, Address address, string description)

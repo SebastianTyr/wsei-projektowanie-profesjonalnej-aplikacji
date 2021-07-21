@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Formik, Form, ErrorMessage, Field } from "formik";
 import * as Yup from 'yup';
 import Button from "../common/Button";
@@ -67,6 +67,8 @@ interface IAnnouncementData {
 
 const AnnouncementForm = () => {
 
+    let history = useHistory();
+
     const initialValues: IAnnouncementData = {
         date: '',
         address: {
@@ -109,7 +111,7 @@ const AnnouncementForm = () => {
                         method: 'POST',
                         headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'), "Content-Type": "application/json" },
                         body: JSON.stringify(announcement)
-                    })
+                    }).then(() => {history.push('./main')})
                 }}
             >
                 <CustomForm>

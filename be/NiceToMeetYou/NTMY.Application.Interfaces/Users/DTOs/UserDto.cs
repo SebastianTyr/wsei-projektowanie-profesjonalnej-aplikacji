@@ -8,7 +8,7 @@ namespace NTMY.Application.Interfaces.Users.DTOs
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
-        public int Distance { get; set; }
+        public decimal Distance { get; set; }
         public int Age { get; set; }
         public decimal WeightValue { get; set; }
         public string WeightUnit { get; set; }

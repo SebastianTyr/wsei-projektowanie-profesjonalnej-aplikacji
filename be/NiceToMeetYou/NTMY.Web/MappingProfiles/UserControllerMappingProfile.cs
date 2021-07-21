@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using NTMY.Application.Interfaces.Users.DTOs;
 using NTMY.Web.ViewModels.Users;
 
@@ -40,6 +36,15 @@ namespace NTMY.Web.MappingProfiles
             CreateMap<UserPhotoDto, UserPhotoViewModel>()
                 .ForMember(x => x.PhotoNo, opt => opt.MapFrom(x => x.FileNo))
                 .ForMember(x => x.PhotoUrl, opt => opt.MapFrom(x => x.FileUrl));
+
+            CreateMap<CurrentUserWeddingDto, CurrentUserWeddingViewModel>()
+                .ForMember(x => x.Address, opt => opt.MapFrom(x => new AddressViewModel()
+                {
+                    City = x.Address.City,
+                    Country = x.Address.Country,
+                    PostCode = x.Address.PostCode,
+                    Street = x.Address.Street
+                }));
         }
     }
 }

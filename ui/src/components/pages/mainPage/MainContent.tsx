@@ -126,7 +126,7 @@ const MainContent = () => {
         </SearchButtonContainer>
       </SearchWrapper>
 
-      <h2>Te osoby możesz chcieć poznać. Kliknij łapkę w górę i nawiąż kontakt</h2>
+      <h2>Te osoby możesz chcieć poznać. Kliknij łapkę w górę by nawiązać kontakt!</h2>
 
       <CardWrapper>
         {
@@ -136,6 +136,7 @@ const MainContent = () => {
               image={(user.photos.length > 0 ) ? user.photos[0].fileUrl  :  "./media/icons/avatar.svg" }
               name={user.firstName}
               description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
+              id={user.id}
               />
               )
           })
