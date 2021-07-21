@@ -73,6 +73,7 @@ const EditButtonBox = styled.span`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-bottom: ${Margin[16]};
 `;
 const ButtonsBox = styled.div`
     position: relative;
