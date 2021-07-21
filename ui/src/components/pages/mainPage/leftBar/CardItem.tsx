@@ -90,6 +90,11 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
     const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
     console.log(selectedUserId);
 
+    let weddingDate = props.weddingDate.toString().substring(0, 10);
+    
+    
+    console.log(weddingDate)
+
     const postLikeHandler = () => {
         const urlAddLike = 'https://localhost:5001/Users/AddLike';
         fetch(urlAddLike, {
@@ -117,7 +122,7 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
             </TextWrapper>
             {(props.weddingDescription != null) ?
                 <TextWrapper>
-                    <WeddingHeader>Zbliża się wesele: {props.weddingDate}</WeddingHeader>
+                    <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
                     <WeddingDescription>{props.weddingDescription}</WeddingDescription>
                 </TextWrapper>
                 :

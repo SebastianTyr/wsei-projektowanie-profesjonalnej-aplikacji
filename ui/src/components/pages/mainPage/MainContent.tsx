@@ -78,7 +78,7 @@ interface ISingleUser {
       fileUrl: string
     }
   ],
-  incomingWddingDate: Date,
+  incomingWeddingDate: Date,
   incomingWeddingDescription: string | null
 };
 
@@ -137,7 +137,7 @@ const MainContent = () => {
               name={user.firstName}
               description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
               id={user.id}
-              weddingDate={user.incomingWddingDate}
+              weddingDate={user.incomingWeddingDate}
               weddingDescription={user.incomingWeddingDescription}
               />
               )
