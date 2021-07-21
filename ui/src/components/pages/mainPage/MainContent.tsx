@@ -6,6 +6,7 @@ import { IState } from '../../../reducers';
 import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
+import { Margin } from '../../../styledHelpers/Margin';
 import { Padding } from '../../../styledHelpers/Padding';
 import IconButtonGeneric from '../../common/IconButtonGeneric';
 
@@ -13,20 +14,23 @@ import CardItem from './leftBar/CardItem';
 
 
 const Wrapper = styled.div`
-    border: 1px solid red;
-    max-width: 1200px;
-    display: flex;
+    width: 70%;
     margin: 0 auto;
     overflow: auto;
-    flex-direction: column;
     padding: ${Padding[24]} ${Padding[16]} ${Padding[8]} ${Padding[16]};
+
+    h2 {
+      font-size: ${FontSize[20]};
+      text-align: center;
+      color: ${Colors.red};
+      margin-bottom: ${Margin[24]};
+    }
 `;
 
 const CardWrapper = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-space-around;
 `;
 
 const SearchWrapper = styled.div`
@@ -35,6 +39,7 @@ const SearchWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: ${Margin[24]};
 `;
 const Search = styled.input`
   border: 1px solid ${Colors.gray02};
@@ -58,6 +63,7 @@ const SearchButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: ${Margin[8]};
 `;
 
 
@@ -77,7 +83,9 @@ interface ISingleUser {
       fileNo: number,
       fileUrl: string
     }
-  ]
+  ],
+  incomingWeddingDate: Date,
+  incomingWeddingDescription: string | null
 };
 
 
@@ -114,8 +122,6 @@ const MainContent = () => {
       }));
   }, []);
   
-  console.log(allUsers[2]?.photos);
-
   return (
     <Wrapper>
       {console.log(userData)}
@@ -137,6 +143,8 @@ const MainContent = () => {
               name={user.firstName}
               description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
               id={user.id}
+              weddingDate={user.incomingWeddingDate}
+              weddingDescription={user.incomingWeddingDescription}
               />
               )
           })

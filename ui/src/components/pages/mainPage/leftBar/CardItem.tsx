@@ -13,12 +13,14 @@ const Wrapper = styled.div`
     border: ${Border.red};
     position: relative;
     background-color: ${Colors.white};
-    width: 33.333%;
+    width: calc(33.333% - 2rem);
     height: 31.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 1rem;
+    overflow: hidden;
+    margin: ${Margin[16]};
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `;
 
@@ -36,7 +38,7 @@ const ImageBox = styled.div`
 `;
 const TextWrapper = styled.div`
     padding: 1rem;
-    height: 40%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -69,20 +71,33 @@ const ButtonBox = styled.button`
     right: 1rem;
 `;
 
+const WeddingHeader = styled.span`
+    font-weight: 700;
+`;
+const WeddingDescription = styled.span`
+    overflow: hidden;
+`;
 
 interface ICardItem {
     image: string;
     name: string;
     description: string;
-    id: string
+    id: string;
+    weddingDate: Date;
+    weddingDescription: string | null
 }
 
 const CardItem: FC<ICardItem> = (props: ICardItem) => {
 
-    const [selectedUserId, setSelectedUserId] = useState({likedUserId: props.id});
+    const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
     console.log(selectedUserId);
 
-    const postHandler = () => {
+    let weddingDate = props.weddingDate.toString().substring(0, 10);
+    
+    
+    console.log(weddingDate)
+
+    const postLikeHandler = () => {
         const urlAddLike = 'https://localhost:5001/Users/AddLike';
         fetch(urlAddLike, {
             method: 'POST',
@@ -92,12 +107,12 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
             },
             body: JSON.stringify(selectedUserId)
         })
-        .then((response) => console.log(response));
+            .then((response) => console.log(response));
     }
 
-    return(
+    return (
         <Wrapper>
-            <ButtonBox onClick={postHandler}>
+            <ButtonBox onClick={postLikeHandler}>
                 <IconButtonGeneric className="lg" src="./media/icons/like.svg" alt="like icon" />
             </ButtonBox>
             <ImageBox>
@@ -107,6 +122,15 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
                 <NameBox>{props.name}</NameBox>
                 <DescriptionBox>{props.description}</DescriptionBox>
             </TextWrapper>
+            {(props.weddingDescription != null) ?
+                <TextWrapper>
+                    <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
+                    <WeddingDescription>{props.weddingDescription}</WeddingDescription>
+                </TextWrapper>
+                :
+                <TextWrapper/>
+            }
+
         </Wrapper>
     );
 };
