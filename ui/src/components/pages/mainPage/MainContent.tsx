@@ -77,7 +77,9 @@ interface ISingleUser {
       fileNo: number,
       fileUrl: string
     }
-  ]
+  ],
+  incomingWeddingDate: Date,
+  incomingWeddingDescription: string | null
 };
 
 
@@ -114,8 +116,6 @@ const MainContent = () => {
       }));
   }, []);
   
-  console.log(allUsers[2]?.photos);
-
   return (
     <Wrapper>
       {console.log(userData)}
@@ -137,6 +137,8 @@ const MainContent = () => {
               name={user.firstName}
               description={(user.description === null) ? "Ten użytkownik jest nieśmiały. Jeszcze nic o sobie nie napisał." : user.description}
               id={user.id}
+              weddingDate={user.incomingWeddingDate}
+              weddingDescription={user.incomingWeddingDescription}
               />
               )
           })
