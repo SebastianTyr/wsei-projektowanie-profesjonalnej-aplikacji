@@ -5,7 +5,7 @@ import IconButtonGeneric from '../../common/IconButtonGeneric';
 import { Gradient } from '../../../styledHelpers/Gradient';
 import Label from "../../common/Label";
 import AnnouncementForm from "../../announcementForm/announcementForm";
-import Announcement from './Announcement';
+import Announcement from './AnnouncementContent';
 
 const ItemsBox = styled.div`
     display: flex;
