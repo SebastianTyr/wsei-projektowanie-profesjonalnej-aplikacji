@@ -2,29 +2,30 @@ import { IIncomingWeddingDetails } from "../entities/incomingWeddingDetails";
 import * as actionTypes from '../actions/actionTypes/incomingWeddingDetailsTypes';
 
 export interface IIncomingWeddingDetailsReducers {
-    incomingWeddingDetails: IIncomingWeddingDetails;
+    IIncomingWeddingDetails: IIncomingWeddingDetails;
 }
-/*
+
 const defaultState = (): IIncomingWeddingDetailsReducers => ({
-    incomingWeddingDetails: {
+    IIncomingWeddingDetails: {
+        id: '',
+        firstName:'',
+        description:'',
         date: new Date(),
-        address: {
-            city: '',
-            country: '',
-            postCode: '',
-            street: ''
-        },
-        description:''
+        addressStreet: '',
+        addressCity: '',
+        addressPostCode: '',
+        addressCountry: '',
+        genders: 0,
     }
     });
 
 export default (state = defaultState(), action: any) => {
     switch (action.type) {
         case actionTypes.GET_DETAILS: {
-            const data: actionTypes.IncomingWeddingDetailsTypes['GET_DETAILS'] = action;
+            const data: actionTypes.IIncomingWeddingDetailTypes['GET_DETAILS'] = action;
             return {
                 ...state,
-                incomingWeddingDetails: data.currentUserDetails
+                incomingWeddingDetails: data.incomingWeddingDetails
             }
         }
 
@@ -32,4 +33,4 @@ export default (state = defaultState(), action: any) => {
             return state;
         }
     }
-}*/
+}

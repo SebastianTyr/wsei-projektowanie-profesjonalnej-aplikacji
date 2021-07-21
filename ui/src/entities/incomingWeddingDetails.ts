@@ -1,10 +1,12 @@
-export interface IIncomingWeddingDetails {
- date: Date,
- address: {
-    city: string,
-    country: string,
-    postCode: string,
-    street: string
-},
-description: string
+export  interface IIncomingWeddingDetails {
+    id:string,
+    firstName:string,
+    description: string,
+    date: Date,
+    addressStreet: string,
+    addressCity: string,
+    addressPostCode: string,
+    addressCountry: string,
+    genders:number
+
 }
