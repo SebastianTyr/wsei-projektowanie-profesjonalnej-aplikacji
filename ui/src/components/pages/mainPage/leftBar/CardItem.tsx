@@ -13,12 +13,14 @@ const Wrapper = styled.div`
     border: ${Border.red};
     position: relative;
     background-color: ${Colors.white};
-    width: 33.333%;
+    width: calc(33.333% - 2rem);
     height: 31.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 1rem;
+    overflow: hidden;
+    margin: ${Margin[16]};
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `;
 
