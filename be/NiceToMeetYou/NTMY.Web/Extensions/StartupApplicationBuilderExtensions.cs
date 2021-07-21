@@ -5,7 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using NTMY.Application.Interfaces.Users.Commands;
 using NTMY.Domain.Users;
 using NTMY.SharedKernel;
+using PlaygroundShared;
 using PlaygroundShared.Application.CQRS;
+using PlaygroundShared.Domain;
 
 namespace NTMY.Web.Extensions
 {

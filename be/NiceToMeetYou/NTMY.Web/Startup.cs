@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NTMY.Application;
 using NTMY.Application.Interfaces;
@@ -146,6 +147,7 @@ namespace NTMY.Web
             builder.RegisterType<CommandDispatcher>().As<ICommandDispatcher>();
             builder.RegisterType<QueryDispatcher>().As<IQueryDispatcher>();
             builder.RegisterType<CommandQueryDispatcherDecorator>().As<ICommandQueryDispatcherDecorator>();
+            builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>));
 
             builder.Register(ctx =>
             {
@@ -183,6 +185,7 @@ namespace NTMY.Web
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NTMY.Web v1"));
             }
 
+            app.UseErrorHandling();
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
