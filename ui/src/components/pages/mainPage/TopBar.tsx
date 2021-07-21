@@ -147,7 +147,7 @@ const TopBar: FC<ITopBarProps> = (props) => {
                     </Link>
                 </LeftContainer>
                 <IconsSection>
-                    <PersonNameContainer>Cześć, <span>{userData?.firstName} </span>!</PersonNameContainer>
+                    <PersonNameContainer>Cześć, <span>{userData?.firstName}</span>!</PersonNameContainer>
                     <Link to="/weddings">
                         <Weddings>
                             <IconButtonGeneric className="md" src="./media/icons/weddings.svg" alt="weddings icon" />
