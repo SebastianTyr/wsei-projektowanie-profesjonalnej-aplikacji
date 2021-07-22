@@ -1,6 +1,6 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
@@ -11,7 +11,6 @@ import { Border } from '../../../styledHelpers/Border';
 import { IState } from '../../../reducers';
 import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { useSelector } from 'react-redux';
-import { boolean } from 'yup/lib/locale';
 
 
 const Wrapper = styled.div`

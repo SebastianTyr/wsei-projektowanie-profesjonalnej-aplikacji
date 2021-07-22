@@ -11,6 +11,7 @@ import { Margin } from '../../../styledHelpers/Margin';
 import { Padding } from '../../../styledHelpers/Padding';
 import styled from 'styled-components';
 
+
 const Wrapper = styled.div`
     width: 70%;
     margin: 0 auto;
@@ -31,41 +32,43 @@ const CardWrapper = styled.div`
     flex-wrap: wrap;
 `;
 
-interface Iweddings{
-  firstName:string,
+interface Iweddings {
+  firstName: string,
   description: string,
   date: Date,
   addressStreet: string,
   addressCity: string,
   addressPostCode: string,
   addressCountry: string,
-  weddingNo:number
+  weddingNo: number,
+  gender:number,
 }
 
 const Announcement = () => {
   const [allAnnouncement, setAllAnouncement] = useState<Iweddings[]>([]);
-  const { IIncomingWeddingDetails } = useSelector<IState, IIncomingWeddingDetailsReducers& ILoggedInReducer>( state => ({
+  const { currentUserDetails } = useSelector<IState, IIncomingWeddingDetailsReducers & ICurrentUserDetailsReducers>(state => ({
     ...state.incomingWeddingDetails,
-    ...state.userData
+    ...state.currentUserDetails
   }));
 
-  const wantedGender = (IIncomingWeddingDetails?.genders === 10) ? 20 : 10;
-  console.log(IIncomingWeddingDetails);
-  const usersParams = new URLSearchParams({
+  const wantedGender = currentUserDetails?.wantedGender.toString();
+ console.log(currentUserDetails.gender);
+  /*const usersParams = new URLSearchParams({
     maxDistance: '10',
-    genders: wantedGender.toString()
-  }).toString();
+    genders: wantedGender
+  }).toString();*/
 
-  const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
- 
+  // const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
+  const urlSelectedUsers = 'https://localhost:5001/Users/GetIncomingWeddings';
+
 
   useEffect(() => {
     fetch(urlSelectedUsers, {
       method: 'GET',
       headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
     })
-    .then(response => response.json())
-    .then((data => {
+      .then(response => response.json())
+      .then((data => {
         console.log(data);
         setAllAnouncement(data.items);
       }));
@@ -78,6 +81,7 @@ const Announcement = () => {
   {
     allAnnouncement?.map((items?) => {
       return(
+        (currentUserDetails.gender===items.gender)?null:(
         <AnnoucementCard key={items.weddingNo}
           date={items.date.toLocaleString().substring(0,10)}
           firstname={items.firstName}
@@ -86,7 +90,7 @@ const Announcement = () => {
           city={(items.addressCity === null) ? 'Nie wiadomo gdzie ':items.addressCity}
           postCode={(items.addressPostCode === null) ? 'Nie wiadomo gdzie ':items.addressPostCode}
           country={(items.addressCountry === null) ? 'Nie wiadomo gdzie ':items.addressCountry}
-        />);
+        />));
   })
 }
 </CardWrapper>

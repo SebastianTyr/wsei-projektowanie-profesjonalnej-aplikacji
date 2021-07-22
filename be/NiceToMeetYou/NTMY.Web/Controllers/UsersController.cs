@@ -181,5 +181,14 @@ namespace NTMY.Web.Controllers
             return Ok(result);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            var query = new GetUserQuery(id, baseUrl);
+
+            return Ok(await _commandQueryDispatcherDecorator.DispatchAsync<GetUserQuery, UserDto>(query));
+        }
     }
 }

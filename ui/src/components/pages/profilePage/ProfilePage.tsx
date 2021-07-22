@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import DetailsForm from '../../profileForms/DetialsForm';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import Button from '../../common/Button';
-import ImageForm from '../../profileForms/ImageForm';
+
 import { useSelector } from 'react-redux';
 import { IState } from '../../../reducers';
 import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
@@ -14,6 +13,7 @@ import { Gradient } from '../../../styledHelpers/Gradient';
 import { Colors } from '../../../styledHelpers/Colors';
 import { Border } from '../../../styledHelpers/Border';
 import { Margin } from '../../../styledHelpers/Margin';
+import EditProfileForms from '../../profileForms/EditProfileForms';
 
 const Wrapper = styled.div`
     display: flex;
@@ -35,9 +35,19 @@ const WrapperContainer = styled.div`
 `
 const ImageContainer = styled.div`
     display: flex;
+    flex-direction: column;
     width: 40%;
     padding: ${Padding[40]};
     height: 100%;
+
+    img { 
+        height: 60%;
+        border-radius: 1rem;
+    }
+
+    span {
+        margin-top: ${Margin[24]};
+    }
 `
 const MainContainer = styled.div`
     width: 60%;
@@ -173,101 +183,111 @@ const SingleWedding = styled.li`
     margin-bottom: ${Margin[8]};
 `
 
+const DescriptionWrapper = styled.span`
+
+`;
+
 const ProfilePage = () => {
 
-    const { userData, currentUserDetails } = useSelector<IState, ILoggedInReducer & ICurrentUserDetailsReducers>( state => ({
+    const { userData, currentUserDetails } = useSelector<IState, ILoggedInReducer & ICurrentUserDetailsReducers>(state => ({
         ...state.userData,
         ...state.currentUserDetails
-      }));
+    }));
     const [isInfoVisible, setIsInfoVisible] = useState<boolean>(true);
     const [isWeddingsInfoVisible, setIsWeddingsInfoVisible] = useState<boolean>(false);
 
-    const [isEditDetails, setIsEditDeatils] = useState<boolean>(false);
-    const editDetailsHandler = () => {
-        setIsEditDeatils(!isEditDetails);
+    const [isEdit, setIsEdit] = useState<boolean>(false);
+    const editClickHandler = () => {
+        setIsEdit(!isEdit);
     }
     const showInfo = () => {
         setIsInfoVisible(true);
         setIsWeddingsInfoVisible(false);
-      }
+    }
     const showWeddings = () => {
         setIsWeddingsInfoVisible(true);
         setIsInfoVisible(false);
     }
     return (
-       <Wrapper>
-           <WrapperContainer>
-            {isEditDetails ? (
-                <DetailsForm />
-            ) : (
-                <>
-                    <ImageContainer>
-                        <ImageForm/>
-                    </ImageContainer>
-                    <MainContainer>
-                        <MainContainerHeader>
-                            <EditButtonBox>
-                                <Button variant="primary" type="text" size="md" text="Edytuj szczegóły" onClick={editDetailsHandler}></Button>
-                            </EditButtonBox>
-                            <PersonInfo>
-                                <Names>{currentUserDetails?.firstName} {currentUserDetails?.secondName}</Names>
-                                <Description>
-                                   {currentUserDetails?.description ? (
-                                        <>{currentUserDetails?.description}</>
-                                   ) : (
-                                        <>Opis</>
-                                   )}
-                                </Description> 
-                            </PersonInfo>
-                        </MainContainerHeader>
-                        <MainContainerBox>
-                            <ButtonsBox>
-                                <ButtonAbout type="button" onClick={showInfo} className={isInfoVisible ? "active" : ""}> Informacje </ButtonAbout>
-                                <ButtonWeddings type="button" onClick={showWeddings} className={isWeddingsInfoVisible ? "active" : ""}> Wesela </ButtonWeddings>
-                            </ButtonsBox>
-                            <ButtonContent>
-                                {isInfoVisible ? (
-                                    <InfoContainer>
-                                        <table>
-                                            <tr>
-                                                <td>Nick:</td>
-                                                <td>{currentUserDetails?.userName}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Imie:</td>
-                                                <td>{currentUserDetails?.firstName}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nazwisko:</td>
-                                                <td>{currentUserDetails?.secondName}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email:</td>
-                                                <td>{currentUserDetails?.email}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Płeć:</td>
-                                                <td>{(currentUserDetails?.gender === 10? "mężczyzna" : "kobieta")}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Data urodzenia:</td>
-                                                <td>{currentUserDetails?.birthDate.toString().substring(0, 10)}</td>
-                                            </tr>
-                                        </table>
-                                    </InfoContainer>
-                                ) : (
-                                    <WeddingsContainer>
-                                        <ul>
-                                            <SingleWedding>Wesele w Szczebrzeszynie</SingleWedding>
-                                        </ul>
-                                    </WeddingsContainer>
-                                )}
-                            </ButtonContent>
-                        </MainContainerBox>
-                    </MainContainer>
+        <Wrapper>
+            <WrapperContainer>
+                {isEdit ? (
+                    <EditProfileForms />
+                ) : (
+                    <>
+                        <ImageContainer>
+                            <img alt="avatar" src={(currentUserDetails?.photos.length < 1) ? "./media/icons/avatar.svg" : currentUserDetails?.photos[0].photoUrl}></img>
+                            {(currentUserDetails?.photos.length < 1) ?
+                                <span>Pokaż się innym, kliknij "Edytuj" i dodaj zdjęcie</span>
+                                : null
+                            }
+                        </ImageContainer>
+                        <MainContainer>
+                            <MainContainerHeader>
+                                <EditButtonBox>
+                                    <Button variant="primary" type="text" size="md" text="Edytuj" onClick={editClickHandler}></Button>
+                                </EditButtonBox>
+                                <PersonInfo>
+                                    <Names>{currentUserDetails?.firstName} {currentUserDetails?.secondName}</Names>
+                                    <Description>
+                                        {currentUserDetails?.description ? (
+                                            <>{currentUserDetails?.description}</>
+                                        ) : (
+                                            <>Opis</>
+                                        )}
+                                    </Description>
+                                </PersonInfo>
+                            </MainContainerHeader>
+                            <MainContainerBox>
+                                <ButtonsBox>
+                                    <ButtonAbout type="button" onClick={showInfo} className={isInfoVisible ? "active" : ""}> Informacje </ButtonAbout>
+                                    <ButtonWeddings type="button" onClick={showWeddings} className={isWeddingsInfoVisible ? "active" : ""}> Wesela </ButtonWeddings>
+                                </ButtonsBox>
+                                <ButtonContent>
+                                    {isInfoVisible ? (
+                                        <InfoContainer>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Nick:</td>
+                                                        <td>{currentUserDetails?.userName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Imie:</td>
+                                                        <td>{currentUserDetails?.firstName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nazwisko:</td>
+                                                        <td>{currentUserDetails?.secondName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email:</td>
+                                                        <td>{currentUserDetails?.email}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Płeć:</td>
+                                                        <td>{(currentUserDetails?.gender === 10 ? "mężczyzna" : "kobieta")}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Data urodzenia:</td>
+                                                        <td>{currentUserDetails?.birthDate.toString().substring(0, 10)}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </InfoContainer>
+                                    ) : (
+                                        <WeddingsContainer>
+                                            <ul>
+                                                <SingleWedding>Wesele w Szczebrzeszynie</SingleWedding>
+                                            </ul>
+                                        </WeddingsContainer>
+                                    )}
+                                </ButtonContent>
+                            </MainContainerBox>
+                        </MainContainer>
 
-                </>
-            )}
+                    </>
+                )}
             </WrapperContainer>
         </Wrapper>
     );
