@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using NTMY.Application.Interfaces.Users.DTOs;
 using NTMY.Application.Interfaces.Users.Queries;
 using NTMY.Application.Interfaces.Users.ReadModels;
+using NTMY.Domain.Users;
 using NTMY.Domain.Users.Repositories;
 using PlaygroundShared.Configurations;
 using PlaygroundShared.Infrastructure;
@@ -35,6 +36,7 @@ SELECT U.[Id]
       ,U.[Description]
       ,U.[LastLoginDate]
       ,U.[WantedGender]
+      ,U.[Status]
 	  ,DATEDIFF(YEAR, U.BirthDate, GETDATE()) AS Age
 	  ,geography::STGeomFromText('POINT(' + 
                 CAST(U.[CoordinateLongitude] AS VARCHAR(20)) + ' ' + 
@@ -142,6 +144,45 @@ ORDER BY W.Date
             return await connection.QueryAsync<UserWeddingDto>(template.RawSql, template.Parameters);
         }
 
+        public async Task<UserDto> GetUserInfoAsync(GetUserQuery query)
+        {
+            var sqlQuery = $@"
+{declareStatement}
+;WITH UsersWithDistance AS ({sqlWithStatement})
+
+SELECT * FROM UsersWithDistance AS U
+WHERE U.Id = @UserId AND U.Status = @ActiveUserStatus
+
+SELECT P.Id
+    ,P.No AS FileNo
+    ,P.Name AS FileName
+    ,@BaseUrl + '/' + P.Path AS FileUrl
+FROM dbo.UserPhotos P
+WHERE P.IsArchived = 0 AND P.Id = @UserId";
+
+            var currentUser = await _userRepository.GetAsync(_correlationContext.CurrentUser.UserId.Value);
+
+            await using var connection = new SqlConnection(_sqlConnectionConfiguration.MainConnectionString);
+            using var multi = await connection.QueryMultipleAsync(sqlQuery, new
+            {
+                CurrentLongitude = currentUser.Coordinate.Longitude.ToString().Replace(",", "."),
+                CurrentLatitude = currentUser.Coordinate.Latitude.ToString().Replace(",", "."),
+                UserId = query.UserId,
+                BaseUrl = query.BaseAppUrl,
+                ActiveUserStatus = (int)UserStatus.Active,
+
+            });
+
+            var user = await multi.ReadSingleOrDefaultAsync<UserDto>();
+            if (user == null)
+            {
+                return null;
+            }
+            user.Photos = (await multi.ReadAsync<UserPhotoDto>()).ToList();
+
+            return user;
+        }
+
         private void ApplyUsersWhereStatement(SqlBuilder sqlBuilder, GetUsersQuery query)
         {
             if (query.Gender != null && query.Gender.Any())
@@ -155,6 +196,7 @@ ORDER BY W.Date
             }
 
             sqlBuilder.Where(@"U.Distance <= @Distance", new {Distance = query.MaxDistance});
+            sqlBuilder.Where(@"U.Status = @ActiveUserStatus", new { ActiveUserStatus = (int)UserStatus.Active});
             sqlBuilder.Where(@"U.Id != @CurrentUserId", new {@CurrentUserId = _correlationContext.CurrentUser.UserId.Value.Id});
         }
     }
