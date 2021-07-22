@@ -118,6 +118,7 @@ const LoginForm = () => {
                                 return response.json();
                             } else {
                                 alert("Upsss, upewnij się, że podałeś poprawny email i/lub poprawne hasło");
+                                window.location.href = 'http://localhost:3000/';
                             }
                         })
                         .then((data => {
