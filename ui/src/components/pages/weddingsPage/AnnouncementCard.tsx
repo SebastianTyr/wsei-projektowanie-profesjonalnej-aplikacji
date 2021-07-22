@@ -4,6 +4,7 @@ import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import { Margin } from '../../../styledHelpers/Margin';
 import { Border } from '../../../styledHelpers/Border';
+import { Gradient } from '../../../styledHelpers/Gradient';
 
 
 const Wrapper = styled.div`
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: ${Gradient.orangePink};
     border-radius: 1rem;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `;
