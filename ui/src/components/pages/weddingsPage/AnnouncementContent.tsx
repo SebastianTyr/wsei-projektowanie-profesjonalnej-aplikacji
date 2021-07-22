@@ -2,17 +2,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IState } from '../../../reducers';
 import { IIncomingWeddingDetailsReducers } from '../../../reducers/incomingWeddingDetailReducers'
-import styled from 'styled-components';
 import AnnoucementCard from './AnnouncementCard';
-import { useDispatch } from 'react-redux';
-
-
+import styled from 'styled-components';
 
 const CardWrapper = styled.div`
+    align-items: center;  
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-space-around;
 `;
 
 interface Iweddings{
@@ -23,6 +20,7 @@ interface Iweddings{
   addressCity: string,
   addressPostCode: string,
   addressCountry: string,
+  weddingNo:number
 }
 
 const Announcement = () => {
@@ -42,40 +40,35 @@ const Announcement = () => {
  
 
   useEffect(() => {
-
-
     fetch(urlSelectedUsers, {
       method: 'GET',
       headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken') }
-
     })
     .then(response => response.json())
     .then((data => {
         console.log(data);
         setAllAnouncement(data.items);
-
       }));
   }, []);
 
   return(
-  <>
-  <h1>witaj </h1>
+    <CardWrapper>
   <h2>Nadchodzące wydarzenia</h2>
-<CardWrapper>
-  {allAnnouncement?.map((props?) => {
-    <AnnoucementCard
-  description={props.description}
-  street={props.addressStreet}
-  city={props.addressCity}
-  postCode={props.addressPostCode}
-  country={props.addressCountry}
-  />
-
-
+  {
+    allAnnouncement?.map((props?) => {
+      return(
+        <AnnoucementCard key={props.weddingNo}
+          date={props.date.toLocaleString().substring(0,10)}
+          firstname={props.firstName}
+          description={props.description}
+          street={(props.addressStreet === null) ? 'Nie wiadomo gdzie ':props.addressStreet}
+          city={(props.addressCity === null) ? 'Nie wiadomo gdzie ':props.addressCity}
+          postCode={(props.addressPostCode === null) ? 'Nie wiadomo gdzie ':props.addressPostCode}
+          country={(props.addressCountry === null) ? 'Nie wiadomo gdzie ':props.addressCountry}
+        />);
   })
-  
 }
-  </CardWrapper>
-  </>);
+</CardWrapper>
+  );
 }
 export default Announcement;

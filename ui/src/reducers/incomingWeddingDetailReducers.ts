@@ -10,7 +10,7 @@ const defaultState = (): IIncomingWeddingDetailsReducers => ({
         id: '',
         firstName:'',
         description:'',
-        date: new Date(),
+        date: new Date().toLocaleDateString(),
         addressStreet: '',
         addressCity: '',
         addressPostCode: '',

@@ -9,9 +9,11 @@ import { Border } from '../../../styledHelpers/Border';
 const Wrapper = styled.div`
     border: ${Border.red};
     position: relative;
+    margin-bottom: ${Margin[24]};
+    margin-left: ${Margin[16]};
     background-color: ${Colors.white};
-    width: 33.333%;
-    height: 31.25rem;
+    width: calc(33.333% - 2rem);
+    height: 21.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,19 +23,21 @@ const Wrapper = styled.div`
 
 const TextWrapper = styled.div`
     padding: 1rem;
-    height: 40%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
+
 const NameBox = styled.span`
-    font-size: ${FontSize[26]};
+    font-size: ${FontSize[14]};
     color: ${Colors.navy};
     font-weight: 700;
     margin-bottom: ${Margin[8]};
 `;
 const DescriptionBox = styled.div`
+    margin-top: ${Margin[8]};
     overflow: auto;
     font-size: ${FontSize[14]};
 `;
@@ -49,11 +53,12 @@ const SingleItem = styled.div`
 
 
 interface IAnnouncementCard {
-    date?: Date,
+    date?: string,
     street:string,
     city:string,
     postCode:string,
-    country:string
+    country:string,
+    firstname: string,
     description: string
 }
 
@@ -61,17 +66,22 @@ const CardItem: FC<IAnnouncementCard> = (props: IAnnouncementCard) => {
     return(
         <Wrapper>
             <TextWrapper>
+                <NameBox>{props.firstname}</NameBox>
+                </TextWrapper>
+                <TextWrapper>
                 <NameBox>{props.date}</NameBox>
+                </TextWrapper>
                 <AddressWrapper>
                     <SingleItem>
                         <NameBox>{props.street}</NameBox>
+                        </SingleItem>
                         <NameBox>{props.city}</NameBox>
                         <NameBox>{props.postCode}</NameBox>
                         <NameBox>{props.country}</NameBox>
-                    </SingleItem>
                 </AddressWrapper>
+                <TextWrapper>
                 <DescriptionBox>{props.description}</DescriptionBox>
-            </TextWrapper>
+                </TextWrapper>
         </Wrapper>
     );
 };

@@ -2,7 +2,7 @@ export  interface IIncomingWeddingDetails {
     id:string,
     firstName:string,
     description: string,
-    date: Date,
+    date: string,
     addressStreet: string,
     addressCity: string,
     addressPostCode: string,
