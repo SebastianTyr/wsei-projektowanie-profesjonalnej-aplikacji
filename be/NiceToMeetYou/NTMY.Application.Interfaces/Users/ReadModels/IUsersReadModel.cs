@@ -9,5 +9,6 @@ namespace NTMY.Application.Interfaces.Users.ReadModels
     {
         Task<IEnumerable<UserDto>> GetUsersAsync(GetUsersQuery query);
         Task<IEnumerable<UserWeddingDto>> GetIncomingWeddingsAsync(GetIncomingWeddingsQuery query);
+        Task<UserDto> GetUserInfoAsync(GetUserQuery query);
     }
 }
