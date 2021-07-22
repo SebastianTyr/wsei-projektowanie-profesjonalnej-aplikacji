@@ -69,12 +69,13 @@ namespace NTMY.Domain.Pairs
             CancelledBy = _correlationContext.CurrentUser.UserId;
         }
 
-        public void AddMessage(AggregateId toUserId, string message)
+        public int AddMessage(AggregateId toUserId, string message)
         {
             ValidateAddingMessage(toUserId);
 
             var pairMessage = new PairMessage(_messages.GetNextNo(), _correlationContext.CurrentUser.UserId.Value, toUserId, message);
             _messages.Add(pairMessage);
+            return pairMessage.No;
         }
 
         public void RemoveMessage(int no)

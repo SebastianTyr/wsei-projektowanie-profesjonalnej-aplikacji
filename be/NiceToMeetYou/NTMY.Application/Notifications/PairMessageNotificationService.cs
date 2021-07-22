@@ -23,14 +23,15 @@ namespace NTMY.Application.Notifications
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public async Task SendMessageAsync(AggregateId toUserId, AggregateId pairId, string message)
+        public async Task SendMessageAsync(AggregateId toUserId, AggregateId pairId, string message, int messageNo)
         {
             await _hubContext.Clients.User(toUserId.ToString()).SendAsync("messageArrived", new PairMessageReceivedResponse()
             {
                 FromUserId = _correlationContext.CurrentUser.UserId.Value.ToGuid(),
                 Message = message,
                 PairId = pairId.ToGuid(),
-                ToUserId = toUserId.ToGuid()
+                ToUserId = toUserId.ToGuid(),
+                PairMessageNo = messageNo
             });
         }
 

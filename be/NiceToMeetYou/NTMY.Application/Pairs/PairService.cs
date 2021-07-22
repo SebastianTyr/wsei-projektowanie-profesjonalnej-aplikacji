@@ -49,12 +49,13 @@ namespace NTMY.Application.Pairs
             await _pairRepository.PersistAsync(pair);
         }
 
-        public async Task AddMessageToPairAsync(AggregateId pairId, AggregateId toUserId, string message)
+        public async Task<int> AddMessageToPairAsync(AggregateId pairId, AggregateId toUserId, string message)
         {
             var pair = await GetPairOrThrowAsync(pairId);
-            pair.AddMessage(toUserId, message);
+            var messageNo = pair.AddMessage(toUserId, message);
 
             await _pairRepository.PersistAsync(pair);
+            return messageNo;
         }
 
         private async Task<User> GetUserOrThrowAsync(AggregateId userId)

@@ -22,8 +22,8 @@ namespace NTMY.Application.Pairs.Handlers.Commands
 
         public async Task HandleAsync(AddMessageToPairCommand command)
         {
-            await _pairService.AddMessageToPairAsync(command.PairId, command.ToUserId, command.Message);
-            await _pairMessageNotificationService.SendMessageAsync(command.ToUserId, command.PairId, command.Message);
+            var messageNo = await _pairService.AddMessageToPairAsync(command.PairId, command.ToUserId, command.Message);
+            await _pairMessageNotificationService.SendMessageAsync(command.ToUserId, command.PairId, command.Message, messageNo);
         }
     }
 }
