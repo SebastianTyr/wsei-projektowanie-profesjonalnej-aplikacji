@@ -52,7 +52,6 @@ const Announcement = () => {
   }));
 
   const wantedGender = currentUserDetails?.wantedGender.toString();
- console.log(currentUserDetails.gender);
   /*const usersParams = new URLSearchParams({
     maxDistance: '10',
     genders: wantedGender
@@ -76,7 +75,6 @@ const Announcement = () => {
 
   return(
     <Wrapper>
-    <h2>Nadchodzące wydarzenia</h2>
     <CardWrapper>
   {
     allAnnouncement?.map((items?) => {

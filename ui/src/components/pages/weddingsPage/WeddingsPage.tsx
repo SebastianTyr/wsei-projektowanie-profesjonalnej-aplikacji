@@ -24,7 +24,7 @@ const FormItem = styled.div`
 const ButtonWrapper = styled.button`
   width: 80px;
   height: 80px;
-  margin: 10px 0 0 24px;
+  margin: 10px 0 0 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,27 +37,21 @@ const ButtonWrapper = styled.button`
 const WeddingsPage: FC = () => {
 
     const [isForm, setIsForm] = useState<boolean>(false);
-    const [isChoosed, setIsChoosed] = useState<boolean>(false);
     const FormHandler = () => {
         setIsForm(true);
-        setIsChoosed(true);
-    };
-    const LookingHandler = () => {
-        setIsChoosed(true)
+        
     };
     const MainHandler = () => {
-        setIsForm(false);
-        setIsChoosed(false);
+        setIsForm(false); 
     }
 
     return (
-        <>{!isChoosed &&
+        <>{!isForm &&
             <Custom>
                 <ItemsBox>
-                    <h1>Wybierz Jedno</h1>
+                    <h1>Wesela</h1>
                 </ItemsBox>
                 <FormItem>
-                    <Label htmlFor='form' labelName='Dodaj Wydarzenie' />
                     <ButtonWrapper>
                         <button className="form" onClick={FormHandler}>
                             <IconButtonGeneric className="xxl" src="./media/icons/plus-solid.svg" alt="weddings icon" />
@@ -65,22 +59,18 @@ const WeddingsPage: FC = () => {
                     </ButtonWrapper>
                 </FormItem>
                 <FormItem>
-                    <Button variant="primary" type="text" size="md" text="Szukaj wydarzenia" onClick={LookingHandler} />
+                <Announcement />
                 </FormItem>
             </Custom>
         }
-            {isChoosed && isForm &&
-                <>
+            {isForm && 
                     <Custom>
                         <AnnouncementForm />
                         <Button variant="primary" type="text" size="md" text="Powrót" onClick={MainHandler} />
                     </Custom>
-                </>}
-            {isChoosed && !isForm &&
-                <>
-                    <Announcement />
-                    <Button variant="primary" type="text" size="md" text="Powrót" onClick={MainHandler} />
-                </>}
+                }
+                    
+              
         </>
     )
 }
