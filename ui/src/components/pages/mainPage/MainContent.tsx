@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { IState } from '../../../reducers';

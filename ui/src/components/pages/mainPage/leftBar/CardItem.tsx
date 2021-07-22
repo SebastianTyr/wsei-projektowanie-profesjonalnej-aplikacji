@@ -95,7 +95,6 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
     let weddingDate = props.weddingDate.toString().substring(0, 10);
     
     
-    console.log(weddingDate)
 
     const postLikeHandler = () => {
         const urlAddLike = 'https://localhost:5001/Users/AddLike';

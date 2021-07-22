@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 
-import { Colors } from "../../styledHelpers/Colors";
 import Button from "../common/Button";
 import Label from "../common/Label";
 import Input from "../common/Input";

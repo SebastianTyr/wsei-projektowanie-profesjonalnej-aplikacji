@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Border } from '../../../styledHelpers/Border';
 import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
-import { Gradient } from '../../../styledHelpers/Gradient';
 import { Margin } from '../../../styledHelpers/Margin';
 import { Padding } from '../../../styledHelpers/Padding';
 import Button from '../../common/Button';
