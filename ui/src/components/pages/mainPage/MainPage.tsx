@@ -2,6 +2,8 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import * as signalR from '@microsoft/signalr';
 
 import MainContent from './MainContent';
 import TopBar from './TopBar';
@@ -10,11 +12,12 @@ import WeddingsPage from '../weddingsPage/WeddingsPage';
 import LandingPage from '../landingPage/LandingPage';
 import MessagePage from '../messagePage/MessagePage';
 import { getCurrentUserDetails } from '../../../actions/currentUserDetailsActions';
-import { useEffect } from 'react';
-import * as signalR from '@microsoft/signalr';
+import { getIncomingWeddingDetails } from '../../../actions/incomingWeddingDetailsActions';
+
 
 
 type GetCurrentUserDetails = ReturnType<typeof getCurrentUserDetails>;
+type GetIncomingWeddingDetails = ReturnType <typeof getIncomingWeddingDetails>
 
 
 
@@ -40,6 +43,7 @@ const MainPage: FC = () => {
 
     useEffect(() => {
         dispatch<GetCurrentUserDetails>(getCurrentUserDetails());
+        dispatch<GetIncomingWeddingDetails>(getIncomingWeddingDetails());
     }, []);
 
 
