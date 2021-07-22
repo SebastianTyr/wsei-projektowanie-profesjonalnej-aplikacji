@@ -1,9 +1,20 @@
+import styled from "styled-components";
+
+
+const Wrapper = styled.div``;
+
+const CloseWrapper = styled.div``;
+
+const HeaderWrapper = styled.div``;
 
 
 
 const EditProfileForms = () => {
     return (
-        <>Edytuj Profil </>
+        <Wrapper>
+            <CloseWrapper></CloseWrapper>
+            <HeaderWrapper></HeaderWrapper>
+        </Wrapper>
     )
 }
 
