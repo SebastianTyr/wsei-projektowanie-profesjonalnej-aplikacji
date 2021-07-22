@@ -3,17 +3,23 @@ import Button from '../../common/Button';
 import styled from 'styled-components';
 import IconButtonGeneric from '../../common/IconButtonGeneric';
 import { Gradient } from '../../../styledHelpers/Gradient';
-import Label from "../../common/Label";
 import AnnouncementForm from "../../announcementForm/announcementForm";
 import Announcement from './AnnouncementContent';
+import { FontSize } from '../../../styledHelpers/FontSize';
+import { Margin } from '../../../styledHelpers/Margin';
+import { Colors } from '../../../styledHelpers/Colors';
 
 const ItemsBox = styled.div`
     display: flex;
+    font-size: ${FontSize[28]};
+    align-items: center;
+    color: ${Colors.navy};
 `
 const Custom = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2rem 1rem;
 `;
 const FormItem = styled.div`
     display: flex;
@@ -24,7 +30,6 @@ const FormItem = styled.div`
 const ButtonWrapper = styled.button`
   width: 80px;
   height: 80px;
-  margin: 10px 0 0 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,6 +37,7 @@ const ButtonWrapper = styled.button`
   border-radius: 50%;
   position: relative;
   border: 0;
+  margin-left: ${Margin[16]};
 `;
 
 const WeddingsPage: FC = () => {
@@ -50,16 +56,14 @@ const WeddingsPage: FC = () => {
             <Custom>
                 <ItemsBox>
                     <h1>Wesela</h1>
-                </ItemsBox>
-                <FormItem>
                     <ButtonWrapper>
                         <button className="form" onClick={FormHandler}>
                             <IconButtonGeneric className="xxl" src="./media/icons/plus-solid.svg" alt="weddings icon" />
                         </button>
                     </ButtonWrapper>
-                </FormItem>
+                </ItemsBox>
                 <FormItem>
-                <Announcement />
+                    <Announcement />
                 </FormItem>
             </Custom>
         }
