@@ -59,7 +59,7 @@ const MainContainer = styled.div`
 `
 const MainContainerHeader = styled.div`
     width: 100%;
-    height: calc(100% - 425px);
+    height: calc(100% - 400px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -80,7 +80,7 @@ const Description = styled.div`
     font-weight: 500;
 `
 const MainContainerBox = styled.div`
-    height: 425px;
+    height: 400px;
 `
 const EditButtonBox = styled.span`
     height: 3.125rem;
@@ -255,14 +255,6 @@ const ProfilePage = () => {
                                                     <tr>
                                                         <td>Nick:</td>
                                                         <td>{currentUserDetails?.userName}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Imie:</td>
-                                                        <td>{currentUserDetails?.firstName}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Nazwisko:</td>
-                                                        <td>{currentUserDetails?.secondName}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Email:</td>
