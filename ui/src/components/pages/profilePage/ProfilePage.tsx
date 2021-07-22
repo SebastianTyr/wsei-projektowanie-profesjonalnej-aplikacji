@@ -197,6 +197,8 @@ const ProfilePage = () => {
         ...state.userData,
         ...state.currentUserDetails
     }));
+
+
     const [isInfoVisible, setIsInfoVisible] = useState<boolean>(true);
     const [isWeddingsInfoVisible, setIsWeddingsInfoVisible] = useState<boolean>(false);
 

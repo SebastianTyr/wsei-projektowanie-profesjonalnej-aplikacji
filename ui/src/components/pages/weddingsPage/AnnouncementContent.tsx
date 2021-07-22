@@ -57,8 +57,8 @@ const Announcement = () => {
     genders: wantedGender
   }).toString();*/
 
-  const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
-  // const urlSelectedUsers = 'https://localhost:5001/Users/GetIncomingWeddings';
+  // const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
+  const urlSelectedUsers = 'https://localhost:5001/Users/GetIncomingWeddings';
 
 
   useEffect(() => {

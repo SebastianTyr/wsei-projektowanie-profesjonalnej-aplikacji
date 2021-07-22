@@ -7,6 +7,13 @@ import { Padding } from "../../styledHelpers/Padding";
 import ImageForm from "./ImageForm";
 import Input from "../common/Input";
 import Label from "../common/Label";
+import Button from "../common/Button";
+import { Margin } from "../../styledHelpers/Margin";
+import { useState } from "react";
+import DetailsForm from "./DetialsForm";
+import { useSelector } from "react-redux";
+import { IState } from "../../reducers";
+import { ICurrentUserDetailsReducers } from "../../reducers/currentUserDetailsReducers";
 
 
 const Wrapper = styled.div`
@@ -21,7 +28,6 @@ const Wrapper = styled.div`
 `
 
 const CloseWrapper = styled.div`
-border: 1px solid red;
     width: 100%;
     height: 30px;
     display: flex;
@@ -43,6 +49,8 @@ const IconWrapper = styled.span`
 const HeaderWrapper = styled.div`
     text-align: center;
     font-weight: 700;
+    margin-bottom: ${Margin[16]};
+    font-size: ${FontSize[28]};
 `;
 
 const FormsWrapper = styled.div`
@@ -55,21 +63,21 @@ const InfoFormsWrapper = styled.div`
 `;
 
 const ImageContainer = styled.div`
-border: 1px solid pink;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 40%;
     padding: ${Padding[40]};
     height: 100%;
 `;
 
 const PersonInfo = styled.div`
-    height: 100%;
+    height: 40%;
 `;
 
 const Names = styled.p`
     color: ${Colors.navy};
-    font-size: ${FontSize[60]};
+    font-size: ${FontSize[8]};
     font-weight: 600;
 `;
 const Description = styled.p`
@@ -104,85 +112,113 @@ const InfoContainer = styled.div`
     }
 `;
 
+const ButtonsWrapper = styled.div`
+    margin-top: ${Margin[24]};
+    display: flex;
+    justify-content: space-between;
+`;
+
 interface IEditProfileFormsProps {
     closeClick(): void,
 }
 
 const EditProfileForms = (props: IEditProfileFormsProps) => {
+
+    const { currentUserDetails } = useSelector<IState, ICurrentUserDetailsReducers>(state => ({
+        ...state.currentUserDetails
+    }));
+
+    const [isDetailsFormVisible, setIsDetailsFormVisible] = useState<boolean>(false);
+
+    const displayDeatilsForm = () => {
+        setIsDetailsFormVisible(true);
+        console.log(isDetailsFormVisible);
+    }
+
+    const closeDetailsForm = () => {
+        setIsDetailsFormVisible(false);
+    }
+
     return (
-        <Wrapper>
+        <>
+            {isDetailsFormVisible ?
+                <DetailsForm closeClick={closeDetailsForm } />
+                :
+                <Wrapper>
+                    <CloseWrapper>
+                        <IconWrapper>
+                            <button onClick={props.closeClick}>
+                                <img src='./media/icons/close.svg'></img>
+                            </button>
+                        </IconWrapper>
+                    </CloseWrapper>
+                    <HeaderWrapper>
+                        Edytuj Profil
+                    </HeaderWrapper>
+                    <FormsWrapper>
+                        <ImageContainer>
+                            <ImageForm />
+                            <Button type='button' variant="secondary" size="lg" text="Dodaj więcej informacji" onClick={displayDeatilsForm} />
+                        </ImageContainer>
+                        <InfoFormsWrapper>
+                            <Formik
+                                initialValues={{ init: 'hej' }}
+                                onSubmit={values => console.log(values)}
+                            >
+                                <Form>
+                                    <PersonInfo>
+                                        <Names>
+                                            <Input type='text' id='firstName' name='fristName' value={currentUserDetails?.firstName} />
+                                            <Input type='text' id='secondName' name='secondName' value={currentUserDetails?.secondName} />
+                                        </Names>
+                                        <Description>
+                                            <Input type='textarea' id='description' name='description' value={currentUserDetails?.description} />
+                                        </Description>
+                                    </PersonInfo>
 
-            <CloseWrapper>
-                <IconWrapper>
-                    <button onClick={props.closeClick}>
-                        <img src='./media/icons/close.svg'></img>
-                    </button>
-                </IconWrapper>
-            </CloseWrapper>
-            <HeaderWrapper>
-                <button>Zapisz zmiany </button>
-            </HeaderWrapper>
-            <FormsWrapper>
-                <ImageContainer>
-                    <ImageForm />
-                </ImageContainer>
-                <InfoFormsWrapper>
-                    <Formik
-                        initialValues={{ init: 'hej' }}
-                        onSubmit={values => console.log(values)}
-                    >
-                        <Form>
-
-
-                            <PersonInfo>
-                                <Names>
-                                    <Input type='text' id='firstName' name='fristName' value='Imię' />
-                                    <Input type='text' id='secondName' name='secondName' value='Nazwisko' />
-                                </Names>
-                                <Description>
-                                    <Input type='textarea' id='description' name='description' value='description' />
-                                </Description>
-                            </PersonInfo>
-
-                            <InfoContainer>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Nick:</td>
-                                            <td>
-                                                <Input type='text' id='userName' name='userName' value='nazwa użytkownika' />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email:</td>
-                                            <td>
-                                                <Input type='email' id='email' name='email' value='email' />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Płeć:</td>
-                                            <td>
-                                                <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female' />
-                                                <Label htmlFor='start' labelName="Kobieta" />
-                                                <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male' />
-                                                <Label htmlFor='end' labelName="Mężczyzna" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Data urodzenia:</td>
-                                            <td>
-                                                <Input id='birthDate' type='date' name='birthDate' value='' />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </InfoContainer>
-                        </Form>
-                    </Formik>
-                </InfoFormsWrapper>
-            </FormsWrapper>
-
-        </Wrapper>
+                                    <InfoContainer>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Nick:</td>
+                                                    <td>
+                                                        <Input type='text' id='userName' name='userName' value={currentUserDetails?.userName} />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Email:</td>
+                                                    <td>
+                                                        <Input type='email' id='email' name='email' value={currentUserDetails?.email} />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Płeć:</td>
+                                                    <td>
+                                                        <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female' />
+                                                        <Label htmlFor='start' labelName="Kobieta" />
+                                                        <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male' />
+                                                        <Label htmlFor='end' labelName="Mężczyzna" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Data urodzenia:</td>
+                                                    <td>
+                                                        <Input id='birthDate' type='date' name='birthDate' value={currentUserDetails?.birthDate.toString().substring(0,10)} />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </InfoContainer>
+                                    <ButtonsWrapper>
+                                        <Button type='submit' variant="secondary" size="lg" text="Zapisz zmiany" />
+                                    </ButtonsWrapper>
+                                </Form>
+                            </Formik>
+                        </InfoFormsWrapper>
+                    </FormsWrapper>
+                </Wrapper>
+            }
+        </>
     )
 }
 

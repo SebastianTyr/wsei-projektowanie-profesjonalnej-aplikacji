@@ -4,6 +4,10 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Border } from '../../styledHelpers/Border';
+import { Colors } from '../../styledHelpers/Colors';
+import { Gradient } from '../../styledHelpers/Gradient';
+import { Margin } from '../../styledHelpers/Margin';
+
 
 
 const Wrapper = styled.div`
@@ -18,18 +22,63 @@ const ItemWrapper = styled.div`
     flex-direction: column;
 
     label {
-        margin: 10px 0;
+        margin-top: ${Margin[16]};
+        text-align: center;
+        color: ${Colors.white};
+        background-image: ${Gradient.orangePink};
+        border-radius: 3rem;
+        &:hover {
+            background-image: ${Gradient.pinkOrange};
+        }
+        min-width: 6rem;
+        height: 3rem;  
     }
 
     input {
-        margin: 10px 0;
         opacity: 0;
     }
 `;
 
-const PreviewWrapper = styled.div`
-
+const ButtonDisabled = styled.button`
+    color: ${Colors.red};
+        border: ${Border.red};
+        background-color: ${Colors.white};
+        border-radius: 0.6rem;
+        background-image: none;
+        min-width: 6rem;
+        height: 3rem; 
 `;
+
+
+
+const ButtonActive = styled.button`
+        color: ${Colors.white};
+        background-image: ${Gradient.orangePink};
+        border-radius: 3rem;
+        min-width: 6rem;
+        height: 3rem; 
+        &:hover {
+            background-image: ${Gradient.pinkOrange};
+        }
+        
+    `;
+
+const LabelDisabeled = styled.label`
+        color: ${Colors.red};
+        border: ${Border.red};
+        background-color: ${Colors.white};
+        border-radius: 0.6rem;
+        background-image: none;
+        min-width: 6rem;
+        height: 3rem; `;
+
+
+const ButtonsWrapper = styled.div``;
+
+const PreviewWrapper = styled.div`
+`;
+
+
 
 const ImageForm = () => {
     const selectedFile = React.useRef<any>(null);
@@ -47,7 +96,7 @@ const ImageForm = () => {
             return;
         console.log(curFile[0]);
 
-        if(curFile.length === 0)
+        if (curFile.length === 0)
             setIsSelect(false);
 
         selectedFile.current = curFile;
@@ -61,37 +110,55 @@ const ImageForm = () => {
         Array.from(selectedFile.current).forEach((file) => fd.append("file", file as Blob))
         fetch('https://localhost:5001/Users/UploadPhoto', {
             method: 'POST',
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'),
                 "accept": "*/*"
             },
             body: fd
         }).then(response => console.log(response))
-        .then(() => { history.push("/main") });
+            .then(() => { history.push("/main") });
     };
 
 
     return (
         <Wrapper>
             <form>
-                <ItemWrapper>
-                    <label htmlFor='image'>Wybierz zdjęcie:</label>
-                    <input id='image'
-                        type='file'
-                        name='image'
-                        accept='.jpg, .jpeg, .png'
-                        multiple={false}
-                        onChange={onChangeHandler}
-                    />
-                </ItemWrapper>
-                {!isSelect &&
-                    <PreviewWrapper>
-                        <p>Nie wybrałeś jeszcze zdjęcia</p>
-                    </PreviewWrapper>
+                {!isSelect ?
+                    <>
+                        <ItemWrapper>
+                            <label htmlFor='image'>Wybierz zdjęcie:</label>
+                            <input id='image'
+                                type='file'
+                                name='image'
+                                accept='.jpg, .jpeg, .png'
+                                multiple={false}
+                                onChange={onChangeHandler}
+                            />
+                        </ItemWrapper>
+                        <PreviewWrapper>
+                            <p>Nie wybrałeś jeszcze zdjęcia</p>
+                        </PreviewWrapper>
+                        <div>
+                            <ButtonDisabled disabled onClick={fileUploadHandler}>Dodaj zdjęcie</ButtonDisabled>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <ItemWrapper>
+                            <LabelDisabeled htmlFor='image'>Wybierz zdjęcie:</LabelDisabeled>
+                            <input id='image'
+                                type='file'
+                                name='image'
+                                accept='.jpg, .jpeg, .png'
+                                multiple={false}
+                                onChange={onChangeHandler}
+                            />
+                        </ItemWrapper>
+                        <div>
+                            <ButtonActive onClick={fileUploadHandler}> Dodaj zdjęcie</ButtonActive>
+                        </div>
+                    </>
                 }
-                <div>
-                    <button onClick={fileUploadHandler}>Dodaj zdjęcie</button>
-                </div> 
             </form>
         </Wrapper>
     )
