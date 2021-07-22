@@ -61,8 +61,22 @@ const Reset = createGlobalStyle`
 `;
 const Scrollbar = createGlobalStyle`
   ::-webkit-scrollbar {
-    display: none;
-  }
+        width: 1.25rem;
+        background-color: transparent;
+        &-thumb {
+          border-radius: 1.375rem;
+          border: solid 0.375rem transparent;
+          box-shadow: inset 0 0 1rem 1rem #d5d5ce;
+          background-color: transparent;
+        }
+        &-track {
+          box-shadow: inset 0 0 1rem 1rem #f0f1f3;
+          border: solid 0.375rem transparent;
+          &-piece {
+            background-color: transparent;
+          }
+        }
+      }
 `;
 
 function App() {

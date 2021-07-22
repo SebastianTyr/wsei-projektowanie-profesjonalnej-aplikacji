@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 `
 const WrapperContainer = styled.div`
     background-color: ${Colors.white};
-    width: 70%;
+    width: 80%;
     height: 90%;
     display: flex;
     align-items: center;
@@ -51,31 +51,36 @@ const ImageContainer = styled.div`
 `
 const MainContainer = styled.div`
     width: 60%;
-    padding: ${Padding[40]};
+    padding: ${Padding[40]} ${Padding[40]} ${Padding[40]} ${Padding[24]};
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `
 const MainContainerHeader = styled.div`
     width: 100%;
-    height: 30%;
+    height: calc(100% - 425px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 `
 const PersonInfo = styled.div`
     height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 `
 const Names = styled.p`
     color: ${Colors.navy};
-    font-size: ${FontSize[60]};
+    font-size: ${FontSize[50]};
     font-weight: 600;
 `
-const Description = styled.p`
-    font-size: 1.13rem;
+const Description = styled.div`
+    font-size: ${FontSize[18]};
     color: ${Colors.navy};
     font-weight: 500;
 `
 const MainContainerBox = styled.div`
-    height: 70%;
+    height: 425px;
 `
 const EditButtonBox = styled.span`
     height: 3.125rem;
@@ -83,7 +88,7 @@ const EditButtonBox = styled.span`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: ${Margin[16]};
+    margin-bottom: ${Margin[8]};
 `;
 const ButtonsBox = styled.div`
     position: relative;
@@ -140,7 +145,6 @@ const ButtonWeddings = styled.button`
     }
 `
 const ButtonContent = styled.div`
-    height: calc(100% - 2rem);
     padding: ${Padding[16]} 0;
 `
 const InfoContainer = styled.div`
@@ -227,8 +231,8 @@ const ProfilePage = () => {
                                 <EditButtonBox>
                                     <Button variant="primary" type="text" size="md" text="Edytuj" onClick={editClickHandler}></Button>
                                 </EditButtonBox>
+                                <Names>{currentUserDetails?.firstName} {currentUserDetails?.secondName}</Names>
                                 <PersonInfo>
-                                    <Names>{currentUserDetails?.firstName} {currentUserDetails?.secondName}</Names>
                                     <Description>
                                         {currentUserDetails?.description ? (
                                             <>{currentUserDetails?.description}</>
