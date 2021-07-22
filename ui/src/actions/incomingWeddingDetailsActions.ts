@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import * as actionTypes from '../actions/actionTypes/currentUserDetailsTypes';
+import * as actionTypes from '../actions/actionTypes/incomingWeddingDetailsTypes';
 import { IIncomingWeddingDetails } from "../entities/incomingWeddingDetails";
 
 
@@ -13,7 +13,7 @@ export const getIncomingWeddingDetails = (): Promise<IIncomingWeddingDetails> =>
       .then(response => response.json())
       .then((incomingWeddingDetails: IIncomingWeddingDetails) => {
           dispatch({
-              type: actionTypes.GET_DETAILS,
+              type: actionTypes.GET_WEDDINGS,
               incomingWeddingDetails
           })
       })

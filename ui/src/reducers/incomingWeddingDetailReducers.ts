@@ -21,8 +21,8 @@ const defaultState = (): IIncomingWeddingDetailsReducers => ({
 
 export default (state = defaultState(), action: any) => {
     switch (action.type) {
-        case actionTypes.GET_DETAILS: {
-            const data: actionTypes.IIncomingWeddingDetailTypes['GET_DETAILS'] = action;
+        case actionTypes.GET_WEDDINGS: {
+            const data: actionTypes.IIncomingWeddingDetailTypes['GET_WEDDINGS'] = action;
             return {
                 ...state,
                 incomingWeddingDetails: data.incomingWeddingDetails
