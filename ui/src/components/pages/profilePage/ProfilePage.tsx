@@ -200,6 +200,10 @@ const ProfilePage = () => {
     const editClickHandler = () => {
         setIsEdit(!isEdit);
     }
+
+    const isEditFalseHandler = () => {
+        setIsEdit(false);
+    }
     const showInfo = () => {
         setIsInfoVisible(true);
         setIsWeddingsInfoVisible(false);
@@ -210,10 +214,10 @@ const ProfilePage = () => {
     }
     return (
         <Wrapper>
-            <WrapperContainer>
-                {isEdit ? (
-                    <EditProfileForms />
-                ) : (
+            {isEdit ? (
+                <EditProfileForms  closeClick={isEditFalseHandler}/>
+            ) : (
+                <WrapperContainer>
                     <>
                         <ImageContainer>
                             <img alt="avatar" src={(currentUserDetails?.photos.length < 1) ? "./media/icons/avatar.svg" : currentUserDetails?.photos[0].photoUrl}></img>
@@ -287,8 +291,8 @@ const ProfilePage = () => {
                         </MainContainer>
 
                     </>
-                )}
-            </WrapperContainer>
+                </WrapperContainer>
+            )}
         </Wrapper>
     );
 };
