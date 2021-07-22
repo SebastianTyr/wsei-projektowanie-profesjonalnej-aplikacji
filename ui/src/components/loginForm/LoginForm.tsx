@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from 'react';
 import { Formik, Form, ErrorMessage } from "formik";
 import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
+
 import Button from "../common/Button";
 import Label from "../common/Label";
 import Input from "../common/Input";

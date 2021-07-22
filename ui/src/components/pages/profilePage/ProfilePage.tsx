@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import DetailsForm from '../../profileForms/DetialsForm';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import Button from '../../common/Button';
-import ImageForm from '../../profileForms/ImageForm';
+
 import { useSelector } from 'react-redux';
 import { IState } from '../../../reducers';
 import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
@@ -217,7 +216,7 @@ const ProfilePage = () => {
                 ) : (
                     <>
                         <ImageContainer>
-                            <img src={(currentUserDetails?.photos.length < 1) ? "./media/icons/avatar.svg" : currentUserDetails?.photos[0].photoUrl}></img>
+                            <img alt="avatar" src={(currentUserDetails?.photos.length < 1) ? "./media/icons/avatar.svg" : currentUserDetails?.photos[0].photoUrl}></img>
                             {(currentUserDetails?.photos.length < 1) ?
                                 <span>Pokaż się innym, kliknij "Edytuj" i dodaj zdjęcie</span>
                                 : null
@@ -248,30 +247,32 @@ const ProfilePage = () => {
                                     {isInfoVisible ? (
                                         <InfoContainer>
                                             <table>
-                                                <tr>
-                                                    <td>Nick:</td>
-                                                    <td>{currentUserDetails?.userName}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Imie:</td>
-                                                    <td>{currentUserDetails?.firstName}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nazwisko:</td>
-                                                    <td>{currentUserDetails?.secondName}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Email:</td>
-                                                    <td>{currentUserDetails?.email}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Płeć:</td>
-                                                    <td>{(currentUserDetails?.gender === 10 ? "mężczyzna" : "kobieta")}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Data urodzenia:</td>
-                                                    <td>{currentUserDetails?.birthDate.toString().substring(0, 10)}</td>
-                                                </tr>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Nick:</td>
+                                                        <td>{currentUserDetails?.userName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Imie:</td>
+                                                        <td>{currentUserDetails?.firstName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nazwisko:</td>
+                                                        <td>{currentUserDetails?.secondName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email:</td>
+                                                        <td>{currentUserDetails?.email}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Płeć:</td>
+                                                        <td>{(currentUserDetails?.gender === 10 ? "mężczyzna" : "kobieta")}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Data urodzenia:</td>
+                                                        <td>{currentUserDetails?.birthDate.toString().substring(0, 10)}</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </InfoContainer>
                                     ) : (
