@@ -38,7 +38,7 @@ const ImageBox = styled.div`
 `;
 const TextWrapper = styled.div`
     padding: 1rem;
-    height: 20%;
+    height: 40%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -77,7 +77,11 @@ const WeddingHeader = styled.span`
 const WeddingDescription = styled.span`
     overflow: hidden;
 `;
-
+const NextWedding = styled.div`
+    padding: 0 1rem 1rem 1rem;
+    color: ${Colors.navy};
+    width: 100%;
+`;
 interface ICardItem {
     image: string;
     name: string;
@@ -92,7 +96,7 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
     const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
     console.log(selectedUserId);
 
-    let weddingDate = props.weddingDate.toString().substring(0, 10);
+    const weddingDate = props.weddingDate?.toString().substring(0, 10);
     
     
 
@@ -121,14 +125,12 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
                 <NameBox>{props.name}</NameBox>
                 <DescriptionBox>{props.description}</DescriptionBox>
             </TextWrapper>
-            {(props.weddingDescription != null) ?
-                <TextWrapper>
+            {props.weddingDescription && (
+                <NextWedding>
                     <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
                     <WeddingDescription>{props.weddingDescription}</WeddingDescription>
-                </TextWrapper>
-                :
-                <TextWrapper/>
-            }
+                </NextWedding>
+            )}
 
         </Wrapper>
     );
