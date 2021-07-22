@@ -4,6 +4,7 @@ import { IState } from '../../../reducers';
 import { IIncomingWeddingDetailsReducers } from '../../../reducers/incomingWeddingDetailReducers'
 import AnnoucementCard from './AnnouncementCard';
 import styled from 'styled-components';
+import { ICurrentUserDetailsReducers } from '../../../reducers/currentUserDetailsReducers';
 
 const CardWrapper = styled.div`
     align-items: center;  
@@ -25,18 +26,20 @@ interface Iweddings{
 
 const Announcement = () => {
   const [allAnnouncement, setAllAnouncement] = useState<Iweddings[]>([]);
-  const { IIncomingWeddingDetails } = useSelector<IState, IIncomingWeddingDetailsReducers>( state => ({
-    ...state.incomingWeddingDetails
+  const { incomingWeddingDetails, currentUserDetails } = useSelector<IState, IIncomingWeddingDetailsReducers & ICurrentUserDetailsReducers>( state => ({
+    ...state.incomingWeddingDetails,
+    ...state.currentUserDetails
   }));
 
-  const wantedGender = (IIncomingWeddingDetails?.genders === 10) ? 20 : 10;
+  const wantedGender = currentUserDetails?.wantedGender.toString();
 
   const usersParams = new URLSearchParams({
     maxDistance: '10',
-    genders: wantedGender.toString()
+    genders: wantedGender
   }).toString();
 
-  const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
+  // const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
+  const urlSelectedUsers = 'https://localhost:5001/Users/GetIncomingWeddings';
  
 
   useEffect(() => {
@@ -53,6 +56,7 @@ const Announcement = () => {
 
   return(
     <CardWrapper>
+      {console.log(incomingWeddingDetails)}
   <h2>Nadchodzące wydarzenia</h2>
   {
     allAnnouncement?.map((props?) => {

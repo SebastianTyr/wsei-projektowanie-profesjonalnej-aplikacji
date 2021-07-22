@@ -2,11 +2,11 @@ import { IIncomingWeddingDetails } from "../entities/incomingWeddingDetails";
 import * as actionTypes from '../actions/actionTypes/incomingWeddingDetailsTypes';
 
 export interface IIncomingWeddingDetailsReducers {
-    IIncomingWeddingDetails: IIncomingWeddingDetails;
+    incomingWeddingDetails: IIncomingWeddingDetails;
 }
 
 const defaultState = (): IIncomingWeddingDetailsReducers => ({
-    IIncomingWeddingDetails: {
+    incomingWeddingDetails: {
         id: '',
         firstName:'',
         description:'',
