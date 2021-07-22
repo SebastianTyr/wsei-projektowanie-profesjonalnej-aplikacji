@@ -1,9 +1,9 @@
 import { IIncomingWeddingDetails } from '../../entities/incomingWeddingDetails';
 
-export const GET_DETAILS = 'GET_DETAILS';
+export const GET_WEDDINGS = 'GET_WEDDINGS';
 
 export interface IIncomingWeddingDetailTypes {
-    GET_DETAILS: {
+    GET_WEDDINGS: {
         incomingWeddingDetails: IIncomingWeddingDetails
     }
 }
