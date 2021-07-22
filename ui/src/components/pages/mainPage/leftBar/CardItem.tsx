@@ -14,7 +14,6 @@ const Wrapper = styled.div`
     position: relative;
     background-color: ${Colors.white};
     width: calc(33.333% - 2rem);
-    height: 31.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,11 +24,12 @@ const Wrapper = styled.div`
 `;
 
 const ImageBox = styled.div`
-    height: 60%;
+    height: 400px;
     width: 100%;
     display: flex;
     align-items: center;
     overflow: hidden;
+    position: relative;
     img {
         height: 100%;
         width: 100%;
@@ -37,25 +37,47 @@ const ImageBox = styled.div`
     }
 `;
 const TextWrapper = styled.div`
-    padding: 1rem;
-    height: 40%;
+    padding: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    overflow: hidden;
+    max-height: 0;
+    transition: all 0.5s ease-in-out;
+    &.open {
+    padding: 1rem;
+      max-height: 100vh;
+      transition: all 0.5s ease-in-out;
+    }
+
 `;
 const NameBox = styled.span`
     font-size: ${FontSize[26]};
     color: ${Colors.navy};
     font-weight: 700;
-    margin-bottom: ${Margin[8]};
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(255, 120, 84, 0.2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
 `;
 const DescriptionBox = styled.div`
     overflow: auto;
+    line-height: 1.5;
     font-size: ${FontSize[14]};
 `;
 
 const ButtonBox = styled.button`
+    z-index: 2;
     width: 50px;
     min-width: 50px;
     height: 50px;
@@ -95,11 +117,12 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
 
     const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
     console.log(selectedUserId);
-
+    const [isCardOpen, setIsCardOpen] = useState(false);
     const weddingDate = props.weddingDate?.toString().substring(0, 10);
     
-    
-
+    const openCard = () => {
+        setIsCardOpen(!isCardOpen);
+    }
     const postLikeHandler = () => {
         const urlAddLike = 'https://localhost:5001/Users/AddLike';
         fetch(urlAddLike, {
@@ -115,23 +138,24 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
 
     return (
         <Wrapper>
-            <ButtonBox onClick={postLikeHandler}>
-                <IconButtonGeneric className="lg" src="./media/icons/like.svg" alt="like icon" />
-            </ButtonBox>
-            <ImageBox>
-                <img src={props.image} alt='user'></img>
-            </ImageBox>
-            <TextWrapper>
-                <NameBox>{props.name}</NameBox>
-                <DescriptionBox>{props.description}</DescriptionBox>
-            </TextWrapper>
-            {props.weddingDescription && (
-                <NextWedding>
-                    <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
-                    <WeddingDescription>{props.weddingDescription}</WeddingDescription>
-                </NextWedding>
-            )}
-
+            <button type="button" onClick={openCard}>
+                <ButtonBox onClick={postLikeHandler}>
+                    <IconButtonGeneric className="lg" src="./media/icons/like.svg" alt="like icon" />
+                </ButtonBox>
+                <ImageBox>
+                    <img src={props.image} alt='user'></img>
+                    <NameBox>{props.name}</NameBox>
+                </ImageBox>
+                <TextWrapper className={`${isCardOpen && "open"}`}>
+                    <DescriptionBox>{props.description}</DescriptionBox>
+                </TextWrapper>
+                {props.weddingDescription && (
+                    <NextWedding>
+                        <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
+                        <WeddingDescription>{props.weddingDescription}</WeddingDescription>
+                    </NextWedding>
+                )}
+            </button>
         </Wrapper>
     );
 };
