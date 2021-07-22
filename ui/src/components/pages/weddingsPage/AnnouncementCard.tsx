@@ -4,6 +4,7 @@ import { Colors } from '../../../styledHelpers/Colors';
 import { FontSize } from '../../../styledHelpers/FontSize';
 import { Margin } from '../../../styledHelpers/Margin';
 import { Border } from '../../../styledHelpers/Border';
+import { Gradient } from '../../../styledHelpers/Gradient';
 
 
 const Wrapper = styled.div`
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: ${Gradient.orangePink};
     border-radius: 1rem;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `;
@@ -29,7 +31,11 @@ const TextWrapper = styled.div`
     flex-direction: column;
     align-items: center;
 `;
-
+const HeaderBox = styled.p`
+    font-size: ${FontSize[24]};
+    color: ${Colors.navy};
+    font-weight: 600;
+`
 const NameBox = styled.span`
     font-size: ${FontSize[14]};
     color: ${Colors.navy};
@@ -40,15 +46,20 @@ const DescriptionBox = styled.div`
     margin-top: ${Margin[8]};
     overflow: auto;
     font-size: ${FontSize[14]};
+    border: ${Colors.navy};
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    
 `;
 
 const AddressWrapper = styled.div`
     display: flex;
-    align-items: center;
+    flex-direction:row;
+    margin-bottom: ${Margin[8]};
+    
 `
 const SingleItem = styled.div`
     width: 50%;
-    margin-bottom: ${Margin[8]};
+    margin-right: ${Margin[4]};
 `;
 
 
@@ -66,22 +77,19 @@ const CardItem: FC<IAnnouncementCard> = (props: IAnnouncementCard) => {
     return(
         <Wrapper>
             <TextWrapper>
-                <NameBox>{props.firstname}</NameBox>
+                <HeaderBox>{props.firstname}</HeaderBox>
                 </TextWrapper>
                 <TextWrapper>
                 <NameBox>{props.date}</NameBox>
                 </TextWrapper>
-                <AddressWrapper>
-                    <SingleItem>
-                        <NameBox>{props.street}</NameBox>
-                        </SingleItem>
-                        <NameBox>{props.city}</NameBox>
-                        <NameBox>{props.postCode}</NameBox>
-                        <NameBox>{props.country}</NameBox>
+                <NameBox>Adres</NameBox>
+                    <AddressWrapper>
+                        <SingleItem><NameBox>{props.street}</NameBox></SingleItem>
+                        <SingleItem><NameBox>{props.city}</NameBox></SingleItem>
+                        <SingleItem><NameBox>{props.postCode}</NameBox></SingleItem>
+                        <SingleItem><NameBox>{props.country}</NameBox></SingleItem>
                 </AddressWrapper>
-                <TextWrapper>
                 <DescriptionBox>{props.description}</DescriptionBox>
-                </TextWrapper>
         </Wrapper>
     );
 };

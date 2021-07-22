@@ -2,14 +2,33 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IState } from '../../../reducers';
 import { IIncomingWeddingDetailsReducers } from '../../../reducers/incomingWeddingDetailReducers'
-import AnnoucementCard from './AnnouncementCard';
-import styled from 'styled-components';
+import { ILoggedInReducer } from '../../../reducers/loggedInUserReducers';
 import { ICurrentUserDetailsReducers } from '../../../reducers/currentUserDetailsReducers';
+import AnnoucementCard from './AnnouncementCard';
+import { Colors } from '../../../styledHelpers/Colors';
+import { FontSize } from '../../../styledHelpers/FontSize';
+import { Margin } from '../../../styledHelpers/Margin';
+import { Padding } from '../../../styledHelpers/Padding';
+import styled from 'styled-components';
+
+
+const Wrapper = styled.div`
+    width: 70%;
+    margin: 0 auto;
+    overflow: auto;
+    padding: ${Padding[24]} ${Padding[16]} ${Padding[8]} ${Padding[16]};
+
+    h2 {
+      font-size: ${FontSize[20]};
+      text-align: center;
+      color: ${Colors.red};
+      margin-bottom: ${Margin[24]};
+    }
+`;
 
 const CardWrapper = styled.div`
-    align-items: center;  
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
 `;
 
@@ -21,22 +40,22 @@ interface Iweddings {
   addressCity: string,
   addressPostCode: string,
   addressCountry: string,
-  weddingNo: number
+  weddingNo: number,
+  gender:number,
 }
 
 const Announcement = () => {
   const [allAnnouncement, setAllAnouncement] = useState<Iweddings[]>([]);
-  const { incomingWeddingDetails, currentUserDetails } = useSelector<IState, IIncomingWeddingDetailsReducers & ICurrentUserDetailsReducers>(state => ({
+  const { currentUserDetails } = useSelector<IState, IIncomingWeddingDetailsReducers & ICurrentUserDetailsReducers>(state => ({
     ...state.incomingWeddingDetails,
     ...state.currentUserDetails
   }));
 
   const wantedGender = currentUserDetails?.wantedGender.toString();
-
-  const usersParams = new URLSearchParams({
+  /*const usersParams = new URLSearchParams({
     maxDistance: '10',
     genders: wantedGender
-  }).toString();
+  }).toString();*/
 
   // const urlSelectedUsers = `https://localhost:5001/Users/GetIncomingWeddings?${usersParams}`;
   const urlSelectedUsers = 'https://localhost:5001/Users/GetIncomingWeddings';
@@ -54,25 +73,26 @@ const Announcement = () => {
       }));
   }, []);
 
-  return (
+  return(
+    <Wrapper>
     <CardWrapper>
-      {console.log(incomingWeddingDetails)}
-      <h2>Nadchodzące wydarzenia</h2>
-      {
-        allAnnouncement?.map((props?) => {
-          return (
-            <AnnoucementCard key={props.weddingNo}
-              date={props.date.toLocaleString().substring(0, 10)}
-              firstname={props.firstName}
-              description={props.description}
-              street={(props.addressStreet === null) ? 'Nie wiadomo gdzie ' : props.addressStreet}
-              city={(props.addressCity === null) ? 'Nie wiadomo gdzie ' : props.addressCity}
-              postCode={(props.addressPostCode === null) ? 'Nie wiadomo gdzie ' : props.addressPostCode}
-              country={(props.addressCountry === null) ? 'Nie wiadomo gdzie ' : props.addressCountry}
-            />);
-        })
-      }
-    </CardWrapper>
+  {
+    allAnnouncement?.map((items?) => {
+      return(
+        (currentUserDetails.gender===items.gender)?null:(
+        <AnnoucementCard key={items.weddingNo}
+          date={items.date.toLocaleString().substring(0,10)}
+          firstname={items.firstName}
+          description={items.description}
+          street={(items.addressStreet === null) ? 'Nie wiadomo gdzie ':items.addressStreet}
+          city={(items.addressCity === null) ? 'Nie wiadomo gdzie ':items.addressCity}
+          postCode={(items.addressPostCode === null) ? 'Nie wiadomo gdzie ':items.addressPostCode}
+          country={(items.addressCountry === null) ? 'Nie wiadomo gdzie ':items.addressCountry}
+        />));
+  })
+}
+</CardWrapper>
+</Wrapper>
   );
 }
 export default Announcement;
