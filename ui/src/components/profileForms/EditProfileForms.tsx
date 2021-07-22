@@ -1,8 +1,12 @@
 import styled from "styled-components";
+import { Formik, Form, ErrorMessage } from "formik";
+
 import { Colors } from "../../styledHelpers/Colors";
 import { FontSize } from "../../styledHelpers/FontSize";
 import { Padding } from "../../styledHelpers/Padding";
 import ImageForm from "./ImageForm";
+import Input from "../common/Input";
+import Label from "../common/Label";
 
 
 const Wrapper = styled.div`
@@ -115,47 +119,66 @@ const EditProfileForms = (props: IEditProfileFormsProps) => {
                     </button>
                 </IconWrapper>
             </CloseWrapper>
-            <HeaderWrapper>Edytuj Profil</HeaderWrapper>
+            <HeaderWrapper>
+                <button>Zapisz zmiany </button>
+            </HeaderWrapper>
             <FormsWrapper>
                 <ImageContainer>
                     <ImageForm />
                 </ImageContainer>
                 <InfoFormsWrapper>
+                    <Formik
+                        initialValues={{ init: 'hej' }}
+                        onSubmit={values => console.log(values)}
+                    >
+                        <Form>
 
-                    <PersonInfo>
-                        <Names>Janusz Kowalski</Names>
-                        <Description>Super towrzysz na wesele</Description>
-                    </PersonInfo>
-                    <InfoContainer>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>Nick:</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Imie:</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Nazwisko:</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Płeć:</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Data urodzenia:</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </InfoContainer>
+
+                            <PersonInfo>
+                                <Names>
+                                    <Input type='text' id='firstName' name='fristName' value='Imię' />
+                                    <Input type='text' id='secondName' name='secondName' value='Nazwisko' />
+                                </Names>
+                                <Description>
+                                    <Input type='textarea' id='description' name='description' value='description' />
+                                </Description>
+                            </PersonInfo>
+
+                            <InfoContainer>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nick:</td>
+                                            <td>
+                                                <Input type='text' id='userName' name='userName' value='nazwa użytkownika' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>
+                                                <Input type='email' id='email' name='email' value='email' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Płeć:</td>
+                                            <td>
+                                                <Input id='start' aria-labelledby='gender' type='radio' name='gender' value='female' />
+                                                <Label htmlFor='start' labelName="Kobieta" />
+                                                <Input id='end' aria-labelledby='gender' type='radio' name='gender' value='male' />
+                                                <Label htmlFor='end' labelName="Mężczyzna" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Data urodzenia:</td>
+                                            <td>
+                                                <Input id='birthDate' type='date' name='birthDate' value='' />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </InfoContainer>
+                        </Form>
+                    </Formik>
                 </InfoFormsWrapper>
             </FormsWrapper>
 
