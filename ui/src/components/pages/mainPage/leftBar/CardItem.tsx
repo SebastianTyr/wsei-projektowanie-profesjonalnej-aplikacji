@@ -53,7 +53,7 @@ const TextWrapper = styled.div`
     }
 
 `;
-const NameBox = styled.span`
+const InfoBox = styled.span`
     font-size: ${FontSize[26]};
     color: ${Colors.navy};
     font-weight: 700;
@@ -63,7 +63,20 @@ const NameBox = styled.span`
     display: flex;
     align-items: center;
     padding: 1rem;
-    background-color: rgba(255, 120, 84, 0.2);
+    background-color: rgba(255,255,255,0.8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+`;
+const NameBox = styled.span`
+    font-size: ${FontSize[26]};
+    color: ${Colors.navy};
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    align-items: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -92,7 +105,10 @@ const ButtonBox = styled.button`
     top: 1rem;
     right: 1rem;
 `;
-
+const WeddingInfo = styled.button`
+    font-size: ${FontSize[14]};
+    color: ${Colors.navy};
+`;
 const WeddingHeader = styled.span`
     font-weight: 700;
 `;
@@ -144,7 +160,12 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
                 </ButtonBox>
                 <ImageBox>
                     <img src={props.image} alt='user'></img>
-                    <NameBox>{props.name}</NameBox>
+                    <InfoBox>
+                        <NameBox>{props.name}</NameBox>
+                        {props.weddingDescription && ( 
+                            <WeddingInfo>Zbliża się wesele: 20.03.2021 {weddingDate}</WeddingInfo>
+                        )} 
+                    </InfoBox>
                 </ImageBox>
                 <TextWrapper className={`${isCardOpen && "open"}`}>
                     <DescriptionBox>{props.description}</DescriptionBox>
