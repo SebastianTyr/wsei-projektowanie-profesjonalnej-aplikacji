@@ -98,14 +98,10 @@ const LoginForm = () => {
             <Formik
                 initialValues={initialValues}
                 onSubmit={values => {
-                    console.log(values)
-
                     const loginData = {
                         email: values.email,
                         password: values.password
                     };
-
-                    console.log(loginData);
 
                     fetch('https://localhost:5001/Users/signIn', {
                         method: 'POST',
@@ -122,14 +118,12 @@ const LoginForm = () => {
                             }
                         })
                         .then((data => {
-                            console.log(data);
                             sessionStorage.setItem("jwtToken", data.jwtToken);
                             setCurrentUser(data);
                         })).then(() => { history.push("/main") });
                 }}
             >
                 <CustomForm>
-                    {console.log(currentUser)}
                     <FormItem>
                         <Label htmlFor='email' labelName="Email" className="registration-form__label" />
                         <Input id='email' type='email' name='email' className="registration-form__input" />

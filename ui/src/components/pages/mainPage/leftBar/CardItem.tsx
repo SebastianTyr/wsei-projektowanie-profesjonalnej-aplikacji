@@ -135,7 +135,7 @@ interface ICardItem {
 const CardItem: FC<ICardItem> = (props: ICardItem) => {
 
     const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
-    console.log(selectedUserId);
+
     const [isCardOpen, setIsCardOpen] = useState(false);
     const [isLiked, setisLiked]= useState(false);
     const weddingDate = props.weddingDate?.toString().substring(0, 10);

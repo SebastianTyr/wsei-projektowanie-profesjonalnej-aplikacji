@@ -100,7 +100,6 @@ const AnnouncementForm = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    console.log(values)
                     const announcement = {
                         date: values.date,
                         address: { street: values.address.street, city: values.address.city, postCode: values.address.postCode, country: values.address.country },
