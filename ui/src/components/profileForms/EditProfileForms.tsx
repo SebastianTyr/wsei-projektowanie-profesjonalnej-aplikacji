@@ -14,6 +14,8 @@ import DetailsForm from "./DetialsForm";
 import { useSelector } from "react-redux";
 import { IState } from "../../reducers";
 import { ICurrentUserDetailsReducers } from "../../reducers/currentUserDetailsReducers";
+import IconButtonGeneric from "../common/IconButtonGeneric";
+import { Gradient } from "../../styledHelpers/Gradient";
 
 
 const Wrapper = styled.div`
@@ -28,11 +30,22 @@ const Wrapper = styled.div`
 `
 
 const CloseWrapper = styled.div`
-    width: 100%;
-    height: 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: ${Gradient.orangePink};
+  border-radius: 50%;
+  position: relative;
+  border: 0;
+  cursor: pointer;
+`;
+
+const CloseWrapperBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
 `;
 
 const IconWrapper = styled.span`
@@ -44,13 +57,6 @@ const IconWrapper = styled.span`
         width: 100%;
         height: 100%;
     }
-`;
-
-const HeaderWrapper = styled.div`
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: ${Margin[16]};
-    font-size: ${FontSize[28]};
 `;
 
 const FormsWrapper = styled.div`
@@ -144,17 +150,24 @@ const EditProfileForms = (props: IEditProfileFormsProps) => {
             {isDetailsFormVisible ?
                 <DetailsForm closeClick={closeDetailsForm } />
                 :
-                <Wrapper>
-                    <CloseWrapper>
-                        <IconWrapper>
+                <Wrapper className="modal modal--simple">
+                
+                        {/* <IconWrapper>
                             <button onClick={props.closeClick}>
-                                <img src='./media/icons/close.svg'></img>
+
                             </button>
-                        </IconWrapper>
+                        </IconWrapper> */}
+              <CloseWrapperBox>
+                    <CloseWrapper onClick={props.closeClick}>
+                        <IconButtonGeneric className="md" src="./media/icons/close.svg" alt="close icon" />
                     </CloseWrapper>
-                    <HeaderWrapper>
-                        Edytuj Profil
-                    </HeaderWrapper>
+              </CloseWrapperBox>
+
+
+
+                    <div className="modal__header">
+                        <h2>Edytuj Profil</h2>
+                    </div>
                     <FormsWrapper>
                         <ImageContainer>
                             <ImageForm />
