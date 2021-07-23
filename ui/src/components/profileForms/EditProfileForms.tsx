@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage, Field } from "formik";
 
 import { Colors } from "../../styledHelpers/Colors";
 import { FontSize } from "../../styledHelpers/FontSize";
@@ -16,19 +16,39 @@ import { IState } from "../../reducers";
 import { ICurrentUserDetailsReducers } from "../../reducers/currentUserDetailsReducers";
 import IconButtonGeneric from "../common/IconButtonGeneric";
 import { Gradient } from "../../styledHelpers/Gradient";
+import ErrorBox from "../common/ErrorBox";
 
 
 const Wrapper = styled.div`
+    position: relative;
     background-color: ${Colors.white};
     width: 70%;
     height: 90%;
     display: flex;
     flex-direction: column;
     border-radius: 1rem;
-    padding: 0 ${Padding[8]};
+    padding: 2rem;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-`
 
+    .registration-form__woman-label {
+        margin: 0 ${Margin[8]};  
+    }
+    .registration-form__man-label {
+            margin: 0 ${Margin[8]};   
+    }
+    .registration-form__label {
+            margin-bottom: ${Margin[8]};  
+    }
+    .registration-form__error {
+        margin: 0 ${Margin[8]} ${Margin[8]} ${Margin[8]};
+    }
+`
+const FormItem = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-bottom: 20px;
+`;
 const CloseWrapper = styled.div`
   width: 40px;
   height: 40px;
@@ -46,6 +66,9 @@ const CloseWrapperBox = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 0.5rem;
 `;
 
 const IconWrapper = styled.span`
@@ -61,35 +84,21 @@ const IconWrapper = styled.span`
 
 const FormsWrapper = styled.div`
     display: flex;
+    justify-content: space-between;
 `;
 
 const InfoFormsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    width: 60%;
 `;
 
 const ImageContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: 40%;
-    padding: ${Padding[40]};
+    padding: 0 ${Padding[40]} 0 0;
     height: 100%;
-`;
-
-const PersonInfo = styled.div`
-    height: 40%;
-`;
-
-const Names = styled.p`
-    color: ${Colors.navy};
-    font-size: ${FontSize[8]};
-    font-weight: 600;
-`;
-const Description = styled.p`
-    font-size: 1.13rem;
-    color: ${Colors.navy};
-    font-weight: 500;
 `;
 
 const InfoContainer = styled.div`
@@ -111,6 +120,11 @@ const InfoContainer = styled.div`
                     font-size: ${FontSize[18]};
                     color: ${Colors.red};
                     font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    input, label {
+                        margin-right: 0.5rem;
+                    }
                 }
             }
 
@@ -121,7 +135,7 @@ const InfoContainer = styled.div`
 const ButtonsWrapper = styled.div`
     margin-top: ${Margin[24]};
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 `;
 
 interface IEditProfileFormsProps {
@@ -151,20 +165,11 @@ const EditProfileForms = (props: IEditProfileFormsProps) => {
                 <DetailsForm closeClick={closeDetailsForm } />
                 :
                 <Wrapper className="modal modal--simple">
-                
-                        {/* <IconWrapper>
-                            <button onClick={props.closeClick}>
-
-                            </button>
-                        </IconWrapper> */}
-              <CloseWrapperBox>
-                    <CloseWrapper onClick={props.closeClick}>
-                        <IconButtonGeneric className="md" src="./media/icons/close.svg" alt="close icon" />
-                    </CloseWrapper>
-              </CloseWrapperBox>
-
-
-
+                    <CloseWrapperBox>
+                            <CloseWrapper onClick={props.closeClick}>
+                                <IconButtonGeneric className="md" src="./media/icons/close.svg" alt="close icon" />
+                            </CloseWrapper>
+                    </CloseWrapperBox>
                     <div className="modal__header">
                         <h2>Edytuj Profil</h2>
                     </div>
@@ -179,17 +184,33 @@ const EditProfileForms = (props: IEditProfileFormsProps) => {
                                 onSubmit={values => console.log(values)}
                             >
                                 <Form>
-                                    <PersonInfo>
-                                        <Names>
-                                            <Input type='text' id='firstName' name='fristName' value={currentUserDetails?.firstName} />
-                                            <Input type='text' id='secondName' name='secondName' value={currentUserDetails?.secondName} />
-                                        </Names>
-                                        <Description>
-                                            <Input type='textarea' id='description' name='description' value={currentUserDetails?.description} />
-                                        </Description>
-                                    </PersonInfo>
+                                    <FormItem>
+                                        <Label htmlFor='userName' labelName="Imie" className="registration-form__label" />
+                                        <Input type='text' id='firstName' name='fristName' value={currentUserDetails?.firstName} />
+                                        <ErrorMessage name='userName' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                    </FormItem>
+                                    <FormItem>
+                                        <Label htmlFor='userName' labelName="Nazwisko" className="registration-form__label" />
+                                        <Input type='text' id='secondName' name='secondName' value={currentUserDetails?.secondName} />
+                                        <ErrorMessage name='userName' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                    </FormItem>
+                                    <FormItem>
+                                        <Label htmlFor='description' labelName="Opis" className="registration-form__label" />
+                                        <Field as='textarea'
+                                            cols="30" 
+                                            rows="5"
+                                            id='description'
+                                            type='text'
+                                            name='description'
+                                            value={currentUserDetails?.description}
+                                        />
+                                        <ErrorMessage name='description' render={error => <ErrorBox errorText={error} className="registration-form__error" />} />
+                                    </FormItem>
+
 
                                     <InfoContainer>
+
+
                                         <table>
                                             <tbody>
                                                 <tr>
