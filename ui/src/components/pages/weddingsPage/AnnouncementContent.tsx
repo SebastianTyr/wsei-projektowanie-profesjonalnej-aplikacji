@@ -68,7 +68,6 @@ const Announcement = () => {
     })
       .then(response => response.json())
       .then((data => {
-        console.log(data);
         setAllAnouncement(data.items);
       }));
   }, []);
