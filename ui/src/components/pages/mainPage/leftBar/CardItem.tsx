@@ -12,7 +12,6 @@ import { Border } from '../../../../styledHelpers/Border';
 const Wrapper = styled.div`
     border: ${Border.red};
     position: relative;
-    height: 100%;
     background-color: ${Colors.white};
     width: calc(33.333% - 2rem);
     display: flex;
@@ -43,13 +42,14 @@ const TextWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
     overflow: hidden;
     max-height: 0;
     transition: all 0.5s ease-in-out;
     &.open {
-        padding: 0 1rem 1rem 1rem;
-        max-height: 100vh;
-        transition: all 0.5s ease-in-out;
+    padding: 1rem;
+      max-height: 100vh;
+      transition: all 0.5s ease-in-out;
     }
 
 `;
@@ -84,11 +84,9 @@ const NameBox = styled.span`
     display: block;
 `;
 const DescriptionBox = styled.div`
+    overflow: auto;
     line-height: 1.5;
     font-size: ${FontSize[14]};
-    text-align: left;
-    color: ${Colors.navy};
-    margin-bottom: 0.5rem;
 `;
 
 const ButtonBox = styled.button`
@@ -110,21 +108,17 @@ const ButtonBox = styled.button`
 const WeddingInfo = styled.button`
     font-size: ${FontSize[14]};
     color: ${Colors.navy};
-    font-weight: 600;
 `;
-const WeddingHeader = styled.div`
+const WeddingHeader = styled.span`
     font-weight: 700;
-    margin-bottom: 0.25rem;
 `;
 const WeddingDescription = styled.span`
     overflow: hidden;
 `;
 const NextWedding = styled.div`
+    padding: 0 1rem 1rem 1rem;
     color: ${Colors.navy};
     width: 100%;
-    text-align: left;
-    border-top: ${Border.red};
-    padding-top: 0.5rem;
 `;
 interface ICardItem {
     image: string;
@@ -140,12 +134,18 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
     const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
     console.log(selectedUserId);
     const [isCardOpen, setIsCardOpen] = useState(false);
+    const [isLiked, setisLiked]= useState(false);
     const weddingDate = props.weddingDate?.toString().substring(0, 10);
     
     const openCard = () => {
         setIsCardOpen(!isCardOpen);
+        
+    }
+    const liked = () => {
+        setisLiked(true);
     }
     const postLikeHandler = () => {
+        liked()
         const urlAddLike = 'https://localhost:5001/Users/AddLike';
         fetch(urlAddLike, {
             method: 'POST',
@@ -154,42 +154,37 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
                 "Authorization": "Bearer " + sessionStorage.getItem('jwtToken')
             },
             body: JSON.stringify(selectedUserId)
-        })
-            .then((response) => console.log(response));
-    }
+        })     
+    };
 
     return (
+        <>
         <Wrapper>
             <button type="button" onClick={openCard}>
                 <ButtonBox onClick={postLikeHandler}>
-                    <IconButtonGeneric className="lg" src="./media/icons/like.svg" alt="like icon" />
+                    <IconButtonGeneric className="lg" src={`${(isLiked===false)?"./media/icons/like.svg":"./media/icons/heart.svg"}`} alt="like icon" />
                 </ButtonBox>
-                <ImageBox> 
+                <ImageBox>
                     <img src={props.image} alt='user'></img>
                     <InfoBox>
                         <NameBox>{props.name}</NameBox>
-                        {!isCardOpen && (
-                            <>
-                                {props.weddingDescription && (   
-                                    <WeddingInfo>Zbliża się wesele: {weddingDate}</WeddingInfo>
-                                )}   
-                            </>
-                        )}
-
+                        {props.weddingDescription && ( 
+                            <WeddingInfo>Zbliża się wesele: 20.03.2021 {weddingDate}</WeddingInfo>
+                        )} 
                     </InfoBox>
                 </ImageBox>
                 <TextWrapper className={`${isCardOpen && "open"}`}>
                     <DescriptionBox>{props.description}</DescriptionBox>
-                        {props.weddingDescription && ( 
-                            <NextWedding> 
-                                <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
-                                <WeddingDescription>{props.weddingDescription}</WeddingDescription>
-                            </NextWedding>
-                        )}
                 </TextWrapper>
-
+                {props.weddingDescription && (
+                    <NextWedding>
+                        <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
+                        <WeddingDescription>{props.weddingDescription}</WeddingDescription>
+                    </NextWedding>
+                )}
             </button>
         </Wrapper>
+        </>
     );
 };
 
