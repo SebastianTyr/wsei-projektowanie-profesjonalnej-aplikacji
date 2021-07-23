@@ -126,7 +126,6 @@ const RegistrationForm = (props: any) => {
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={values => {
-                            console.log(values)
                             let userGender = (values.gender === 'female') ? 20 : 10;
 
                             const newUser = {
@@ -140,7 +139,6 @@ const RegistrationForm = (props: any) => {
                                 birthDate: values.birthDate
                             };
 
-                            console.log(newUser)
                             fetch('https://localhost:5001/Users', {
                                 method: 'POST',
                                 headers: { "Content-Type": "application/json" },

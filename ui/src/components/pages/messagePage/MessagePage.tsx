@@ -34,18 +34,17 @@ const LeftPanel = styled.div`
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `
 const Wrapper = styled.div`
+border: 3px solid black;
     margin: 0 auto;
     height: 100%;
     margin-bottom: 2rem;
     overflow: auto;
-    cursor: pointer;
     padding: ${Padding[24]} ${Padding[16]} ${Padding[8]} ${Padding[16]};
     width: 100%;
     background-color: ${Colors.white};
     display: flex;
     flex-direction: column;
     border-radius: 1rem;
-    overflow: hidden;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 
     h2 {
@@ -55,9 +54,9 @@ const Wrapper = styled.div`
     margin-bottom: ${Margin[24]};
     }
 `;
+
 const YourMessage = styled.div`
-width: max-content;
-max-width: 30%;
+max-width: 50%;
 padding: 1rem;
 margin-bottom: 30px;
 border-radius: 1rem;
@@ -66,10 +65,21 @@ background-color: ${Colors.gray05};
 border: 0.063rem solid #fd5068;
 
 `
+
+const YourMessageContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100%;
+`;
+
+const IncomingMessageContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    max-width: 100%;
+`;
+
 const IncomingMessage = styled.div`
-width: max-content;
-max-width: 30%;
-margin-left: 8rem;
+max-width: 50%;
 padding: 1rem;
 margin-bottom: 30px;
 border-radius: 1rem;
@@ -79,6 +89,7 @@ border: 0.063rem solid #ff7854;
 `
 const Message = styled.span`
 align-items: center;
+max-width: 100%;
 `
 const User= styled.span`
 font-size: x-small;
@@ -89,6 +100,16 @@ display: flex;
 width: 100%;
 justify-content: space-between;
 `
+
+const PairWrapper = styled.div`
+margin-top:5px;
+padding:10px;
+display: block;
+cursor:pointer;
+border-radius: 1rem;
+box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+border: 0.063rem solid #ccc;
+`;
 const WrapperMessage = styled.div`
     justify-content: space-between;
     margin: 0 auto;
@@ -175,33 +196,38 @@ const MessagePage = () => {
     return (
         <MainContainer>
             <LeftPanel className="left-panel">
+                <Wrapper>
                 {
                 pairs.map((pair) => { return (
-                    <Wrapper onClick={() => setPair(pair)}>
-                        <div>
-                        Para z: {pair.likedUserFirstName}
-                        </div>
-                        <div>
-                        Ostatnia wiadomość: {pair.lastMessage}
-                        </div>
-                        <hr></hr>
-                    </Wrapper>
+                        <PairWrapper onClick={() => setPair(pair)}>
+                            <div>
+                            <strong>Para z: </strong>{pair.likedUserFirstName}
+                            </div>
+                            <div>
+                            <strong>Ostatnia wiadomość: </strong>{pair.lastMessage}
+                            </div>
+                        </PairWrapper>
                 )})
             }
+            </Wrapper>
             </LeftPanel>
             <RightPanel className="right-panel">
                 <Wrapper>
                 {currentMessages.map((message) => {
                     return (
-                        (message.fromUserId==="Ty")?
+                        (message.fromUserId!==currentPair?.likedUserId)?
+                        <YourMessageContainer>
                             <YourMessage>
                                <Message>{message.message}</Message>
                             </YourMessage>
+                        </YourMessageContainer>
                             :
+                            <IncomingMessageContainer>
                                <IncomingMessage>
                                    <Message>{message.message}
                                    </Message>
                                 </IncomingMessage>
+                            </IncomingMessageContainer>
                             
                         )
                     })

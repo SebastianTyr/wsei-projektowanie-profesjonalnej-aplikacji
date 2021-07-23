@@ -116,9 +116,12 @@ const WeddingDescription = styled.span`
     overflow: hidden;
 `;
 const NextWedding = styled.div`
+    margin-top: ${Margin[8]};
     padding: 0 1rem 1rem 1rem;
     color: ${Colors.navy};
     width: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 interface ICardItem {
     image: string;
@@ -132,7 +135,7 @@ interface ICardItem {
 const CardItem: FC<ICardItem> = (props: ICardItem) => {
 
     const [selectedUserId, setSelectedUserId] = useState({ likedUserId: props.id });
-    console.log(selectedUserId);
+
     const [isCardOpen, setIsCardOpen] = useState(false);
     const [isLiked, setisLiked]= useState(false);
     const weddingDate = props.weddingDate?.toString().substring(0, 10);
@@ -169,19 +172,19 @@ const CardItem: FC<ICardItem> = (props: ICardItem) => {
                     <InfoBox>
                         <NameBox>{props.name}</NameBox>
                         {props.weddingDescription && ( 
-                            <WeddingInfo>Zbliża się wesele: 20.03.2021 {weddingDate}</WeddingInfo>
+                            <WeddingInfo>Zbliża się wesele: {weddingDate}</WeddingInfo>
                         )} 
                     </InfoBox>
                 </ImageBox>
                 <TextWrapper className={`${isCardOpen && "open"}`}>
                     <DescriptionBox>{props.description}</DescriptionBox>
-                </TextWrapper>
                 {props.weddingDescription && (
                     <NextWedding>
-                        <WeddingHeader>Zbliża się wesele: {weddingDate}</WeddingHeader>
+                        <WeddingHeader>Wesele: {weddingDate} </WeddingHeader>
                         <WeddingDescription>{props.weddingDescription}</WeddingDescription>
                     </NextWedding>
                 )}
+                </TextWrapper>
             </button>
         </Wrapper>
         </>

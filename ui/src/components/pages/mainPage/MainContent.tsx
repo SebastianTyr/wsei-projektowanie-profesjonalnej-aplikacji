@@ -116,7 +116,6 @@ const MainContent = () => {
     })
     .then(response => response.json())
     .then((data => {
-        console.log(data);
         setAllUsers(data.items);
 
       }));
@@ -124,7 +123,6 @@ const MainContent = () => {
   
   return (
     <Wrapper>
-      {console.log(userData)}
       <SearchWrapper>
         <Search type="search" placeholder="Znajdź wymarzoną partnerkę/partnera" />
         <SearchButtonContainer>
