@@ -84,10 +84,10 @@ const Announcement = () => {
           date={items.date.toLocaleString().substring(0,10)}
           firstname={items.firstName}
           description={items.description}
-          street={(items.addressStreet === null) ? 'Nie wiadomo gdzie ':items.addressStreet}
-          city={(items.addressCity === null) ? 'Nie wiadomo gdzie ':items.addressCity}
-          postCode={(items.addressPostCode === null) ? 'Nie wiadomo gdzie ':items.addressPostCode}
-          country={(items.addressCountry === null) ? 'Nie wiadomo gdzie ':items.addressCountry}
+          street={(items.addressStreet === null) ? 'Brak danych ':items.addressStreet}
+          city={(items.addressCity === null) ? 'Brak danych ':items.addressCity}
+          postCode={(items.addressPostCode === null) ? 'Brak danych ':items.addressPostCode}
+          country={(items.addressCountry === null) ? 'Brak danych ':items.addressCountry}
         />));
   })
 }

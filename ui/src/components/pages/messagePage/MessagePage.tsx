@@ -34,6 +34,7 @@ const LeftPanel = styled.div`
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `
 const Wrapper = styled.div`
+border: 3px solid black;
     margin: 0 auto;
     height: 100%;
     margin-bottom: 2rem;
@@ -45,7 +46,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     border-radius: 1rem;
-    overflow: hidden;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 
     h2 {
@@ -55,6 +55,7 @@ const Wrapper = styled.div`
     margin-bottom: ${Margin[24]};
     }
 `;
+
 const YourMessage = styled.div`
 width: max-content;
 max-width: 30%;

@@ -55,41 +55,44 @@ const AddressWrapper = styled.div`
     display: flex;
     flex-direction:row;
     margin-bottom: ${Margin[8]};
+    width: 100%;
+
     
 `
 const SingleItem = styled.div`
     width: 50%;
     margin-right: ${Margin[4]};
+
 `;
 
 
 interface IAnnouncementCard {
     date?: string,
-    street:string,
-    city:string,
-    postCode:string,
-    country:string,
+    street: string,
+    city: string,
+    postCode: string,
+    country: string,
     firstname: string,
     description: string
 }
 
 const CardItem: FC<IAnnouncementCard> = (props: IAnnouncementCard) => {
-    return(
+    return (
         <Wrapper>
             <TextWrapper>
                 <HeaderBox>{props.firstname}</HeaderBox>
-                </TextWrapper>
-                <TextWrapper>
+            </TextWrapper>
+            <TextWrapper>
                 <NameBox>{props.date}</NameBox>
-                </TextWrapper>
-                <NameBox>Adres</NameBox>
-                    <AddressWrapper>
-                        <SingleItem><NameBox>{props.street}</NameBox></SingleItem>
-                        <SingleItem><NameBox>{props.city}</NameBox></SingleItem>
-                        <SingleItem><NameBox>{props.postCode}</NameBox></SingleItem>
-                        <SingleItem><NameBox>{props.country}</NameBox></SingleItem>
-                </AddressWrapper>
-                <DescriptionBox>{props.description}</DescriptionBox>
+            </TextWrapper>
+            <NameBox>Adres</NameBox>
+            <AddressWrapper>
+                <SingleItem><NameBox>{props.street}</NameBox></SingleItem>
+                <SingleItem><NameBox>{props.city}</NameBox></SingleItem>
+                <SingleItem><NameBox>{props.postCode}</NameBox></SingleItem>
+                <SingleItem><NameBox>{props.country}</NameBox></SingleItem>
+            </AddressWrapper>
+            <DescriptionBox>{props.description}</DescriptionBox>
         </Wrapper>
     );
 };
