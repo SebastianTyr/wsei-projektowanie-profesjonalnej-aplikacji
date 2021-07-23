@@ -22,7 +22,8 @@ import ErrorBox from "../common/ErrorBox";
 const Wrapper = styled.div`
     position: relative;
     background-color: ${Colors.white};
-    width: 70%;
+    min-width: 80% !important;
+    width: 80% !important;
     height: 90%;
     display: flex;
     flex-direction: column;
