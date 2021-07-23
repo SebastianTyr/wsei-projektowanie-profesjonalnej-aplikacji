@@ -12,6 +12,7 @@ const MessagePage = () => {
     const [currentMessages, setCurrentMessages] = useState<IPairMessage[]>([]);
     let [currentPair, setCurrentPair] = useState<IPair>();
     const url = `https://localhost:5001/Pairs`;
+    let messageInput = React.createRef<HTMLInputElement>();
     
     function setPair(pair: IPair) {
         setCurrentPair(pair);
@@ -34,6 +35,15 @@ const MessagePage = () => {
     function addMessageToCollection(message: IPairMessage) {
         console.log(message);
         setCurrentMessages(previousState => [...previousState, message]);
+    }
+
+    function sendMessageToPair() {
+        fetch(`${url}/messages`, {
+            method: 'POST',
+            headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'), "Content-Type": "application/json"},
+            body: JSON.stringify({ pairId: currentPair?.pairId, toUserId: currentPair?.likedUserId, message: messageInput.current?.value })
+        })
+        .then(() => addMessageToCollection({fromUserId: "you", message: messageInput.current?.value} as IPairMessage));
     }
 
     const Wrapper = styled.div`
@@ -102,8 +112,8 @@ const MessagePage = () => {
             }
             <Wrapper>
                     <label>Wpisz wiadomość: </label>
-                    <input name="message" type="text"></input>
-                    <button type="submit">Wyślij</button>
+                    <input ref={messageInput} name="message" type="text"></input>
+                    <button onClick={sendMessageToPair}>Wyślij</button>
             </Wrapper>
         </div>
         </>
