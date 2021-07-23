@@ -7,6 +7,7 @@ import { Border } from '../../../styledHelpers/Border';
 import { Gradient } from '../../../styledHelpers/Gradient';
 
 
+
 const Wrapper = styled.div`
     border: ${Border.red};
     position: relative;
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: ${Gradient.orangePink};
+    background-image: ${Colors.navy};
     border-radius: 1rem;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 `;
@@ -52,6 +53,7 @@ const DescriptionBox = styled.div`
 `;
 
 const AddressWrapper = styled.div`
+width: 100%;
     display: flex;
     flex-direction:row;
     margin-bottom: ${Margin[8]};

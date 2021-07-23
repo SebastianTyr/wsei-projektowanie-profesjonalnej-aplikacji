@@ -13,8 +13,7 @@ import styled from 'styled-components';
 
 
 const Wrapper = styled.div`
-    width: 70%;
-    margin: 0 auto;
+    width: 100%;
     overflow: auto;
     padding: ${Padding[24]} ${Padding[16]} ${Padding[8]} ${Padding[16]};
 
@@ -29,7 +28,6 @@ const Wrapper = styled.div`
 const CardWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
 `;
 
 interface Iweddings {
