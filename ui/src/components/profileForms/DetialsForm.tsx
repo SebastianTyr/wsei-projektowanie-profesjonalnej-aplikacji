@@ -10,6 +10,8 @@ import ErrorBox from "../common/ErrorBox";
 import { Colors } from '../../styledHelpers/Colors';
 import { FontSize } from '../../styledHelpers/FontSize';
 import { Padding } from '../../styledHelpers/Padding';
+import { useHistory } from 'react-router-dom';
+import IconButtonGeneric from '../common/IconButtonGeneric';
 
 
 const Wrapper = styled.div`
@@ -33,7 +35,8 @@ const HeaderWrapper = styled.div`
     }
 `;
 
-const IconWrapper = styled.span`
+const IconWrapper = styled.div`
+    border: 1px solid black;
     width: 30px;
     height: 30px;
     padding: 0 ${Padding[8]};
@@ -118,6 +121,7 @@ interface IDetailsFormProps {
 
 const DetailsForm = (props: IDetailsFormProps) => {
 
+    const history = useHistory();
 
     const initialValues: IDetailsDataFromForm = {
         heightValue: 0,
@@ -144,17 +148,56 @@ const DetailsForm = (props: IDetailsFormProps) => {
     return (
         <Wrapper className="modal">
             <HeaderWrapper className="modal__header">
-                <h2>Podaj dodatkowe informacje i bądź bardziej widoczny dla innych użytkowników</h2>
-                <IconWrapper>
-                    <button onClick={props.closeClick}>
-                        <img src='./media/icons/close.svg'></img>
-                    </button>
+                <h2>Dodatkowe informacje</h2>
+                <IconWrapper onClick={props.closeClick}>
+                    <IconButtonGeneric className="md" src="./media/icons/close.svg" alt="close icon" />
                 </IconWrapper>
             </HeaderWrapper>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={values => {
+                    console.log(values)
+
+                    const detailsData = {
+                        height: {
+                            vaule: values.heightValue,
+                            unit: 'cm'
+                        },
+                        weight: {
+                            value: values.weightValue,
+                            unit: 'kg'
+                        },
+                        address: {
+                            street: values.addresStreet,
+                            city: values.addresCity,
+                            postCode: values.addresPostCode,
+                            country: values.addresCountry
+                        },
+                        description: values.description,
+                        wantedGender: values.wantedGender,
+                        coordinate: {
+                            longitude: 0,
+                            latitude: 0
+                        }
+                    };
+
+                    console.log(detailsData);
+                    const urlSetDetails = 'https://localhost:5001/Users/SetAdditionalInformation'
+                    fetch(urlSetDetails, {
+                        method: 'PUT',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + sessionStorage.getItem('jwtToken')
+                        },
+                        body: JSON.stringify(detailsData)
+                    }).then((response) => console.log(response))
+                        .then(() => {
+                            alert('Twoje informacje zostały zapisane')
+                        });
+
+
+                }}
             >
                 <CustomForm>
                     <FormItemsContainer>
