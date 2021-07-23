@@ -19,13 +19,12 @@ const MainContainer = styled.div`
 const RightPanel = styled.div`
     padding: 4rem;
     display: flex;
-    flex: 3;
+    flex: 4;
     flex-direction: column;
     justify-content: space-between;
 `
 const LeftPanel = styled.div`
    margin: 4rem 0 4rem 4rem;
-    display: flex;
     flex: 1;
     overflow: auto;
     width: 100%;
@@ -45,7 +44,6 @@ const Wrapper = styled.div`
     background-color: ${Colors.white};
     display: flex;
     flex-direction: column;
-    align-items: center;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
@@ -57,6 +55,40 @@ const Wrapper = styled.div`
     margin-bottom: ${Margin[24]};
     }
 `;
+const YourMessage = styled.div`
+width: max-content;
+max-width: 30%;
+padding: 1rem;
+margin-bottom: 30px;
+border-radius: 1rem;
+box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+background-color: ${Colors.gray05};
+border: 0.063rem solid #fd5068;
+
+`
+const IncomingMessage = styled.div`
+width: max-content;
+max-width: 30%;
+margin-left: 8rem;
+padding: 1rem;
+margin-bottom: 30px;
+border-radius: 1rem;
+box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+background-color: ${Colors.gray05};
+border: 0.063rem solid #ff7854;
+`
+const Message = styled.span`
+align-items: center;
+`
+const User= styled.span`
+font-size: x-small;
+text-align: center;
+`
+const TextWrapper = styled.div`
+display: flex;
+width: 100%;
+justify-content: space-between;
+`
 const WrapperMessage = styled.div`
     justify-content: space-between;
     margin: 0 auto;
@@ -80,8 +112,7 @@ const WrapperMessage = styled.div`
             margin-left: 1rem;
             width: 100%;
         }
-    }
-`;
+    `;
 const MessagePage = () => {
     const [pairs, setPairs] = useState<IPair[]>([]);
     const [currentMessages, setCurrentMessages] = useState<IPairMessage[]>([]);
@@ -93,7 +124,6 @@ const MessagePage = () => {
         setCurrentPair(pair);
         getPairMessages(pair);
     }
-
     function getPairMessages(pair: IPair) {
         console.log(currentPair);
         fetch(`${url}/${pair?.pairId}/messages`, {
@@ -106,7 +136,7 @@ const MessagePage = () => {
             console.log(currentMessages);
         });
     }
-
+    console.log(currentPair);
     function addMessageToCollection(message: IPairMessage) {
         console.log(message);
         setCurrentMessages(previousState => [...previousState, message]);
@@ -118,7 +148,7 @@ const MessagePage = () => {
             headers: { "Authorization": "Bearer " + sessionStorage.getItem('jwtToken'), "Content-Type": "application/json"},
             body: JSON.stringify({ pairId: currentPair?.pairId, toUserId: currentPair?.likedUserId, message: messageInput.current?.value })
         })
-        .then(() => addMessageToCollection({fromUserId: "you", message: messageInput.current?.value} as IPairMessage));
+        .then(() => addMessageToCollection({fromUserId: "Ty", message: messageInput.current?.value} as IPairMessage));
     }
 
     useEffect(() => {
@@ -162,11 +192,17 @@ const MessagePage = () => {
             <RightPanel className="right-panel">
                 <Wrapper>
                 {currentMessages.map((message) => {
-                        return (
-                            <>
-                                <div>Od: {message.fromUserId}</div>
-                                <div>Wiadomość: {message.message}</div>
-                            </>
+                    return (
+                        (message.fromUserId==="Ty")?
+                            <YourMessage>
+                               <Message>{message.message}</Message>
+                            </YourMessage>
+                            :
+                               <IncomingMessage>
+                                   <Message>{message.message}
+                                   </Message>
+                                </IncomingMessage>
+                            
                         )
                     })
                 }
