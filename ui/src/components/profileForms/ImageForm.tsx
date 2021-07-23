@@ -15,6 +15,7 @@ const Wrapper = styled.div`
     border-radius: 1rem;
     width: 100%;
     height: 60%;
+    margin-bottom: 1rem;
 `;
 
 const ItemWrapper = styled.div`
@@ -22,16 +23,21 @@ const ItemWrapper = styled.div`
     flex-direction: column;
 
     label {
-        margin-top: ${Margin[16]};
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: ${Colors.white};
         background-image: ${Gradient.orangePink};
         border-radius: 3rem;
+        min-width: 6rem;
+        height: 3rem;  
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
         &:hover {
             background-image: ${Gradient.pinkOrange};
         }
-        min-width: 6rem;
-        height: 3rem;  
     }
 
     input {
