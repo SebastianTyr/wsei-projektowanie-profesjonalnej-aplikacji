@@ -9,23 +9,23 @@ import { FontSize } from '../../../styledHelpers/FontSize';
 import { Margin } from '../../../styledHelpers/Margin';
 import { Colors } from '../../../styledHelpers/Colors';
 
+
+const Custom = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    background-image: ${Gradient.orangePink};
+`;
 const ItemsBox = styled.div`
     display: flex;
     font-size: ${FontSize[28]};
     align-items: center;
     color: ${Colors.navy};
 `
-const Custom = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 1rem;
-`;
 const FormItem = styled.div`
     display: flex;
-    flex: 1;
-    flex-direction: column;
-    margin: 10px 0 20px 0;
+    flex-direction: row;
 `;
 const ButtonWrapper = styled.button`
   width: 80px;
@@ -33,7 +33,7 @@ const ButtonWrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: ${Gradient.pinkOrange};
+  background-color: ${Colors.navy};
   border-radius: 50%;
   position: relative;
   border: 0;
@@ -52,8 +52,8 @@ const WeddingsPage: FC = () => {
     }
 
     return (
-        <>{!isForm &&
-            <Custom>
+        <Custom>
+        {!isForm &&<>
                 <ItemsBox>
                     <h1>Wesela</h1>
                     <ButtonWrapper>
@@ -62,21 +62,18 @@ const WeddingsPage: FC = () => {
                         </button>
                     </ButtonWrapper>
                 </ItemsBox>
-                <FormItem>
+                
                     <Announcement />
-                </FormItem>
-            </Custom>
+              
+                </>
         }
             {isForm && 
-                    <Custom>
-                        <AnnouncementForm />
-                        <Button variant="primary" type="text" size="md" text="Powrót" onClick={MainHandler} />
-                    </Custom>
-                }
-                    
-              
-        </>
+                   <>
+                     <AnnouncementForm />
+                     <Button variant="primary" type="text" size="md" text="Powrót" onClick={MainHandler} />
+                    </>
+                }         
+        </Custom>  
     )
 }
-
 export default WeddingsPage;
