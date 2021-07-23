@@ -100,7 +100,6 @@ const ImageForm = () => {
 
         if (!curFile)
             return;
-        console.log(curFile[0]);
 
         if (curFile.length === 0)
             setIsSelect(false);
@@ -109,7 +108,6 @@ const ImageForm = () => {
     };
 
     const fileUploadHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(selectedFile)
         event.preventDefault();
 
         const fd = new FormData();

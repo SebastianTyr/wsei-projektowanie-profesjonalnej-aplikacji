@@ -157,7 +157,6 @@ const DetailsForm = (props: IDetailsFormProps) => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={values => {
-                    console.log(values)
 
                     const detailsData = {
                         height: {
@@ -181,8 +180,6 @@ const DetailsForm = (props: IDetailsFormProps) => {
                             latitude: 0
                         }
                     };
-
-                    console.log(detailsData);
                     const urlSetDetails = 'https://localhost:5001/Users/SetAdditionalInformation'
                     fetch(urlSetDetails, {
                         method: 'PUT',

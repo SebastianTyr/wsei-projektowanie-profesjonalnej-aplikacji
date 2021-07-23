@@ -153,7 +153,6 @@ const EditProfileForms = (props: IEditProfileFormsProps) => {
 
     const displayDeatilsForm = () => {
         setIsDetailsFormVisible(true);
-        console.log(isDetailsFormVisible);
     }
 
     const closeDetailsForm = () => {
